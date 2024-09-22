@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowerExchange_API", "FlowerExchange_API\FlowerExchange_API.csproj", "{59245D16-550C-46A1-A63A-D4BCF624E242}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowerExchange_Repositories", "FlowerExchange_Repositories\FlowerExchange_Repositories.csproj", "{975B8740-DFD0-4B52-BDDD-293376D62B22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowerExchange_Services", "FlowerExchange_Services\FlowerExchange_Services.csproj", "{E3395ABF-0301-4A0A-B579-38F6F4B5271E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59245D16-550C-46A1-A63A-D4BCF624E242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59245D16-550C-46A1-A63A-D4BCF624E242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59245D16-550C-46A1-A63A-D4BCF624E242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59245D16-550C-46A1-A63A-D4BCF624E242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{975B8740-DFD0-4B52-BDDD-293376D62B22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{975B8740-DFD0-4B52-BDDD-293376D62B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{975B8740-DFD0-4B52-BDDD-293376D62B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{975B8740-DFD0-4B52-BDDD-293376D62B22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3395ABF-0301-4A0A-B579-38F6F4B5271E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3395ABF-0301-4A0A-B579-38F6F4B5271E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3395ABF-0301-4A0A-B579-38F6F4B5271E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3395ABF-0301-4A0A-B579-38F6F4B5271E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE0B1281-8832-4ECE-A9CF-6DAA86415465}
+	EndGlobalSection
+EndGlobal
