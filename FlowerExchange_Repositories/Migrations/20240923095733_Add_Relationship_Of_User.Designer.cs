@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FlowerExchange_Repositories.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FlowerExchange_Repositories.Migrations
 {
     [DbContext(typeof(FlowerExchangeDbContext))]
-    partial class FlowerExchangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240923095733_Add_Relationship_Of_User")]
+    partial class Add_Relationship_Of_User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

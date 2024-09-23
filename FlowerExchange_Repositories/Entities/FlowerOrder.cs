@@ -27,7 +27,11 @@ namespace FlowerExchange_Repositories.Entities
         
         public Guid BuyerId { get; set; }
 
+        public User Buyer { get; set; }
+
         public Guid SellerId { get; set; }
+
+        public User Seller { get; set; }
 
         public Guid FlowerId { get; set; }
 

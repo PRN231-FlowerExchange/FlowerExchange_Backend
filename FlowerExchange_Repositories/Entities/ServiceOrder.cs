@@ -21,6 +21,8 @@ namespace FlowerExchange_Repositories.Entities
 
         public Guid BuyerId { get; set; }
 
+        public User Buyer {  get; set; }
+
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
 
         public DateTime UpdateAt { get; set; } = DateTime.UtcNow;

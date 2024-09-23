@@ -35,6 +35,38 @@ namespace FlowerExchange_Repositories.Data
 
         public DbSet<Store> Stores { get; set; }
 
+        public DbSet<UserConversation> UserConversations { get; set; }
+
+        public DbSet<Conversation> Conversations { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
+
+        public DbSet<Report> Reports { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<PostCategory> PostCategories { get; set; }
+
+        public DbSet<Flower> Flowers { get; set; }
+
+        public DbSet<FlowerOrder> FlowerOrders { get; set; }
+
+        public DbSet<Service> Services { get; set; }
+
+        public DbSet<PostService> PostServices { get; set; }
+
+        public DbSet<ServiceOrder> ServiceOrders { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
+
+        public DbSet<WalletTransaction> WalletTransactions { get; set; }
+
+        public DbSet<Wallet> Wallets { get; set; }
+
+        public DbSet<DepositTransaction> DepositTransactions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -139,6 +171,58 @@ namespace FlowerExchange_Repositories.Data
                 .HasOne(wt => wt.Transaction)
                 .WithMany(t => t.WalletTransactions)
                 .HasForeignKey(wt => wt.TransactonId);
+
+            // User many to many Conversation
+            modelBuilder.Entity<UserConversation>()
+                .HasKey(uc => new { uc.UserId, uc.ConversationId });
+            modelBuilder.Entity<UserConversation>()
+                .HasOne(uc => uc.User)
+                .WithMany(u => u.UserConversations)
+                .HasForeignKey(uc => uc.UserId);
+            modelBuilder.Entity<UserConversation>()
+                .HasOne(uc => uc.Conversation)
+                .WithMany(c => c.UserConversations)
+                .HasForeignKey(uc => uc.ConversationId);
+
+            //Message one to many User and Conversation
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany(s => s.Messages)
+                .HasForeignKey(m => m.SenderId);
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Conversation)
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.ConversationId);
+
+            // Buyer (User) one to many ServiceOrder
+            modelBuilder.Entity<ServiceOrder>()
+                .HasOne(so => so.Buyer)
+                .WithMany(b => b.ServiceOrders)
+                .HasForeignKey(so => so.BuyerId);
+
+            // Buyer (User) one to many FlowerOrder
+            modelBuilder.Entity<FlowerOrder>()
+                .HasOne(fo => fo.Buyer)
+                .WithMany(b => b.BuyOrders)
+                .HasForeignKey(fo => fo.BuyerId);
+
+            // Seller (User) one to many FlowerOrder
+            modelBuilder.Entity<FlowerOrder>()
+                .HasOne(fo => fo.Seller)
+                .WithMany(s => s.SellOrders)
+                .HasForeignKey(fo => fo.SellerId);
+
+            // User one to many Report (Create)
+            modelBuilder.Entity<Report>()
+                .HasOne(r => r.CreateBy)
+                .WithMany(cb => cb.CreatedReports)
+                .HasForeignKey(r => r.CreateById);
+
+            // User one to many Report (Update)
+            modelBuilder.Entity<Report>()
+                .HasOne(r => r.UpdateBy)
+                .WithMany(ub => ub.UpdatedReports)
+                .HasForeignKey(r => r.UpdateById);
 
         }
     }

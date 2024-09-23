@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FlowerExchange_Repositories.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FlowerExchange_Repositories.Migrations
 {
     [DbContext(typeof(FlowerExchangeDbContext))]
-    partial class FlowerExchangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240923092312_Add_Conversation")]
+    partial class Add_Conversation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,12 +148,8 @@ namespace FlowerExchange_Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuyerId");
-
                     b.HasIndex("FlowerId")
                         .IsUnique();
-
-                    b.HasIndex("SellerId");
 
                     b.ToTable("FlowerOrder");
                 });
@@ -297,7 +296,7 @@ namespace FlowerExchange_Repositories.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateById")
+                    b.Property<Guid>("CreateBy")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Detail")
@@ -316,16 +315,12 @@ namespace FlowerExchange_Repositories.Migrations
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("UpdateById")
+                    b.Property<Guid>("UpdateBy")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreateById");
-
                     b.HasIndex("PostId");
-
-                    b.HasIndex("UpdateById");
 
                     b.ToTable("Report");
                 });
@@ -388,8 +383,6 @@ namespace FlowerExchange_Repositories.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BuyerId");
 
                     b.ToTable("ServiceOrder");
                 });
@@ -607,29 +600,13 @@ namespace FlowerExchange_Repositories.Migrations
 
             modelBuilder.Entity("FlowerExchange_Repositories.Entities.FlowerOrder", b =>
                 {
-                    b.HasOne("FlowerExchange_Repositories.Entities.User", "Buyer")
-                        .WithMany("BuyOrders")
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FlowerExchange_Repositories.Entities.Flower", "Flower")
                         .WithOne("FlowerOrder")
                         .HasForeignKey("FlowerExchange_Repositories.Entities.FlowerOrder", "FlowerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlowerExchange_Repositories.Entities.User", "Seller")
-                        .WithMany("SellOrders")
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Buyer");
-
                     b.Navigation("Flower");
-
-                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("FlowerExchange_Repositories.Entities.Message", b =>
@@ -718,40 +695,13 @@ namespace FlowerExchange_Repositories.Migrations
 
             modelBuilder.Entity("FlowerExchange_Repositories.Entities.Report", b =>
                 {
-                    b.HasOne("FlowerExchange_Repositories.Entities.User", "CreateBy")
-                        .WithMany("CreatedReports")
-                        .HasForeignKey("CreateById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FlowerExchange_Repositories.Entities.Post", "Post")
                         .WithMany("Reports")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlowerExchange_Repositories.Entities.User", "UpdateBy")
-                        .WithMany("UpdatedReports")
-                        .HasForeignKey("UpdateById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreateBy");
-
                     b.Navigation("Post");
-
-                    b.Navigation("UpdateBy");
-                });
-
-            modelBuilder.Entity("FlowerExchange_Repositories.Entities.ServiceOrder", b =>
-                {
-                    b.HasOne("FlowerExchange_Repositories.Entities.User", "Buyer")
-                        .WithMany("ServiceOrders")
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Buyer");
                 });
 
             modelBuilder.Entity("FlowerExchange_Repositories.Entities.Store", b =>
@@ -888,21 +838,11 @@ namespace FlowerExchange_Repositories.Migrations
 
             modelBuilder.Entity("FlowerExchange_Repositories.Entities.User", b =>
                 {
-                    b.Navigation("BuyOrders");
-
-                    b.Navigation("CreatedReports");
-
                     b.Navigation("Messages");
 
                     b.Navigation("Posts");
 
-                    b.Navigation("SellOrders");
-
-                    b.Navigation("ServiceOrders");
-
                     b.Navigation("Store");
-
-                    b.Navigation("UpdatedReports");
 
                     b.Navigation("UserConversations");
 

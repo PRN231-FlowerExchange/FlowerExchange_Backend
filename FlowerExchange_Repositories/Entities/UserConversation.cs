@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 
 namespace FlowerExchange_Repositories.Entities
 {
-    [Table("Conversation")]
-    public class Conversation
+    [Table("UserConversation")]
+    public class UserConversation
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
 
-        public DateTime CreateAt { get; set; }
+        public User User { get; set; }
 
-        public ICollection<UserConversation>? UserConversations { get; set; }
+        [Key]
+        public Guid ConversationId { get; set; }
 
-        public ICollection<Message>? Messages { get; set; }
+        public Conversation Conversation { get; set; }
 
 
     }

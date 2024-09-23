@@ -23,11 +23,15 @@ namespace FlowerExchange_Repositories.Entities
 
         public DateTime CreateAt { get; set; }
 
-        public Guid CreateBy { get; set; }
+        public Guid CreateById { get; set; }
+
+        public User CreateBy { get; set; }
 
         public DateTime UpdateAt { get; set; }
 
-        public Guid UpdateBy { get; set; }
+        public Guid UpdateById { get; set; }
+
+        public User UpdateBy { get; set; }
 
         public Guid PostId { get; set; }
 

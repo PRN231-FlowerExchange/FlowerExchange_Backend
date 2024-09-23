@@ -47,5 +47,19 @@ namespace FlowerExchange_Repositories.Entities
 
         public Wallet? Wallet { get; set; }
 
+        public ICollection<UserConversation>? UserConversations { get; set;}
+
+        public ICollection<Message>? Messages { get; set; }
+
+        public ICollection<ServiceOrder>? ServiceOrders { get; set; }
+
+        public ICollection<FlowerOrder>? BuyOrders { get; set; }
+
+        public ICollection<FlowerOrder>? SellOrders { get; set; }
+
+        public ICollection<Report>? CreatedReports { get; set; }
+
+        public ICollection<Report>? UpdatedReports { get; set; }
+
     }
 }
