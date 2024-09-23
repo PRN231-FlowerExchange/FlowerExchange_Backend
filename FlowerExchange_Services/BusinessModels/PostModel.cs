@@ -7,12 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlowerExchange_Repositories.Entities
+namespace FlowerExchange_Services.BusinessModels
 {
-    [Table("Post")]
-    public class Post
+    public class PostModel
     {
-        [Key]
         public Guid Id { get; set; }
 
         public string Title { get; set; }
@@ -37,21 +35,21 @@ namespace FlowerExchange_Repositories.Entities
 
         public string MainImageUrl { get; set; }
 
-        public ICollection<PostCategory> PostCategories { get; set; }
+        public List<PostCategoryModel> PostCategories { get; set; }
 
-        public ICollection<Report> Reports { get; set; }
+        public List<ReportModel> Reports { get; set; }
 
-        public Guid? SellerId { get; set; }
+        public Guid SellerId { get; set; }
 
-        public User? Seller { get; set; }
+        public UserModel Seller { get; set; }
 
-        public Guid? StoreId { get; set; }
+        public Guid StoreId { get; set; }
 
-        public Store? Store { get; set; }
+        public StoreModel Store { get; set; }
 
-        public Flower Flower { get; set; }
+        public FlowerModel Flower { get; set; }
 
-        public ICollection<PostService>? PostServices { get; set; }
+        public List<PostServiceModel>? PostServices { get; set; }
 
     }
 }

@@ -7,10 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BusinessModels\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Implements\" />
-    <Folder Include="Mappers\" />
   </ItemGroup>
 
   <ItemGroup>
