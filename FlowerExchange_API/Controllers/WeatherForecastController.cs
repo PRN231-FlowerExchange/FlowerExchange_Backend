@@ -1,16 +1,15 @@
+using Application.Weather.Commands.AddWeather;
+using Application.Weather.Queries.GetWeather;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Presentation;
 
-namespace FlowerExchange_API.Controllers
+namespace Presentation.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : APIControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
@@ -18,16 +17,16 @@ namespace FlowerExchange_API.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet(Name = "weathr-forecast/all")]
+        public async Task<List<WeatherForecast>> GetAll()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return await Mediator.Send(new GetallWeatherForecastQuery());
+        }
+
+        [HttpPost(Name = "weathr-forecast")]
+        public async Task<WeatherForecast> AddNew([FromBody] AddWeatherCommand command)
+        {
+            return await Mediator.Send(command);
         }
     }
 }

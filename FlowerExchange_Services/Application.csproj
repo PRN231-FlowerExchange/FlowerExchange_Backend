@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Implements\**" />
+    <Compile Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Implements\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <None Remove="Implements\**" />
+    <None Remove="Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BusinessModels\" />
+    <Folder Include="Category\Commands\" />
+    <Folder Include="Category\Queries\" />
+    <Folder Include="Category\Services\" />
+    <Folder Include="Common\Services\" />
+    <Folder Include="Post\Commands\" />
+    <Folder Include="Post\Queries\" />
+    <Folder Include="Post\Services\" />
+    <Folder Include="Report\Commands\" />
+    <Folder Include="Report\Queries\" />
+    <Folder Include="Report\Services\" />
+    <Folder Include="PlatformService\Commands\" />
+    <Folder Include="PlatformService\Queries\" />
+    <Folder Include="PlatformService\Services\" />
+    <Folder Include="Conversation\Commands\" />
+    <Folder Include="Conversation\Queries\" />
+    <Folder Include="Conversation\Services\" />
+    <Folder Include="PaymentTransaction\Commands\" />
+    <Folder Include="PaymentTransaction\Queries\" />
+    <Folder Include="PaymentTransaction\Services\" />
+    <Folder Include="Order\Commands\" />
+    <Folder Include="Order\Queries\" />
+    <Folder Include="Order\Services\" />
+    <Folder Include="Weather\Services\" />
+    <Folder Include="UserStore\Commands\" />
+    <Folder Include="UserStore\Queries\" />
+    <Folder Include="UserStore\Services\" />
+    <Folder Include="Wallet\Commands\" />
+    <Folder Include="Wallet\Queries\" />
+    <Folder Include="Wallet\Services\" />
+    <Folder Include="SystemUser\Commands\" />
+    <Folder Include="SystemUser\Services\" />
+    <Folder Include="SystemUser\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="112.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FlowerExchange_Repositories\Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
