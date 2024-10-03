@@ -29,6 +29,11 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -58,6 +63,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -104,6 +114,11 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -149,6 +164,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("BuyerId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -190,6 +210,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -233,6 +258,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -302,6 +332,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -329,6 +364,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -369,6 +409,11 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -406,11 +451,44 @@ namespace Persistence.Migrations
                     b.ToTable("Report", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("Role", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Service", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -454,6 +532,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("BuyerId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -484,6 +567,11 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
@@ -521,6 +609,11 @@ namespace Persistence.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -567,51 +660,73 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Fullname")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("LastLogin")
+                    b.Property<DateTime?>("LastLogin")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("LoginType")
-                        .HasColumnType("integer");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("RefreshToken")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Role")
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<Guid?>("createById")
                         .HasColumnType("uuid");
@@ -621,6 +736,13 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
                     b.ToTable("User", (string)null);
                 });
 
@@ -629,6 +751,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
 
                     b.Property<Guid>("ConversationId")
                         .HasColumnType("uuid");
@@ -662,6 +789,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -697,6 +829,11 @@ namespace Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -734,6 +871,11 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -758,6 +900,109 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WeatherForecast", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RoleClaim", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserClaim", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLogin", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UserRole", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("UserToke", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.DepositTransaction", b =>
@@ -994,6 +1239,57 @@ namespace Persistence.Migrations
                     b.Navigation("Wallet");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.HasOne("Domain.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithMany("Claims")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithMany("Logins")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.HasOne("Domain.Entities.Role", null)
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithMany("Tokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
                     b.Navigation("PostCategories");
@@ -1029,6 +1325,11 @@ namespace Persistence.Migrations
                     b.Navigation("Reports");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
             modelBuilder.Entity("Domain.Entities.Service", b =>
                 {
                     b.Navigation("PostServices");
@@ -1055,6 +1356,10 @@ namespace Persistence.Migrations
                 {
                     b.Navigation("BuyOrders");
 
+                    b.Navigation("Claims");
+
+                    b.Navigation("Logins");
+
                     b.Navigation("Messages");
 
                     b.Navigation("Posts");
@@ -1067,7 +1372,11 @@ namespace Persistence.Migrations
 
                     b.Navigation("Store");
 
+                    b.Navigation("Tokens");
+
                     b.Navigation("UserConversations");
+
+                    b.Navigation("UserRoles");
 
                     b.Navigation("Wallet");
                 });
