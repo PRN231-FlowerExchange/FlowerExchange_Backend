@@ -38,7 +38,6 @@ namespace Persistence
             {
                 throw new ArgumentNullException("CONNECTION IS NULL");
             }
-            Console.WriteLine(connection + "DAY");
             return connection;
         }
 

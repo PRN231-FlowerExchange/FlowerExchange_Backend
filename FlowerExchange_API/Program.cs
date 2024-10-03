@@ -99,6 +99,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapIdentityApi<User>();
+//app.MapIdentityApi<User>();
 
 app.Run();
