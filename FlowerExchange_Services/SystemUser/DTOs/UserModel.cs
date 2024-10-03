@@ -37,7 +37,7 @@ namespace Application.SystemUser.DTOs
 
         public DateTime LastLogin { get; set; }
 
-        public Role Role { get; set; }
+        public RoleType Role { get; set; }
 
         public StoreModel? Store { get; set; }
 
