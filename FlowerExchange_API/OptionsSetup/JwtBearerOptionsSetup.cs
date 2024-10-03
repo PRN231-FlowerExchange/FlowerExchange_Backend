@@ -17,19 +17,18 @@ namespace Presentation.OptionsSetup
         }
 
         public void PostConfigure(string? name, JwtBearerOptions options)
-        {                   
+        {
             options.TokenValidationParameters.ValidateIssuer = true;
             options.TokenValidationParameters.ValidateAudience = true;
             options.TokenValidationParameters.ValidateLifetime = true;
-            options.TokenValidationParameters.ValidateIssuerSigningKey = false;
+            options.TokenValidationParameters.ValidateIssuerSigningKey = true;
             options.TokenValidationParameters.ValidAudience = _jwtOptions.JwtValidAudience;
             options.TokenValidationParameters.ValidIssuer = _jwtOptions.JwtValidIssuer;
             options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.JwtSecret));
             options.TokenValidationParameters.RequireExpirationTime = true;
             options.TokenValidationParameters.RequireSignedTokens = true;
-            //options.TokenValidationParameters.ClockSkew = TimeSpan.FromMilliseconds(TokenConstants.ACCESS_TOKEN_PERIOD_MINISECOND);
             options.Audience = _jwtOptions.JwtValidAudience;
-            options.Authority = "https://login.microsoftonline.com/a1d50521-9687-4e4d-a76d-ddd53ab0c668/";
+            options.TokenValidationParameters.ClockSkew = TimeSpan.Zero; // No clock skew, strict expiration time validation
         }
     }
 }

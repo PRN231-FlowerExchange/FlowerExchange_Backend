@@ -22,8 +22,8 @@ namespace Persistence
         {
             optionsBuilder
             //.UseLazyLoadingProxies()
-            //.UseNpgsql(this.GetConnectionString());
-            .UseNpgsql("Host=localhost; Database=flowerexchangedb; Username=postgres; Password=hanh3533.");
+            .UseNpgsql(this.GetConnectionString());
+            //.UseNpgsql("Host=localhost; Database=flowerexchangedb; Username=postgres; Password=hanh3533.");
 
         }
 
@@ -102,7 +102,7 @@ namespace Persistence
             ); 
 
             builder.Entity<IdentityUserToken<Guid>>(ut =>
-                ut.ToTable("UserToke")
+                ut.ToTable("UserToken")
                   .HasKey(t => new { t.UserId, t.LoginProvider, t.Name })
             );
 

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
+using System.CodeDom;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Infrastructure.Security.TokenProvider
 {
     public class JwtTokenProvider : IJwtTokenProvider
     {
-        private readonly ILogger<JwtTokenProvider> _logger;  
+        private readonly ILogger<JwtTokenProvider> _logger;
         private JwtConfigOptions _jwtOptions;
 
         public JwtTokenProvider(IServiceProvider serviceProvider, IOptions<JwtConfigOptions> jwtOptions)
@@ -25,7 +26,7 @@ namespace Infrastructure.Security.TokenProvider
             _logger = serviceProvider.GetRequiredService<ILogger<JwtTokenProvider>>();
             _jwtOptions = jwtOptions.Value;
             Console.WriteLine("SECRETKY IN TOKEN PROVIDER: " + _jwtOptions.JwtSecret);
-           
+
         }
 
         public string GenerateAccessToken(List<Claim> claims, int milisecondExpired)
@@ -69,8 +70,8 @@ namespace Infrastructure.Security.TokenProvider
         public async Task<ClaimsPrincipal> ReadAndValidateTokenAsync(string token)
         {
             TokenValidationParameters validationParameters = new TokenValidationParameters();
-            validationParameters.ValidateIssuer = false;
-            validationParameters.ValidateAudience = false;
+            validationParameters.ValidateIssuer = true;
+            validationParameters.ValidateAudience = true;
             validationParameters.ValidateLifetime = false;
             validationParameters.ValidateIssuerSigningKey = true;
             validationParameters.ValidAudience = _jwtOptions.JwtValidAudience;
@@ -119,7 +120,35 @@ namespace Infrastructure.Security.TokenProvider
 
         public async Task<ClaimsPrincipal> GetPrincipalFromToken(string token)
         {
-            return await ReadAndValidateTokenAsync(token);
+
+            try
+            {
+                TokenValidationParameters validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = false, // Không kiểm tra thời gian sống của token
+                    ValidateIssuerSigningKey = true,
+                    ValidAudience = _jwtOptions.JwtValidAudience,
+                    ValidIssuer = _jwtOptions.JwtValidIssuer,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.JwtSecret))
+                };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                if (tokenHandler.CanReadToken(token))
+                {
+                    SecurityToken securityToken;
+                    ClaimsPrincipal principals = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+                    Console.WriteLine("==== EXISTED: " + principals.Identity.Name);
+                    return principals;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error validating token: " + ex.Message);
+            }
+
+            return null;
         }
     }
 }

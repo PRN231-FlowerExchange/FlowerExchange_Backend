@@ -33,6 +33,7 @@ namespace Infrastructure.ExceptionHandlers
             {
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
+                { typeof(BadRequestException), HandleBadRequestException },
                 { typeof(ConflictException), HandleConflictException },
                 //{ typeof(ForbiddenAccessException), HandleForbiddenAccessException },
             };
@@ -69,7 +70,26 @@ namespace Infrastructure.ExceptionHandlers
             };
 
             problemDetails.Extensions.Add("message", exception.Message);
-            //problemDetails.Extensions.Add("traceId", Activity.Current.GetTraceId());
+
+            response.ContentType = "application/problem+json";
+            response.StatusCode = problemDetails.Status.Value;
+
+            await response.WriteAsJsonAsync(problemDetails);
+        }
+
+        private async Task HandleBadRequestException(HttpContext httpContext, Exception exception)
+        {
+            var response = httpContext.Response;
+            var problemDetails = new ProblemDetails
+            {
+                Detail = exception.Message,
+                Instance = null,
+                Status = (int)HttpStatusCode.BadRequest,
+                Title = "Bad Request",
+                Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4"
+            };
+
+            problemDetails.Extensions.Add("message", exception.Message);
 
             response.ContentType = "application/problem+json";
             response.StatusCode = problemDetails.Status.Value;
@@ -93,7 +113,6 @@ namespace Infrastructure.ExceptionHandlers
             };
 
             problemDetails.Extensions.Add("message", ex.Message);
-            //problemDetails.Extensions.Add("traceId", Activity.Current.GetTraceId());
 
             response.ContentType = "application/problem+json";
             response.StatusCode = problemDetails.Status.Value;

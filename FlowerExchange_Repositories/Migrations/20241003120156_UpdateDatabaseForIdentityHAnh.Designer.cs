@@ -13,8 +13,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(FlowerExchangeDbContext))]
-    [Migration("20241002095657_UpdateUserIdentity")]
-    partial class UpdateUserIdentity
+    [Migration("20241003120156_UpdateDatabaseForIdentityHAnh")]
+    partial class UpdateDatabaseForIdentityHAnh
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1005,7 +1005,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserToke", (string)null);
+                    b.ToTable("UserToken", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.DepositTransaction", b =>

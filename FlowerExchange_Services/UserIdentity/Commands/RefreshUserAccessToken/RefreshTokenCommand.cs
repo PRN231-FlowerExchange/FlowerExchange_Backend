@@ -25,7 +25,9 @@ using ValidationException = Domain.Exceptions.ValidationException;
 namespace Application.UserIdentity.Commands.RefreshUserAccessToken
 {
     public class RefreshTokenCommand : IRequest<AuthenticatedToken>
-    { 
+    {
+        [Required]
+        public string AccessToken { get; set; }
         [Required]
         public string RefreshToken { get; set; }
        
@@ -60,8 +62,13 @@ namespace Application.UserIdentity.Commands.RefreshUserAccessToken
         }
         public async Task<AuthenticatedToken> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-             
-            var user = await _userManager.FindByEmailAsync(_currentuser.UserEmail);
+
+            var principal = await _jwtTokenService.GetPrincipalFromToken(request.AccessToken);
+            if(principal == null)
+            {
+                throw new BadRequestException("Token is invalid");
+            }
+            var user = await _userManager.FindByEmailAsync(principal.Identity.Name);
             if (user == null)
             {
                 throw new NotFoundException("User not found !");
@@ -69,7 +76,7 @@ namespace Application.UserIdentity.Commands.RefreshUserAccessToken
             string storedRefreshToken = await _userManager.GetAuthenticationTokenAsync(user, TokenConstants.TOKEN_LOGIN_PROVIDER_NAME, TokenConstants.REFRESH_TOKEN_NAME);
             if (storedRefreshToken == null || storedRefreshToken != request.RefreshToken)
             {
-                throw new ValidationException("Invalid refresh token !");
+                throw new BadRequestException("Invalid refresh token !");
             }
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
@@ -80,9 +87,8 @@ namespace Application.UserIdentity.Commands.RefreshUserAccessToken
             if (readableToken.ValidTo.CompareTo(DateTime.UtcNow) <= 0)
             {
                 Console.WriteLine("TOKEN EXPIRED NEED TO BE REFRESHED");
-                throw new Exception("Token expired !");
+                throw new BadRequestException($"Refresh token expired at {readableToken.ValidTo}!");
             }
-
 
             AuthenticatedToken token = await this.GenerateAuthenticatedSignInSuccess(user);
 
