@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.RepositoryAdapter
 {
-    public class RepositoryBase<TEntity, Tkey> : IRepositoryBase<TEntity, Tkey>, IDisposable where TEntity : BaseEntity<TEntity, Tkey>
+    public class RepositoryBase<TEntity, Tkey> : IRepositoryBase<TEntity, Tkey>, IDisposable where TEntity : class, IEntityWitkKey<Tkey>
     {
         protected readonly FlowerExchangeDbContext _dbContext;
         protected DbSet<TEntity> _dbSet;
@@ -237,7 +237,11 @@ namespace Persistence.RepositoryAdapter
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
                 // Ensure entity is attached and marked as modified
-                var existingEntity = await _dbSet.FindAsync(entity.Id);
+                var entityIdProperty = typeof(TEntity).GetProperty("Id");
+                if (entityIdProperty == null)
+                    throw new InvalidOperationException("Entity does not have an Id property.");
+
+                var existingEntity = await _dbSet.FindAsync(entityIdProperty);
                 if (existingEntity != null)
                 {
                     _dbContext.Entry(existingEntity).State = EntityState.Modified;

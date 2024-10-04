@@ -1,21 +1,17 @@
 ﻿using Application.Common.Behaviors;
-using Domain.Entities;
+using Application.Services.EmailForIdentityService;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ApplicationExtenstions
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
         // Register AutoMapper with all profiles in the assembly
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
@@ -32,7 +28,10 @@ public static class ApplicationExtenstions
         });
         // Register pipeline behaviors
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        services.AddScoped<EmailForIdentityService>();
+                
         return services;
     }
+
 }
 

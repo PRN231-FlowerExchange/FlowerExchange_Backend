@@ -8,8 +8,10 @@ namespace Domain.Security.Identity
 {
     public interface ICurrentUser
     {
-        bool IsAuthenticated { get; }
+        public bool IsAuthenticated { get; }
 
-        Guid UserId { get; }
+        public string UserEmail { get; }
+
+        public Guid UserId { get; }
     }
 }
