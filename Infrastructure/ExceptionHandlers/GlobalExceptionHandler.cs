@@ -33,13 +33,11 @@ namespace Infrastructure.ExceptionHandlers
             {
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
-                { typeof(BadRequestException), HandleBadRequestException },
-                { typeof(ConflictException), HandleConflictException },
+                //{ typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
                 //{ typeof(ForbiddenAccessException), HandleForbiddenAccessException },
             };
         }
 
-   
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
@@ -168,6 +166,35 @@ namespace Infrastructure.ExceptionHandlers
             response.StatusCode = problemDetails.Status.Value;
 
             await response.WriteAsJsonAsync(problemDetails);
+        }
+
+        private async Task HandleMediaException(HttpContext context, Exception exception)
+        {
+            var response = context.Response;
+
+            _logger.LogError(exception, "[{Ticks}-{ThreadId}]", DateTime.UtcNow.Ticks, Environment.CurrentManagedThreadId);
+
+            if (_options.DetailLevel != GlobalExceptionDetailLevel.Throw)
+            {
+
+                var problemDetails = new ProblemDetails
+                {
+                    Detail = _options.GetErrorMessage(exception),
+                    Instance = null,
+                    Status = (int)HttpStatusCode.BadRequest,
+                    Title = "Media Error",
+                    Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1"
+                };
+
+                problemDetails.Extensions.Add("message", _options.GetErrorMessage(exception));
+                // problemDetails.Extensions.Add("traceId", Activity.Current.GetTraceId());
+
+                response.ContentType = "application/problem+json";
+                response.StatusCode = problemDetails.Status.Value;
+
+                //var result = JsonSerializer.Serialize(problemDetails);
+                await response.WriteAsJsonAsync(problemDetails);
+            }
         }
     }
 }

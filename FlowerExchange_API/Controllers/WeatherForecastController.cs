@@ -8,7 +8,7 @@ using Presentation;
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("weather-forecast")]
     public class WeatherForecastController : APIControllerBase
     {
         private readonly ILogger<WeatherForecastController> _logger;
@@ -20,19 +20,19 @@ namespace Presentation.Controllers
 
        
         [Authorize]
-        [HttpGet(Name = "weathr-forecast/all")]
+        [HttpGet("require-authorize")]
         public async Task<List<WeatherForecast>> GetAll()
         {
             return await Mediator.Send(new GetallWeatherForecastQuery());
         }
 
-        //[HttpGet(Name = "/weathr-forecast/free")]
-        //public async Task<List<WeatherForecast>> GetAllFree()
-        //{
-        //    return await Mediator.Send(new GetallWeatherForecastQuery());
-        //}
+        [HttpGet("no-authorize")]
+        public async Task<List<WeatherForecast>> GetAllFree()
+        {
+            return await Mediator.Send(new GetallWeatherForecastQuery());
+        }
 
-        [HttpPost(Name = "weathr-forecast")]
+        [HttpPost]
         public async Task<WeatherForecast> AddNew([FromBody] AddWeatherCommand command)
         {
             return await Mediator.Send(command);
