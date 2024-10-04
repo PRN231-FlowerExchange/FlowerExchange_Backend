@@ -1,10 +1,7 @@
 ﻿using CrossCuttingConcerns.Datetimes;
-using Infrastructure.DateTimes;
+using Microsoft.Extensions.DependencyInjection;
 
-
-
-
-namespace  Microsoft.Extensions.DependencyInjection;
+namespace Infrastructure.DateTimes;
 
 public static class DateTimeProviderRegisterService
 {
