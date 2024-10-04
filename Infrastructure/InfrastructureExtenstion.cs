@@ -1,7 +1,7 @@
-﻿using Castle.Core.Configuration;
+﻿using Application.Services.JwtTokenService;
+using Castle.Core.Configuration;
 using Domain.EmailProvider;
 using Domain.Entities;
-using Domain.Security.JwtTokenService;
 using Infrastructure.DateTimes;
 using Infrastructure.EmailProvider.Gmail;
 using Infrastructure.Security;

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Post.Queries.GetService
+namespace Application.PostFlower.Queries.GetService
 {
     public class GetServiceQuery : IRequest<List<Service>>
     {

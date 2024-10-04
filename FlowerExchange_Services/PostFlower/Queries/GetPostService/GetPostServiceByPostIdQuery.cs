@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Post.Queries.GetPostService
+namespace Application.PostFlower.Queries.GetPostService
 {
     public class GetPostServiceByPostIdQuery : IRequest<List<PostService>>
     {

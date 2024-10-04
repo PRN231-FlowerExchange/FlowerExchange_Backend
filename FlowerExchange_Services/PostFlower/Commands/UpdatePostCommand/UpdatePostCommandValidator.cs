@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Post.Commands.UpdatePostCommand
+namespace Application.PostFlower.Commands.UpdatePostCommand
 {
     internal class UpdatePostCommandValidator
     {

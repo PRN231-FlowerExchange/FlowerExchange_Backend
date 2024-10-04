@@ -1,19 +1,18 @@
-﻿using Application.Post.DTOs;
-using Application.Post.Services;
-using Domain.Repository;
+﻿using Domain.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Entities;
+using Application.PostFlower.Services;
+using Application.PostFlower.DTOs;
+using Domain.Exceptions;
 
-namespace Application.Post.Queries.GetPost
+namespace Application.PostFlower.Queries.GetPost
 {
     public class GetPostQuery : IRequest<List<PostViewDTO>>
     {
-        public Domain.Entities.Post? Post { get; set; }//filter entity
+        //public Post? Post { get; set; }//filter entity
+        public Guid StoreId { get; set; }
+        public Guid SellerId { get; set; }
         public string SearchString { get; set; }
         public PaginateRequest PaginateRequest { get; set; }
     }
@@ -33,15 +32,19 @@ namespace Application.Post.Queries.GetPost
         public async Task<List<PostViewDTO>> Handle(GetPostQuery request, CancellationToken cancellationToken)
         {
             List<PostViewDTO> result = new List<PostViewDTO>();
-
+            Post postEntity = new Post()
+            {
+                StoreId = request.StoreId,
+                SellerId = request.SellerId,
+            };
             try
             {
                 // Await the async call
-                List<Domain.Entities.Post> listPost = (List<Domain.Entities.Post>)await _postRepository.GetPosts(request.Post, request.PaginateRequest.CurrentPage, request.PaginateRequest.PageSize, request.SearchString);
+                List<Post> listPost = (List<Post>)await _postRepository.GetPosts(postEntity, request.PaginateRequest.CurrentPage, request.PaginateRequest.PageSize, request.SearchString);
 
                 if (listPost == null || !listPost.Any())
                 {
-                    throw new Exception("No record match");
+                    throw new NotFoundException("No record match");
                 }
                 else
                 {
@@ -68,6 +71,10 @@ namespace Application.Post.Queries.GetPost
                     }
 
                 }
+            }
+            catch (NotFoundException nfx)
+            {
+                throw nfx;
             }
             catch (Exception ex)
             {

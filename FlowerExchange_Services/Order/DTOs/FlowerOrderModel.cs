@@ -1,6 +1,6 @@
 ﻿using Application.PaymentTransaction.DTOs;
-using Application.Post.DTOs;
-using Application.UserStore.DTOs;
+using Application.PostFlower.DTOs;
+using Application.UserApplication.DTOs;
 using Domain.Constants.Enums;
 using System;
 using System.Collections.Generic;

@@ -10,16 +10,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Post.Commands.AddServiceToPostCommand
+namespace Application.PostFlower.Commands.AddServiceToPostCommand
 {
-    public class AddServiceToPostCommand : IRequest<Domain.Entities.Post>
+    public class AddServiceToPostCommand : IRequest<Post>
     {
-        public Domain.Entities.Post Post { get; set; }
+        public Post Post { get; set; }
         public List<Service> ListService { get; set; }
         public int ServiceDay { get; set; }
     }
 
-    public class AddServicePostCommandHandle : IRequestHandler<AddServiceToPostCommand, Domain.Entities.Post>
+    public class AddServicePostCommandHandle : IRequestHandler<AddServiceToPostCommand, Post>
     {
         private IServiceRepository _serviceRepository;
         private IPostRepository _postRepository;
@@ -32,15 +32,15 @@ namespace Application.Post.Commands.AddServiceToPostCommand
             IPostServiceRepository postServiceRepository,
             IUnitOfWork<FlowerExchangeDbContext> unitOfWork)
         {
-            this._serviceRepository = serviceRepository;
-            this._postRepository = postRepository;
-            this._postServiceRepository = postServiceRepository;
-            this._unitOfWork = unitOfWork;
+            _serviceRepository = serviceRepository;
+            _postRepository = postRepository;
+            _postServiceRepository = postServiceRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public Task<Domain.Entities.Post> Handle(AddServiceToPostCommand request, CancellationToken cancellationToken)
+        public Task<Post> Handle(AddServiceToPostCommand request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Post post = _postRepository.GetByIdAsync(request.Post.Id).GetAwaiter().GetResult();
+            Post post = _postRepository.GetByIdAsync(request.Post.Id).GetAwaiter().GetResult();
             try
             {
 
@@ -70,7 +70,8 @@ namespace Application.Post.Commands.AddServiceToPostCommand
             {
                 throw ex;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
             }
 
             return _postRepository.GetByIdAsync(request.Post.Id);

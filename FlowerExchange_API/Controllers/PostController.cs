@@ -1,6 +1,6 @@
-﻿using Application.Post.Commands.UpdatePostCommand;
-using Application.Post.DTOs;
-using Application.Post.Queries.GetPost;
+﻿using Application.PostFlower.Queries.GetPost;
+using Application.PostFlower.Commands.UpdatePostCommand;
+using Application.PostFlower.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

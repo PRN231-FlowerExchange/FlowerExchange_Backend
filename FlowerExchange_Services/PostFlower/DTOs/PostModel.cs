@@ -1,6 +1,6 @@
 ﻿using Application.Category.DTOs;
 using Application.Report.DTOs;
-using Application.UserStore.DTOs;
+using Application.UserApplication.DTOs;
 using Domain.Constants.Enums;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Post.DTOs
+namespace Application.PostFlower.DTOs
 {
     public class PostModel
     {

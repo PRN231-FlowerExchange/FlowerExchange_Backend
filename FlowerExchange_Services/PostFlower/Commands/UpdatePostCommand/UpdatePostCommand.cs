@@ -1,5 +1,5 @@
-﻿using Application.Post.DTOs;
-using Application.Post.Services;
+﻿using Application.PostFlower.DTOs;
+using Application.PostFlower.Services;
 using AutoMapper;
 using Domain.Commons.BaseRepositories;
 using Domain.Exceptions;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Post.Commands.UpdatePostCommand
+namespace Application.PostFlower.Commands.UpdatePostCommand
 {
     public record UpdatePostCommand : IRequest<PostUpdateDTO>
     {
