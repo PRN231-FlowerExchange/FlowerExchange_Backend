@@ -1,32 +1,72 @@
+using Domain.Constants.Enums;
 using Domain.Entities;
 using Infrastructure.DateTimes;
+using Infrastructure.EmailProvider.Gmail;
 using Infrastructure.ExceptionHandlers;
+using Infrastructure.Security.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using Persistence;
-using System.Configuration;
+using Presentation.OptionsSetup;
+
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddAuthorization();
 
+// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddHttpContextAccessor();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: 'Bearer 12345abcdef'",
+    });
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+            },
+            new List<string>()
+        }
+    });
+});
 
-builder.Services.AddDateTimeProvider();
+
+
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
-builder.Services.AddApplicationServices();
-
 string connectionString = builder.Configuration.GetConnectionString("FlowerExchangeDB") ?? throw new ArgumentNullException("NUL CONECTION");
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration, connectionString, Assembly.GetExecutingAssembly().GetName().Name);
+builder.Services.AddInfrastructureServices();
 
+builder.Services.ConfigureOptions<JwtConfigOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+builder.Services.ConfigureOptions<EmailOptionsSetup>();
 
-
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer();
 
 var app = builder.Build();
 
@@ -37,22 +77,28 @@ InitialiserExtensions.InitialiseDatabaseAsync(app);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
+    });
 }
 
 app.UseExceptionHandler(error =>
 {
     error.Run(async context =>
     {
-        context.RequestServices.GetRequiredService<GlobalExceptionHandler>();
-        _ = (context.Features.Get<IExceptionHandlerFeature>()?.Error);
-
+        var exceptionHandler = context.RequestServices.GetRequiredService<GlobalExceptionHandler>();
+        var exception = (context.Features.Get<IExceptionHandlerFeature>()?.Error);
     });
 });
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
+
+//app.MapIdentityApi<User>();
 
 app.Run();

@@ -2,6 +2,7 @@
 using Domain.Commons.BaseRepositories;
 using Domain.Entities;
 using Domain.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.RepositoryAdapter
@@ -10,14 +11,22 @@ namespace Persistence.RepositoryAdapter
     {
         private readonly DbSet<User> _dbSetUser;
 
-        public UserRepository(IUnitOfWork<FlowerExchangeDbContext> unitOfWork) : base(unitOfWork)
-        {
-            _dbSetUser = base.DbSet;
-        }
+        private readonly UserManager<User> _userManager;
 
+
+        public UserRepository(IUnitOfWork<FlowerExchangeDbContext> unitOfWork, UserManager<User> userManager)
+            : base(unitOfWork)
+        {
+            _userManager = userManager;
+            _dbSetUser = base.DbSet;
+
+        }
         public User GetUserByEmail(string email)
         {
             return _dbSetUser.FirstOrDefault(u => u.Email == email);
+
         }
     }
+
+    
 }

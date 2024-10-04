@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BusinessModels\" />
     <Folder Include="Category\Commands\" />
     <Folder Include="Category\Queries\" />
     <Folder Include="Category\Services\" />
@@ -36,10 +35,15 @@
     <Folder Include="Order\Commands\" />
     <Folder Include="Order\Queries\" />
     <Folder Include="Order\Services\" />
+    <Folder Include="UserApplication\Commands\" />
+    <Folder Include="UserIdentity\DTOs\" />
+    <Folder Include="UserIdentity\Queries\" />
+    <Folder Include="UserIdentity\Commands\ForgotPassword\" />
+    <Folder Include="UserIdentity\Commands\ResetPassword\" />
+    <Folder Include="UserIdentity\Commands\SignOut\" />
     <Folder Include="Weather\Services\" />
-    <Folder Include="UserStore\Commands\" />
-    <Folder Include="UserStore\Queries\" />
-    <Folder Include="UserStore\Services\" />
+    <Folder Include="UserApplication\Queries\" />
+    <Folder Include="UserApplication\Services\" />
     <Folder Include="Wallet\Commands\" />
     <Folder Include="Wallet\Queries\" />
     <Folder Include="Wallet\Services\" />
