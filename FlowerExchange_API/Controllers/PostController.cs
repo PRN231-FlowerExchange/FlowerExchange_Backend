@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
-    [Route("api/")]
+    [Route("api/v1/")]
     [ApiController]
     public class PostController : APIControllerBase
     {
@@ -24,10 +24,10 @@ namespace Presentation.Controllers
         //    return await Mediator.Send(command);
         //}
 
-        [HttpPost(Name = "post/updatepost")]
+        [HttpPut(Name = "updatebai")]
         public async Task<PostUpdateDTO> UpdatePost([FromBody] UpdatePostCommand command) => await Mediator.Send(command);
 
-        [HttpPost(Name = "post")]
+        [HttpPost(Name = "gatbai")]
         public async Task<List<PostViewDTO>> GetPost([FromBody] GetPostQuery query) => await Mediator.Send(query);
     }
 }
