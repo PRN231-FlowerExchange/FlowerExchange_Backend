@@ -24,14 +24,14 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      - name: Publish Presentation project
+        run: dotnet publish FlowerExchange_API/Presentation.csproj -c Release -o "${{github.workspace}}/Presentation"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: "${{github.workspace}}/Presentation"
 
   deploy:
     runs-on: windows-latest
