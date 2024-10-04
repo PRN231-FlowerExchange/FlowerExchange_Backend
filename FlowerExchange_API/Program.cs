@@ -57,6 +57,24 @@ builder.Services.AddSwaggerGen(c =>
             new List<string>()
         }
     });
+     // Define multiple server URLs for Swagger
+     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+     {
+         Url = "https://flowerexchange.azurewebsites.net",
+         Description = "Production Server (Azure)"
+     });
+    
+     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+     {
+         Url = "https://localhost:7246",
+         Description = "Local Development Server (HTTPS)"
+     });
+    
+     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+     {
+         Url = "http://localhost:5223",
+         Description = "Local Development Server (HTTP)"
+     });
 });
 
 
