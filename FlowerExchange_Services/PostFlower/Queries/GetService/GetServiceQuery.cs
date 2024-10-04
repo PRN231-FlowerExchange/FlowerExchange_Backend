@@ -1,4 +1,7 @@
-﻿using Domain.Entities;
+﻿using Application.PostFlower.DTOs;
+using Application.PostFlower.Services;
+using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -10,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace Application.PostFlower.Queries.GetService
 {
-    public class GetServiceQuery : IRequest<List<Service>>
+    public class GetServiceQuery : IRequest<List<ServiceViewDTO>>
     {
     }
 
-    public class GetServiceQueryHandle : IRequestHandler<GetServiceQuery, List<Service>>
+    public class GetServiceQueryHandle : IRequestHandler<GetServiceQuery, List<ServiceViewDTO>>
     {
         private IServiceRepository _serviceRepository;
 
@@ -26,21 +29,27 @@ namespace Application.PostFlower.Queries.GetService
             _logger = logger;
         }
 
-        public async Task<List<Service>> Handle(GetServiceQuery request, CancellationToken cancellationToken)
+        public async Task<List<ServiceViewDTO>> Handle(GetServiceQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                IEnumerable<Service> list = await _serviceRepository.GetAllAsync();
-                if (list == null)
+                var services = await _serviceRepository.GetAllAsync();
+
+                if (services == null || !services.Any())
                 {
-                    throw new Exception("service is null");
+                    throw new NotFoundException("No service found");
                 }
-                return list.ToList();
+
+                return ConvertFuction.ConvertListToList<ServiceViewDTO, Service>(services.ToList());
+            }
+            catch (NotFoundException ex)
+            {
+                throw ex;
             }
             catch (Exception e)
             {
-
-                throw e;
+                // Add additional context to the exception if needed, otherwise use "throw;" to preserve stack trace.
+                throw;
             }
         }
     }

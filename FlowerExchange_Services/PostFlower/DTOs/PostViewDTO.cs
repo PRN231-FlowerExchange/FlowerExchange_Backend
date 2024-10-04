@@ -39,17 +39,17 @@ namespace Application.PostFlower.DTOs
 
         public List<ReportModel> Reports { get; set; }
 
-        public Guid SellerId { get; set; }
+        //public Guid SellerId { get; set; }
 
         public UserModel Seller { get; set; }
 
-        public Guid StoreId { get; set; }
+        //public Guid StoreId { get; set; }
 
         public StoreModel Store { get; set; }
 
         public FlowerModel Flower { get; set; }
 
-        public List<PostServiceModel>? PostServices { get; set; }
+        //public List<PostServiceModel>? PostServices { get; set; }
 
         public int priority { get; set; } = 0;
     }

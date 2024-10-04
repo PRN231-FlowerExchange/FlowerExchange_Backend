@@ -1,4 +1,5 @@
-﻿using Application.PostFlower.Queries.GetService;
+﻿using Application.PostFlower.DTOs;
+using Application.PostFlower.Queries.GetService;
 using Application.Weather.Queries.GetWeather;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,7 @@ namespace Presentation.Controllers
     public class ServiceController : APIControllerBase
     {
         [HttpGet(Name = "all")]
-        public async Task<List<Service>> GetAll()
+        public async Task<List<ServiceViewDTO>> GetAll()
         {
             return await Mediator.Send(new GetServiceQuery());
         }
