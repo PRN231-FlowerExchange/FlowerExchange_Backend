@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - FlowerExchange
 on:
   push:
     branches:
-      - dev
+      - testdeploy
   workflow_dispatch:
 
 jobs:
@@ -24,14 +24,14 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/Presentation
+      - name: Publish Presentation project
+        run: dotnet publish FlowerExchange_API/Presentation.csproj -c Release -o "${{github.workspace}}/Presentation"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/Presentation
+          path: "${{github.workspace}}/Presentation"
 
   deploy:
     runs-on: windows-latest
