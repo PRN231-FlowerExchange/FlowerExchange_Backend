@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
-    [Route("api/")]
     [ApiController]
+    [Route("api/post")]
     public class PostController : APIControllerBase
     {
         private readonly ILogger<PostController> _logger;
@@ -24,10 +24,10 @@ namespace Presentation.Controllers
         //    return await Mediator.Send(command);
         //}
 
-        [HttpPost(Name = "post/updatepost")]
+        [HttpPut(Name = "update-post")]
         public async Task<PostUpdateDTO> UpdatePost([FromBody] UpdatePostCommand command) => await Mediator.Send(command);
 
-        [HttpPost(Name = "post")]
+        [HttpPost(Name = "get-post")]
         public async Task<List<PostViewDTO>> GetPost([FromBody] GetPostQuery query) => await Mediator.Send(query);
     }
 }
