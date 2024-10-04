@@ -60,7 +60,7 @@ builder.Services.AddSwaggerGen(c =>
      // Define multiple server URLs for Swagger
      c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
      {
-         Url = "https://flowerexchange.azurewebsites.net",
+         Url = "https://flowerexchange.azurewebsites.net/",
          Description = "Production Server (Azure)"
      });
     
