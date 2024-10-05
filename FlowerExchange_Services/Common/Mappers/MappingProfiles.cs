@@ -2,6 +2,7 @@
 
 
 
+using Application.Post.DTOs;
 using Application.SystemUser.DTOs;
 using Application.Weather.Commands.AddWeather;
 using Application.Weather.DTOs;
@@ -16,6 +17,8 @@ namespace Application.Common.Mappers
 
             CreateMap<User, UserModel>();
             CreateMap<WeatherForecastDTO, WeatherForecast>().ReverseMap();
+            CreateMap<Store, StoreDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap();
         }
     }
 }

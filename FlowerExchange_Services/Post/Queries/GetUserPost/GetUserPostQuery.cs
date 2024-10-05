@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Application.Post.DTOs;
+using AutoMapper;
+using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Models;
 using Domain.Repository;
@@ -7,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Globalization;
 
-public class GetUserPostQuery : IRequest<PagedList<Domain.Entities.Post>>
+public class GetUserPostQuery : IRequest<PagedList<PostDTO>>
 {
     public Guid UserId { get; set; }
     public PostParameters PostParameters { get; set; }
@@ -19,19 +21,22 @@ public class GetUserPostQuery : IRequest<PagedList<Domain.Entities.Post>>
     }
 }
 
-public class GetUserPostQueryHandler : IRequestHandler<GetUserPostQuery, PagedList<Domain.Entities.Post>>
+public class GetUserPostQueryHandler : IRequestHandler<GetUserPostQuery, PagedList<PostDTO>>
 {
     private Domain.Repository.IPostRepository _iPostRepository;
 
     private readonly ILogger<GetUserPostQueryHandler> _logger;
 
-    public GetUserPostQueryHandler(IPostRepository postRepository, ILogger<GetUserPostQueryHandler> logger)
+    private readonly IMapper _mapper;
+
+    public GetUserPostQueryHandler(IPostRepository postRepository, ILogger<GetUserPostQueryHandler> logger, IMapper mapper)
     {
         _iPostRepository = postRepository;
         _logger = logger;
+        _mapper = mapper;
     }
 
-    public async Task<PagedList<Domain.Entities.Post>> Handle(GetUserPostQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<PostDTO>> Handle(GetUserPostQuery request, CancellationToken cancellationToken)
     {
         var posts = await _iPostRepository.GetPostsByUserIdAsync(request.UserId, request.PostParameters);
 
@@ -42,6 +47,7 @@ public class GetUserPostQueryHandler : IRequestHandler<GetUserPostQuery, PagedLi
             _logger.LogWarning(errorMessage);
             throw new NotFoundException(errorMessage);
         }
-        return posts;
+        var response = _mapper.Map<PagedList<PostDTO>>(posts);
+        return new PagedList<PostDTO>(response, posts.TotalCount, posts.CurrentPage, posts.PageSize);
     }
 }
