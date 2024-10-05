@@ -32,7 +32,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins",
+    options.AddPolicy("AllowAnyOrigin",
         builder =>
         {
              builder.AllowAnyOrigin()
