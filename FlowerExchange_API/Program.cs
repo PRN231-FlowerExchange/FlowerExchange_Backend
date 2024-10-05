@@ -151,6 +151,9 @@ app.UseExceptionHandler(error =>
         var exception = (context.Features.Get<IExceptionHandlerFeature>()?.Error);
     });
 });
+
+app.UseCors("AllowAnyOrigin");
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
