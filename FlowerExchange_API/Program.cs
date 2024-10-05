@@ -1,9 +1,11 @@
 using Domain.Entities;
+using Domain.Repository;
 using Infrastructure.DateTimes;
 using Infrastructure.ExceptionHandlers;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
+using Persistence.RepositoryAdapter;
 using System.Configuration;
 using System.Reflection;
 
@@ -19,6 +21,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDateTimeProvider();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 builder.Services.AddApplicationServices();
 

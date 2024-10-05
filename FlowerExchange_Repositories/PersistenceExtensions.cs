@@ -33,7 +33,6 @@ public static class PersistenceExtensions
             .AddRepositories();
 
          services.AddScoped<FlowerExchangeDbContextInitialiser>();
-
         return services;
     }
 
@@ -42,7 +41,9 @@ public static class PersistenceExtensions
     {
         services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>))
                 .AddScoped(typeof(IUserRepository), typeof(UserRepository))
+                .AddScoped<IPostRepository, PostRepository>()
                 .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
+
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
         //var assembly = Assembly.GetExecutingAssembly(); // or specify the assembly if different

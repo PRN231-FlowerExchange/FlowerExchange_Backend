@@ -22,7 +22,6 @@
     <Folder Include="Category\Services\" />
     <Folder Include="Common\Services\" />
     <Folder Include="Post\Commands\" />
-    <Folder Include="Post\Queries\" />
     <Folder Include="Post\Services\" />
     <Folder Include="Report\Commands\" />
     <Folder Include="Report\Queries\" />
