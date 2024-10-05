@@ -9,28 +9,28 @@ using System.Threading.Tasks;
 
 namespace Domain.Commons.BaseEntities
 {
-    public abstract class BaseEntity<TEntity, TKey> : ITrackable    {
+    public abstract class BaseEntity<TEntity, TKey> : ITrackable, IEntityWitkKey<TKey>
+    {
         //Domain Key
         [Key]
         public TKey Id { get; set; } = default!;
 
         //Domain Auditatable
         [Timestamp]
-        [NotMapped]
-        public byte[] RowVersion { get; set; } = default!;
+        public virtual string? ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
 
-        public DateTimeOffset? CreatedAt { get; set; }
+        public virtual DateTimeOffset? CreatedAt { get; set; }
 
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public virtual DateTimeOffset? UpdatedAt { get; set; }
 
-        public Guid? createById { get; set; }    
+        public virtual Guid? createById { get; set; }    
 
-        public Guid? updateById { get; set; }
-
-        [NotMapped]
-        public User? CreatedBy { get; set; }
+        public virtual Guid? updateById { get; set; }
 
         [NotMapped]
-        public User? UpdatedBy { get; set; }
+        public virtual User? CreatedBy { get; set; }
+
+        [NotMapped]
+        public virtual User? UpdatedBy { get; set; }
     }
 }

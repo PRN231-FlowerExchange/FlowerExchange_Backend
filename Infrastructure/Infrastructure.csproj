@@ -16,9 +16,4 @@
     <ProjectReference Include="..\FlowerExchange_Services\Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Security\Identity\" />
-    <Folder Include="Security\IdentityProvider\" />
-  </ItemGroup>
-
 </Project>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Commons.BaseRepositories
 {
-    public interface IRepositoryBase<TEntity, Tkey> where TEntity : BaseEntity<TEntity, Tkey>
+    public interface IRepositoryBase<TEntity, Tkey> where TEntity : class, IEntityWitkKey<Tkey>
     {
         public Task<TEntity> FindAsync(Func<TEntity, bool> predicate);
         public Task<TEntity> FindByConditionAsync(Expression<Func<TEntity, bool>> predicate);
