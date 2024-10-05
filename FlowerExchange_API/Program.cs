@@ -35,7 +35,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         builder =>
         {
-            builder.WithOrigins("https://flowerexchange.azurewebsites.net")
+             builder.AllowAnyOrigin()
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
