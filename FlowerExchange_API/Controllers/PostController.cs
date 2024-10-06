@@ -4,6 +4,9 @@ using Application.PostFlower.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Application.PostFlower.Queries.GetPostService;
+using Domain.Entities;
+using Application.PostFlower.Commands.AddServiceToPostCommand;
 
 namespace Presentation.Controllers
 {
@@ -28,5 +31,11 @@ namespace Presentation.Controllers
 
         [HttpPost(Name = "get-post")]
         public async Task<List<PostViewDTO>> GetPost([FromBody] GetPostQuery query) => await Mediator.Send(query);
+
+        [HttpPut(Name = "")]
+        public async Task<Post> AddServiceToPost([FromBody] AddServiceToPostCommand command)
+        {
+            return await Mediator.Send(command);
+        }
     }
 }
