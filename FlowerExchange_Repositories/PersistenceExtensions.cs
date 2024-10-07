@@ -42,7 +42,9 @@ public static class PersistenceExtensions
     {
         services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>))
                 .AddScoped(typeof(IUserRepository), typeof(UserRepository))
-                .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
+                .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository))
+                .AddScoped(typeof(IPostRepository), typeof(PostRepository))
+                .AddScoped(typeof(IFlowerRepository), typeof(FlowerRepository));
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
         //var assembly = Assembly.GetExecutingAssembly(); // or specify the assembly if different
