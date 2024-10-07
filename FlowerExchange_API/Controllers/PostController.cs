@@ -14,28 +14,19 @@ namespace Presentation.Controllers
     [Route("api/post")]
     public class PostController : APIControllerBase
     {
-        private readonly ILogger<PostController> _logger;
-
-        public PostController(ILogger<PostController> logger)
-        {
-            _logger = logger;
-        }
-
-        //[HttpPost(Name = "post")]
-        //public async Task<UpdatePostDTO> UpdatePost([FromBody] UpdatePostCommand command)
-        //{
-        //    return await Mediator.Send(command);
-        //}
-        [HttpPut(Name = "update-post")]
+        // Changed route for UpdatePost to avoid conflict
+        [HttpPut("update")]
         public async Task<PostUpdateDTO> UpdatePost([FromBody] UpdatePostCommand command) => await Mediator.Send(command);
 
-        [HttpPost(Name = "get-post")]
-        public async Task<List<PostViewDTO>> GetPost([FromBody] GetPostQuery query) => await Mediator.Send(query);
-
-        [HttpPut(Name = "")]
+        // AddPostToService endpoint should have a unique name
+        [HttpPut("add-service")]
         public async Task<Post> AddServiceToPost([FromBody] AddServiceToPostCommand command)
         {
             return await Mediator.Send(command);
         }
+
+        // Kept GetPost as POST with its own path
+        [HttpPost("get")]
+        public async Task<List<PostViewDTO>> GetPost([FromBody] GetPostQuery query) => await Mediator.Send(query);
     }
 }

@@ -13,13 +13,13 @@ namespace Presentation.Controllers
     [ApiController]
     public class ServiceController : APIControllerBase
     {
-        [HttpGet(Name = "all")]
+        [HttpGet(Name = "get-all")]
         public async Task<List<ServiceViewDTO>> GetAll()
         {
             return await Mediator.Send(new GetServiceQuery());
         }
 
-        [HttpPost(Name = "")]
+        [HttpPost(Name = "get-service")]
         public async Task<List<PostService>> GetPostServiceByPostId([FromBody]GetPostServiceByPostIdQuery query)
         {
             return await Mediator.Send(query);
