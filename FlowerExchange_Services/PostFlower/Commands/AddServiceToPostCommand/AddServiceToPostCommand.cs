@@ -6,6 +6,7 @@ using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
+using Microsoft.EntityFrameworkCore.Storage;
 using Persistence;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,7 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
 
         public async Task<PostViewDTO> Handle(AddServiceToPostCommand request, CancellationToken cancellationToken)
         {
+            // Fetch the post
             Post post = await _postRepository.GetByIdAsync(request.Post.Id);
 
             if (post == null)
@@ -53,15 +55,25 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                 throw new NotFoundException("Post not found");
             }
 
+            double totalPrice = 0;
             List<PostService> listPostService = new List<PostService>();
+
+            // Iterate through requested services
             foreach (ServiceViewDTO serviceDTO in request.ListService)
             {
+                // Fetch the service entity
                 Service serviceEntity = await _serviceRepository.GetByIdAsync(serviceDTO.Id);
 
-                if (serviceEntity == null) {
+                // Check if service exists before calculating total price
+                if (serviceEntity == null)
+                {
                     throw new NotFoundException("Service not found");
                 }
 
+                // Calculate the total price for the services
+                totalPrice += serviceEntity.Price * request.ServiceDay;
+
+                // Create a new PostService entry
                 PostService postService = new PostService
                 {
                     PostId = request.Post.Id,
@@ -72,17 +84,26 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                     ExpiredAt = DateTime.UtcNow.AddDays(request.ServiceDay),
                 };
                 listPostService.Add(postService);
-
-                // Await asynchronous call
-                await _postServiceRepository.InsertAsync(postService);
             }
 
-            //post.PostServices = listPostService;
+            // Check if the user has enough money in the wallet (implement wallet logic)
+            bool hasEnoughMoney = true; // Replace with actual wallet balance check
+            if (!hasEnoughMoney)
+            {
+                throw new Exception("Not enough money to pay");
+            }
 
-            return CovertPostToView(await _postRepository.GetByIdAsync(post.Id));
+            if (listPostService == null || !listPostService.Any())
+            {
+                throw new Exception("No services to insert for the post.");
+            }
+            await _postServiceRepository.InsertRangeAsync(listPostService);
+
+            // Return the updated post as a DTO
+            return ConvertPostToView(await _postRepository.GetByIdAsync(post.Id));
         }
 
-        private PostViewDTO CovertPostToView(Post source)
+        private PostViewDTO ConvertPostToView(Post source)
         {
             return ConvertFuction.ConvertObjectToObject<PostViewDTO, Post>(source);
         }
