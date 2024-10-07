@@ -11,6 +11,22 @@ namespace Persistence.RepositoryAdapter
         {
         }
 
+        public async Task DeleteRangeAsync(List<PostService> entityList)
+        {
+            try
+            {
+                if (entityList == null)
+                    throw new ArgumentNullException(nameof(entityList));
+                if (entityList.Any())
+                    _dbContext.RemoveRange(entityList);
+
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                throw new Exception("Fail", dbEx);
+            }
+        }
+
         public async Task<IEnumerable<PostService>> GetByPostIdAsync(Guid postId)
         {
             return _dbContext.PostServices.Where(p => p.PostId.Equals(postId));

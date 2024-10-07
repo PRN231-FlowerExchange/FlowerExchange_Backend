@@ -10,6 +10,7 @@ namespace Domain.Repository
 {
     public interface IPostServiceRepository : IRepositoryBase<PostService, Guid>
     {
+        Task DeleteRangeAsync(List<PostService> entityList);
         Task<IEnumerable<PostService>> GetByPostIdAsync(Guid postId);
         Task InsertRangeAsync(List<PostService> listPostService);
     }

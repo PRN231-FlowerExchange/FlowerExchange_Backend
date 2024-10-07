@@ -93,11 +93,19 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                 throw new Exception("Not enough money to pay");
             }
 
+            List<PostService> entityList = (List<PostService>)await _postServiceRepository.GetByPostIdAsync(serviceDTO.Id);
+            if (entityList.Any())
+            {
+                await _postServiceRepository.DeleteRangeAsync(entityList);
+            }
+
             if (listPostService == null || !listPostService.Any())
             {
                 throw new Exception("No services to insert for the post.");
             }
+
             await _postServiceRepository.InsertRangeAsync(listPostService);
+            await _unitOfWork.SaveChangesAsync();
 
             // Return the updated post as a DTO
             return ConvertPostToView(await _postRepository.GetByIdAsync(post.Id));
