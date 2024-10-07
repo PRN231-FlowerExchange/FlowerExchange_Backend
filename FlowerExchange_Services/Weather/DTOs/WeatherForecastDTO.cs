@@ -13,5 +13,6 @@ namespace Application.Weather.DTOs
         public int TemperatureC { get; set; }
 
         public string? Summary { get; set; }
+ 
     }
 }

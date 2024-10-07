@@ -1,40 +1,42 @@
 ﻿using Domain.Commons.BaseEntities;
 using Domain.Constants.Enums;
-using Domain.Security.IdentityProvider;
-using System;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Domain.Entities
 {
 
-    public class User : BaseEntity<User, Guid>
+    public class User : IdentityUser<Guid>, IEntityWitkKey<Guid>
     {
-        public string Username { get; set; }
+        //Domain Key
+        [Key]
+        public override Guid Id { get; set; } = default!;
 
-        public string Password { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
-        public string Fullname { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
-        public string RefreshToken { get; set; }
+        public Guid? createById { get; set; }
 
-        public LoginType LoginType { get; set; }
+        public Guid? updateById { get; set; }
 
-        public string Email { get; set; }
+        [NotMapped]
+        public User? CreatedBy { get; set; }
 
-        public string PhoneNumber { get; set; }
+        [NotMapped]
+        public User? UpdatedBy { get; set; }
 
-        public string ProfilePictureUrl { get; set; }
+        public string? Fullname { get; set; }
 
-        public UserStatus Status { get; set; }
+        public string? RefreshToken { get; set; }
 
-        public DateTime LastLogin { get; set; }
+        public string? ProfilePictureUrl { get; set; }
 
-        public Role Role { get; set; }
+        public UserStatus? Status { get; set; } = UserStatus.Active;
+
+        public DateTime? LastLogin { get; set; }
 
         public virtual Store? Store { get; set; }
 
@@ -53,6 +55,15 @@ namespace Domain.Entities
         public virtual ICollection<FlowerOrder>? SellOrders { get; set; }
 
         public virtual ICollection<Report>? Reports { get; set; }
+
+        public virtual ICollection<IdentityUserClaim<Guid>> Claims { get; set; }
+
+        public virtual ICollection<IdentityUserLogin<Guid>> Logins { get; set; }
+
+        public virtual ICollection<IdentityUserToken<Guid>> Tokens { get; set; }
+
+        public virtual ICollection<IdentityUserRole<Guid>> UserRoles { get; set;}
+
 
     }
 }

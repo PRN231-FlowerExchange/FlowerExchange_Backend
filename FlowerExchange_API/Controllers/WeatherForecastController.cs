@@ -1,13 +1,14 @@
 using Application.Weather.Commands.AddWeather;
 using Application.Weather.Queries.GetWeather;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation;
 
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("weather-forecast")]
     public class WeatherForecastController : APIControllerBase
     {
         private readonly ILogger<WeatherForecastController> _logger;
@@ -17,13 +18,21 @@ namespace Presentation.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "weathr-forecast/all")]
+       
+        [Authorize]
+        [HttpGet("require-authorize")]
         public async Task<List<WeatherForecast>> GetAll()
         {
             return await Mediator.Send(new GetallWeatherForecastQuery());
         }
 
-        [HttpPost(Name = "weathr-forecast")]
+        [HttpGet("no-authorize")]
+        public async Task<List<WeatherForecast>> GetAllFree()
+        {
+            return await Mediator.Send(new GetallWeatherForecastQuery());
+        }
+
+        [HttpPost]
         public async Task<WeatherForecast> AddNew([FromBody] AddWeatherCommand command)
         {
             return await Mediator.Send(command);

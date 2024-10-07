@@ -1,5 +1,7 @@
 ﻿using Domain.Commons.BaseRepositories;
+using Domain.Entities;
 using Domain.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -25,14 +27,16 @@ public static class PersistenceExtensions
                }
            });
 
+            options.UseLazyLoadingProxies();
             // Add the interceptor to the DbContext
             options.AddInterceptors(serviceProvider.GetServices<AuditableEntityInterceptor>());
-
         })
             .AddDbContext<FlowerExchangeDbContext>((Action<DbContextOptionsBuilder>)null, ServiceLifetime.Scoped)
             .AddRepositories();
 
-         services.AddScoped<FlowerExchangeDbContextInitialiser>();
+        services.AddScoped<FlowerExchangeDbContextInitialiser>();
+
+ 
 
         return services;
     }
@@ -45,6 +49,7 @@ public static class PersistenceExtensions
                 .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository))
                 .AddScoped(typeof(IPostRepository), typeof(PostRepository))
                 .AddScoped(typeof(IFlowerRepository), typeof(FlowerRepository));
+
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
         //var assembly = Assembly.GetExecutingAssembly(); // or specify the assembly if different

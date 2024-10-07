@@ -9,7 +9,7 @@ namespace Domain.Commons.BaseEntities
 {
     public interface ITrackable
     {
-        byte[] RowVersion { get; set; }
+        string ConcurrencyStamp { get; set; }
 
         DateTimeOffset? CreatedAt { get; set; }
 

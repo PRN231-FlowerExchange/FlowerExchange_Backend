@@ -9,16 +9,18 @@ namespace Domain.Security.IdentityProvider
 {
     public interface IIdentityProvider
     {
-        Task<IList<IUserAccount>> GetUsersAsync();
+        Task<IList<User>> GetUsersAsync();
 
-        Task<IUserAccount> GetUserById(string userId);
+        Task<User> GetUserById(string userId);
 
-        Task<IUserAccount> GetUserByUsernameAsync(string username);
+        Task<User> GetUserByUsernameAsync(string username);
 
-        Task CreateUserAsync(IUserAccount user);
+        Task CreateUserAsync(User user);
 
-        Task UpdateUserAsync(string userId, IUserAccount user);
+        Task UpdateUserAsync(string userId, User user);
 
         Task DeleteUserAsync(string userId);
+
+        
     }
 }
