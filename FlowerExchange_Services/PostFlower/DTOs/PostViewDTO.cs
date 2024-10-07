@@ -49,7 +49,7 @@ namespace Application.PostFlower.DTOs
 
         public FlowerModel Flower { get; set; }
 
-        //public List<PostServiceModel>? PostServices { get; set; }
+        public List<PostServiceModel>? PostServices { get; set; }
 
         public int priority { get; set; } = 0;
     }

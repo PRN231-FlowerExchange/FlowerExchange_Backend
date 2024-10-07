@@ -2,6 +2,7 @@
 using Application.PostFlower.Services;
 using AutoMapper;
 using Domain.Commons.BaseRepositories;
+using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
@@ -71,9 +72,9 @@ namespace Application.PostFlower.Commands.UpdatePostCommand
             return request.UpdatePost;
         }
 
-        private Domain.Entities.Post CovertUpdatePostDTOToPost(PostUpdateDTO source)
+        private Post CovertUpdatePostDTOToPost(PostUpdateDTO source)
         {
-            return ConvertFuction.ConvertObjectToObject<Domain.Entities.Post, PostUpdateDTO>(source);
+            return ConvertFuction.ConvertObjectToObject<Post, PostUpdateDTO>(source);
         }
     }
 }

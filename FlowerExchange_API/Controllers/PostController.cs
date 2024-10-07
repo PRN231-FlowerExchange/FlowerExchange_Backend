@@ -20,7 +20,7 @@ namespace Presentation.Controllers
 
         // AddPostToService endpoint should have a unique name
         [HttpPut("add-service")]
-        public async Task<Post> AddServiceToPost([FromBody] AddServiceToPostCommand command)
+        public async Task<PostViewDTO> AddServiceToPost([FromBody] AddServiceToPostCommand command)
         {
             return await Mediator.Send(command);
         }
