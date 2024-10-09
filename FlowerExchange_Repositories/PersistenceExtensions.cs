@@ -46,6 +46,7 @@ public static class PersistenceExtensions
 
                 .AddScoped(typeof(IUserRepository), typeof(UserRepository))
                 .AddScoped<IPostRepository, PostRepository>()
+                .AddScoped<IWalletTransactionRepository, WalletTransactionRepository>()
                 .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
 
 

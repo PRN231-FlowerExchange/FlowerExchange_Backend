@@ -17,7 +17,7 @@ namespace Application.Post.Queries.GetDetailPost
         public Guid Id { get; set; }
         public GetDetailPostQuery(Guid id)
         {
-            Id = id;  // Gán `Id` từ constructor
+            Id = id;
         }
     }
 
