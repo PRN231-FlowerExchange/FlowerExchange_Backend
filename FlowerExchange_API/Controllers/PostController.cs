@@ -1,17 +1,23 @@
-﻿using Application.Post.Queries.GetDetailPost;
+using Application.Post.Queries.GetDetailPost;
 using Domain.Entities;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-
+using Application.Post.Commands.CreatePost;
+using Application.Post.DTOs;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using DomainEntities = Domain.Entities; // Tạo bí danh cho namespace Domain.Entities
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PostController : APIControllerBase
     {
         private readonly ILogger<PostController> _logger;
-        public PostController(ILogger<PostController> logger)
+        private readonly IMediator _mediator;
+        public PostController(ILogger<PostController> logger, IMediator mediator)
         {
             _logger = logger;
         }
@@ -52,6 +58,13 @@ namespace Presentation.Controllers
                 return StatusCode(500, new { message = "An unexpected error occurred.", details = ex.Message });
             }
         }
-
+        
+        [HttpPost]
+        public async Task<IActionResult> CreatePost([FromBody] CreatePostDTO createPostDTO)
+        {
+            var command = new CreatePostCommand(createPostDTO);
+            Guid result = await _mediator.Send(command);
+            return Ok(new { postId=result});
+        }
     }
 }

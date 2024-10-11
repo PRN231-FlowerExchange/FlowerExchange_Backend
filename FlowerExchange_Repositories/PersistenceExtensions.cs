@@ -56,6 +56,10 @@ public static class PersistenceExtensions
         //.AddScoped(typeof(IRoleRepository), typeof(RoleRepository))
         //.AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
 
+                .AddScoped(typeof(IUserRepository), typeof(UserRepository))
+                .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository))
+                .AddScoped(typeof(IPostRepository), typeof(PostRepository))
+                .AddScoped(typeof(IFlowerRepository), typeof(FlowerRepository));
 
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
