@@ -29,18 +29,28 @@ builder.Services.AddHttpContextAccessor();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+<<<<<<< HEAD
+=======
 
+>>>>>>> f62896daaa3ce195b66c5bbab5b2d56d29a6a482
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",
         builder =>
         {
+<<<<<<< HEAD
+            builder.AllowAnyOrigin()
+=======
              builder.AllowAnyOrigin()
+>>>>>>> f62896daaa3ce195b66c5bbab5b2d56d29a6a482
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
 });
+<<<<<<< HEAD
+=======
 
+>>>>>>> f62896daaa3ce195b66c5bbab5b2d56d29a6a482
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -69,6 +79,26 @@ builder.Services.AddSwaggerGen(c =>
             new List<string>()
         }
     });
+<<<<<<< HEAD
+    // Define multiple server URLs for Swagger
+    c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    {
+        Url = "https://flowerexchange.azurewebsites.net",
+        Description = "Production Server (Azure)"
+    });
+
+    c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    {
+        Url = "https://localhost:7246",
+        Description = "Local Development Server (HTTPS)"
+    });
+
+    c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    {
+        Url = "http://localhost:5223",
+        Description = "Local Development Server (HTTP)"
+    });
+=======
      // Define multiple server URLs for Swagger
      c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
      {
@@ -87,6 +117,7 @@ builder.Services.AddSwaggerGen(c =>
          Url = "http://localhost:5223",
          Description = "Local Development Server (HTTP)"
      });
+>>>>>>> f62896daaa3ce195b66c5bbab5b2d56d29a6a482
 });
 
 

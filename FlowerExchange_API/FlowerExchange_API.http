@@ -1,6 +1,6 @@
-@FlowerExchange_API_HostAddress = http://localhost:5223
+@FlowerExchange_API_HostAddress = https://flowerexchange.azurewebsites.net
 
-GET {{FlowerExchange_API_HostAddress}}/weatherforecast/
+GET {{FlowerExchange_API_HostAddress}}/weather-forecast/no-authorize
 Accept: application/json
 
 ###
