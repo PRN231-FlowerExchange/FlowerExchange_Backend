@@ -22,8 +22,8 @@ namespace Persistence
         {
             optionsBuilder
             //.UseLazyLoadingProxies()
-            //.UseNpgsql(this.GetConnectionString());
-            .UseNpgsql("Host=localhost; Database=flowerexchangedb; Username=postgres; Password=hanh3533.");
+            .UseNpgsql(this.GetConnectionString());
+            //.UseNpgsql("Host=localhost; Database=flowerexchangedb; Username=postgres; Password=hanh3533.");
 
         }
 
