@@ -1,9 +1,5 @@
 using Domain.Constants.Enums;
 using Domain.Entities;
-<<<<<<< HEAD
-using Domain.Repository;
-=======
->>>>>>> 316c98c49668c567b398f7f35aca1d7b212b5c81
 using Domain.FirebaseStorage;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
@@ -18,14 +14,8 @@ using Newtonsoft.Json;
 using Infrastructure.Security.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Persistence;
-<<<<<<< HEAD
-using Persistence.RepositoryAdapter;
-using System.Configuration;
-using Presentation.OptionsSetup;
-=======
 using Presentation.OptionsSetup;
 
->>>>>>> 316c98c49668c567b398f7f35aca1d7b212b5c81
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,92 +29,21 @@ builder.Services.AddHttpContextAccessor();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-<<<<<<< HEAD
+
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",
         builder =>
         {
-             builder.AllowAnyOrigin()
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
-        });
-});
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: 'Bearer 12345abcdef'",
-    });
-    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
-    {
-        {
-            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-            {
-                Reference = new Microsoft.OpenApi.Models.OpenApiReference
-                {
-                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                },
-                Scheme = "oauth2",
-                Name = "Bearer",
-                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-            },
-            new List<string>()
-        }
-    });
-     // Define multiple server URLs for Swagger
-     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-     {
-         Url = "https://flowerexchange.azurewebsites.net/",
-         Description = "Production Server (Azure)"
-     });
-    
-     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-     {
-         Url = "https://localhost:7246",
-         Description = "Local Development Server (HTTPS)"
-     });
-    
-     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-     {
-         Url = "http://localhost:5223",
-         Description = "Local Development Server (HTTP)"
-     });
-});
-
-
-
-=======
-<<<<<<< HEAD
-=======
-
->>>>>>> f62896daaa3ce195b66c5bbab5b2d56d29a6a482
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin",
-        builder =>
-        {
-<<<<<<< HEAD
             builder.AllowAnyOrigin()
-=======
-             builder.AllowAnyOrigin()
->>>>>>> f62896daaa3ce195b66c5bbab5b2d56d29a6a482
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
         });
 });
-<<<<<<< HEAD
-=======
 
->>>>>>> f62896daaa3ce195b66c5bbab5b2d56d29a6a482
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -153,11 +72,11 @@ builder.Services.AddSwaggerGen(c =>
             new List<string>()
         }
     });
-<<<<<<< HEAD
+
     // Define multiple server URLs for Swagger
     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
     {
-        Url = "https://flowerexchange.azurewebsites.net",
+        Url = "https://flowerexchange.azurewebsites.net/",
         Description = "Production Server (Azure)"
     });
 
@@ -172,31 +91,10 @@ builder.Services.AddSwaggerGen(c =>
         Url = "http://localhost:5223",
         Description = "Local Development Server (HTTP)"
     });
-=======
-     // Define multiple server URLs for Swagger
-     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-     {
-         Url = "https://flowerexchange.azurewebsites.net/",
-         Description = "Production Server (Azure)"
-     });
-    
-     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-     {
-         Url = "https://localhost:7246",
-         Description = "Local Development Server (HTTPS)"
-     });
-    
-     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-     {
-         Url = "http://localhost:5223",
-         Description = "Local Development Server (HTTP)"
-     });
->>>>>>> f62896daaa3ce195b66c5bbab5b2d56d29a6a482
 });
 
 
 
->>>>>>> 316c98c49668c567b398f7f35aca1d7b212b5c81
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 string connectionString = builder.Configuration.GetConnectionString("FlowerExchangeDB") ?? throw new ArgumentNullException("NUL CONECTION");
@@ -242,11 +140,11 @@ InitialiserExtensions.InitialiseDatabaseAsync(app);
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{ 
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
-    });
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
+});
 //}
 
 app.UseExceptionHandler(error =>

@@ -35,11 +35,8 @@ public static class PersistenceExtensions
             .AddRepositories();
 
         services.AddScoped<FlowerExchangeDbContextInitialiser>();
-<<<<<<< HEAD
-=======
 
- 
->>>>>>> 316c98c49668c567b398f7f35aca1d7b212b5c81
+
 
         return services;
     }
@@ -48,7 +45,6 @@ public static class PersistenceExtensions
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>))
-<<<<<<< HEAD
 
                 .AddScoped(typeof(IUserRepository), typeof(UserRepository))
                 .AddScoped<IPostRepository, PostRepository>()
@@ -56,17 +52,11 @@ public static class PersistenceExtensions
                 .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
 
 
-                //.AddScoped(typeof(IUserRepository), typeof(UserRepository))
-                //.AddScoped(typeof(IRoleRepository), typeof(RoleRepository))
-                //.AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
-                
+        //.AddScoped(typeof(IUserRepository), typeof(UserRepository))
+        //.AddScoped(typeof(IRoleRepository), typeof(RoleRepository))
+        //.AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
 
-=======
-                //.AddScoped(typeof(IUserRepository), typeof(UserRepository))
-                //.AddScoped(typeof(IRoleRepository), typeof(RoleRepository))
-                .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
-                
->>>>>>> 316c98c49668c567b398f7f35aca1d7b212b5c81
+
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
         //var assembly = Assembly.GetExecutingAssembly(); // or specify the assembly if different
