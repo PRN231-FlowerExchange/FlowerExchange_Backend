@@ -11,6 +11,15 @@
       "applicationUrl": "http://localhost:5223"
     },
     "https": {
+<<<<<<< HEAD
+        "commandName": "Project",
+        "launchBrowser": true,
+        "launchUrl": "swagger",
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "dotnetRunMessages": true,
+=======
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -18,6 +27,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
+<<<<<<< HEAD
+=======
+>>>>>>> f62896daaa3ce195b66c5bbab5b2d56d29a6a482
+>>>>>>> 316c98c49668c567b398f7f35aca1d7b212b5c81
         "applicationUrl": "https://localhost:7246;http://localhost:5223;https://flowerexchange.azurewebsites.net"
     },
     "IIS Express": {
