@@ -12,5 +12,6 @@ namespace Domain.Repository
     public interface IPostRepository : IRepositoryBase<Post, Guid>
     {
         Task<PagedList<Post>> GetPostsByUserIdAsync(Guid userId, PostParameters postParameters);
+        Task<Post> GetPostsByIdAsync(Guid id);
     }
 }

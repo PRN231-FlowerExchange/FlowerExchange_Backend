@@ -6,6 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Text;
 using System.Linq.Dynamic.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Persistence.RepositoryAdapter
 {
@@ -24,12 +28,29 @@ namespace Persistence.RepositoryAdapter
             {
                 var query = _context.Posts
                     .Include(c => c.Store)
+                    //.Include(c => c.Flower)
                     .Where(post => post.StoreId == userId);
 
                 SearchByName(ref query, postParameters.Title);
                 ApplySort(ref query, postParameters.OrderBy);
 
                 return await PagedList<Post>.ToPagedList(query, postParameters.PageNumber, postParameters.PageSize);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception here if necessary
+                throw;
+            }
+        }
+
+        public async Task<Post> GetPostsByIdAsync(Guid id)
+        {
+            try
+            {
+                return _context.Posts
+                    .Include(c => c.Store)
+                    .Include(c => c.Flower)
+                    .FirstOrDefault(post => post.Id == id);
             }
             catch (Exception ex)
             {

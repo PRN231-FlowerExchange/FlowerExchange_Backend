@@ -40,10 +40,12 @@ namespace Application.Post.DTOs
 
         public Guid? StoreId { get; set; }
 
-        public virtual StoreDTO? Store { get; set; }
+        //public virtual StoreDTO? Store { get; set; }
 
         //public virtual Flower Flower { get; set; }
 
         //public virtual ICollection<PostService>? PostServices { get; set; }
+        public StoreDTO Store { get; set; }
+        public FlowerDTO Flower { get; set; }
     }
 }
