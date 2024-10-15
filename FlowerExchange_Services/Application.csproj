@@ -20,6 +20,7 @@
     <Folder Include="Category\Queries\" />
     <Folder Include="Category\Services\" />
     <Folder Include="Common\Services\" />
+    <Folder Include="Post\Commands\" />
     <Folder Include="Post\Queries\" />
     <Folder Include="Post\Services\" />
     <Folder Include="Report\Commands\" />
@@ -47,7 +48,6 @@
     <Folder Include="UserApplication\Queries\" />
     <Folder Include="UserApplication\Services\" />
     <Folder Include="Wallet\Commands\" />
-    <Folder Include="Wallet\Queries\" />
     <Folder Include="Wallet\Services\" />
     <Folder Include="SystemUser\Commands\" />
     <Folder Include="SystemUser\Services\" />

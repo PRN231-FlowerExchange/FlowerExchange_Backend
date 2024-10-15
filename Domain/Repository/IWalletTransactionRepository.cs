@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Repository
 {
-    public interface IPostRepository : IRepositoryBase<Post, Guid>
+    public interface IWalletTransactionRepository : IRepositoryBase<WalletTransaction, Guid>
     {
-        Task<PagedList<Post>> GetPostsByUserIdAsync(Guid userId, PostParameters postParameters);
-        Task<Post> GetPostsByIdAsync(Guid id);
+        Task<PagedList<WalletTransaction>> GetAllWalletTransactionAsync(WalletTransactionParameter walletTransactionParameter);
     }
 }

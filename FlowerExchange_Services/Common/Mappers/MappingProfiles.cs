@@ -18,8 +18,10 @@ namespace Application.Common.Mappers
 
             CreateMap<User, UserModel>();
             CreateMap<WeatherForecastDTO, WeatherForecast>().ReverseMap();
+            CreateMap<Store, StoreDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap() ;
             CreateMap<CreatePostDTO, DomainEntities.Post>();
-            CreateMap<FlowerDTO, Flower>();
+            CreateMap<FlowerDTO, Flower>().ReverseMap();
         }
     }
 }

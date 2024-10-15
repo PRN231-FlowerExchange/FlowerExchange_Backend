@@ -37,9 +37,9 @@ builder.Services.AddCors(options =>
         builder =>
         {
 
-             builder.AllowAnyOrigin()
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
+            builder.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
         });
 });
 
@@ -73,24 +73,24 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 
-     // Define multiple server URLs for Swagger
-     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-     {
-         Url = "https://flowerexchange.azurewebsites.net/",
-         Description = "Production Server (Azure)"
-     });
-    
-     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-     {
-         Url = "https://localhost:7246",
-         Description = "Local Development Server (HTTPS)"
-     });
-    
-     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-     {
-         Url = "http://localhost:5223",
-         Description = "Local Development Server (HTTP)"
-     });
+    // Define multiple server URLs for Swagger
+    c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    {
+        Url = "https://flowerexchange.azurewebsites.net/",
+        Description = "Production Server (Azure)"
+    });
+
+    c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    {
+        Url = "https://localhost:7246",
+        Description = "Local Development Server (HTTPS)"
+    });
+
+    c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    {
+        Url = "http://localhost:5223",
+        Description = "Local Development Server (HTTP)"
+    });
 });
 
 
@@ -140,11 +140,11 @@ InitialiserExtensions.InitialiseDatabaseAsync(app);
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{ 
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
-    });
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
+});
 //}
 
 app.UseExceptionHandler(error =>
