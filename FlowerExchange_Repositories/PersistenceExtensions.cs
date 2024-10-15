@@ -36,7 +36,7 @@ public static class PersistenceExtensions
 
         services.AddScoped<FlowerExchangeDbContextInitialiser>();
 
- 
+
 
         return services;
     }
@@ -51,7 +51,19 @@ public static class PersistenceExtensions
                 .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository))
                 .AddScoped(typeof(IPostRepository), typeof(PostRepossitory))
                 .AddScoped(typeof(IPostServiceRepository), typeof(PostServiceRepository))
-                .AddScoped(typeof(IServiceRepository), typeof(ServiceRepository));
+                .AddScoped(typeof(IServiceRepository), typeof(ServiceRepository))
+                .AddScoped(typeof(IUserRepository), typeof(UserRepository))
+                .AddScoped<IPostRepository, PostRepossitory>()
+                .AddScoped<IWalletTransactionRepository, WalletTransactionRepository>()
+                .AddScoped(typeof(IFlowerRepository), typeof(FlowerRepository))
+                .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
+
+
+        //.AddScoped(typeof(IUserRepository), typeof(UserRepository))
+        //.AddScoped(typeof(IRoleRepository), typeof(RoleRepository))
+        //.AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
+
+               
 
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
