@@ -29,6 +29,21 @@ builder.Services.AddHttpContextAccessor();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin",
+        builder =>
+        {
+
+            builder.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -56,6 +71,25 @@ builder.Services.AddSwaggerGen(c =>
             },
             new List<string>()
         }
+    });
+
+    // Define multiple server URLs for Swagger
+    c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    {
+        Url = "https://flowerexchange.azurewebsites.net/",
+        Description = "Production Server (Azure)"
+    });
+
+    c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    {
+        Url = "https://localhost:7246",
+        Description = "Local Development Server (HTTPS)"
+    });
+
+    c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    {
+        Url = "http://localhost:5223",
+        Description = "Local Development Server (HTTP)"
     });
 });
 
@@ -104,14 +138,14 @@ var app = builder.Build();
 InitialiserExtensions.InitialiseDatabaseAsync(app);
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
+//{ 
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
+});
+//}
 
 app.UseExceptionHandler(error =>
 {
@@ -121,6 +155,9 @@ app.UseExceptionHandler(error =>
         var exception = (context.Features.Get<IExceptionHandlerFeature>()?.Error);
     });
 });
+
+app.UseCors("AllowAnyOrigin");
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
