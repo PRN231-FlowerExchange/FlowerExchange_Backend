@@ -22,6 +22,7 @@ namespace Application.Common.Mappers
             CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap() ;
             CreateMap<CreatePostDTO, DomainEntities.Post>();
             CreateMap<FlowerDTO, Flower>().ReverseMap();
+            CreateMap<Domain.Entities.Post, AllPostDTO>().ReverseMap();
         }
     }
 }

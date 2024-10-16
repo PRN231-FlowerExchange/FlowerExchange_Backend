@@ -13,5 +13,6 @@ namespace Domain.Repository
     {
         Task<PagedList<Post>> GetPostsByUserIdAsync(Guid userId, PostParameters postParameters);
         Task<Post> GetPostsByIdAsync(Guid id);
+        Task<PagedList<Post>> GetAllPostAsync(PostParameters postParameters);
     }
 }
