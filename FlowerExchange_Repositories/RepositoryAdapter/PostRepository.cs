@@ -59,6 +59,26 @@ namespace Persistence.RepositoryAdapter
             }
         }
 
+        public async Task<PagedList<Post>> GetAllPostAsync(PostParameters postParameters)
+        {
+            try
+            {
+                var query = _context.Posts
+                    .Include(c => c.Store)
+                    .Include(c => c.Flower).AsNoTracking();
+
+                SearchByName(ref query, postParameters.Title);
+                ApplySort(ref query, postParameters.OrderBy);
+
+                return await PagedList<Post>.ToPagedList(query, postParameters.PageNumber, postParameters.PageSize);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception here if necessary
+                throw;
+            }
+        }
+
         private void SearchByName(ref IQueryable<Post> posts, string title)
         {
             if (string.IsNullOrWhiteSpace(title)) return;

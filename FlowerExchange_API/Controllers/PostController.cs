@@ -8,6 +8,7 @@ using Application.Post.DTOs;
 using MediatR;
 using System.Threading.Tasks;
 using DomainEntities = Domain.Entities;
+using Application.Post.Queries.GetAllPost;
 
 namespace Presentation.Controllers
 {
@@ -36,6 +37,30 @@ namespace Presentation.Controllers
             try
             {
                 var response = await Mediator.Send(new GetUserPostQuery(id, postParameters));
+                var metadata = new
+                {
+                    response.TotalCount,
+                    response.PageSize,
+                    response.CurrentPage,
+                    response.TotalPages,
+                    response.HasNext,
+                    response.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred.", details = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllPost([FromQuery] PostParameters postParameters)
+        {
+            try
+            {
+                var response = await Mediator.Send(new GetAllPostQuery(postParameters));
                 var metadata = new
                 {
                     response.TotalCount,
