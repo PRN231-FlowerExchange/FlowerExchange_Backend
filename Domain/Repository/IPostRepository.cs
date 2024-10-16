@@ -15,5 +15,6 @@ namespace Domain.Repository
 
         Task<PagedList<Post>> GetPostsByUserIdAsync(Guid userId, PostParameters postParameters);
         Task<Post> GetPostsByIdAsync(Guid id);
+        Task<List<Post>> GetTopActivePostsWithNonExpiredServices(Post postEntity, int currentPage, int pageSize, int top, string searchString);
     }
 }

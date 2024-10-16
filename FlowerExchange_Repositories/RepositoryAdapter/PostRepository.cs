@@ -65,7 +65,9 @@ namespace Persistence.RepositoryAdapter
             }
 
             query.Where(p => p.PostServices.Any(ps => ps.ExpiredAt > now))
-                .OrderBy(p => p.CreatedAt);
+                .OrderBy(p => p.CreatedAt)
+                .OrderByDescending(p => p.ExpiredAt);
+
 
             return await query.Take(top).ToListAsync();
         }

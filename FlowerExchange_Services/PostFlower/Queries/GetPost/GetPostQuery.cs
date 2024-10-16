@@ -32,7 +32,7 @@ namespace Application.PostFlower.Queries.GetPost
         public async Task<List<PostViewDTO>> Handle(GetPostQuery request, CancellationToken cancellationToken)
         {
             List<PostViewDTO> result = new List<PostViewDTO>();
-            Post postEntity = new Post()
+            Domain.Entities.Post postEntity = new Domain.Entities.Post()
             {
                 StoreId = request.StoreId,
                 SellerId = request.SellerId,
@@ -40,7 +40,7 @@ namespace Application.PostFlower.Queries.GetPost
             try
             {
                 // Await the async call
-                List<Post> listPost = (List<Post>)await _postRepository.GetPosts(postEntity, request.PaginateRequest.CurrentPage, request.PaginateRequest.PageSize, request.SearchString);
+                List<Domain.Entities.Post> listPost = (List<Domain.Entities.Post>)await _postRepository.GetPosts(postEntity, request.PaginateRequest.CurrentPage, request.PaginateRequest.PageSize, request.SearchString);
 
                 if (listPost == null || !listPost.Any())
                 {
