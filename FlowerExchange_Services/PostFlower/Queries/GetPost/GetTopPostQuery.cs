@@ -22,7 +22,7 @@ namespace Application.PostFlower.Queries.GetPost
 
         private readonly ILogger<GetTopPostQueryHandler> _logger;
 
-        public GetTopPostQueryHandler(IPostRepository postRepository, ILogger<GetTopPostQuery> logger)
+        public GetTopPostQueryHandler(IPostRepository postRepository, ILogger<GetTopPostQueryHandler> logger)
         {
             _postRepository = postRepository;
             _logger = logger;
