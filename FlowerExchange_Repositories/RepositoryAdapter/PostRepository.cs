@@ -28,7 +28,7 @@ namespace Persistence.RepositoryAdapter
             {
                 var query = _context.Posts
                     .Include(c => c.Store)
-                    //.Include(c => c.Flower)
+                    .Include(c => c.Flower)
                     .Where(post => post.StoreId == userId);
 
                 SearchByName(ref query, postParameters.Title);
