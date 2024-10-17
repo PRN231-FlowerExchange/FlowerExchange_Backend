@@ -1,4 +1,6 @@
-﻿using Application.UserIdentity.Commands.ConfirmEmail;
+﻿using Application.SystemUser.Commands.UpdateUser;
+using Application.SystemUser.DTOs;
+using Application.UserIdentity.Commands.ConfirmEmail;
 using Application.UserIdentity.Commands.Login;
 using Application.UserIdentity.Commands.RefreshUserAccessToken;
 using Application.UserIdentity.Commands.Register;
@@ -49,9 +51,15 @@ namespace Presentation.Controllers
         {
             return await this.Mediator.Send(command);
         }
+        [HttpPut("update-account")]
+        public async Task<string> UpdateAccount([FromBody] UpdateUserAccountDTO dto)
+        {
+            var command = new UpdateUserAccountCommand(dto);
+            return await this.Mediator.Send(command);
+        }
 
 
     }
 
-    
+
 }

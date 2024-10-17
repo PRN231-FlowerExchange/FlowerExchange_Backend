@@ -48,7 +48,6 @@
     <Folder Include="UserApplication\Services\" />
     <Folder Include="Wallet\Commands\" />
     <Folder Include="Wallet\Services\" />
-    <Folder Include="SystemUser\Commands\" />
     <Folder Include="SystemUser\Services\" />
     <Folder Include="SystemUser\Queries\" />
   </ItemGroup>
