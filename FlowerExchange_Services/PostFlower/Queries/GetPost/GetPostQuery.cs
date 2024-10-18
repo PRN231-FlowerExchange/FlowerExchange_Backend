@@ -11,9 +11,9 @@ namespace Application.PostFlower.Queries.GetPost
     public class GetPostQuery : IRequest<List<PostViewDTO>>
     {
         //public Post? Post { get; set; }//filter entity
-        public Guid StoreId { get; set; }
-        public Guid SellerId { get; set; }
-        public string SearchString { get; set; }
+        public Guid StoreId { get; set; } = Guid.Empty; // Default to an empty GUID
+        public Guid SellerId { get; set; } = Guid.Empty; // Default to an empty GUID
+        public string SearchString { get; set; } = ""; // Default to null
         public PaginateRequest PaginateRequest { get; set; }
     }
 

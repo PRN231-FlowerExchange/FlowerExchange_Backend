@@ -20,56 +20,53 @@ namespace Persistence.RepositoryAdapter
         public async Task<List<Post>> GetPosts(Post entity, int currentPage, int pageSize, string? searchString = null)
         {
             var query = _dbContext.Posts
-                .Include(p => p.PostStatus)
-                .Include(p => p.Store)
-                .Include(p => p.Seller)
-                .Include(p => p.Flower)
-                .Include(p => p.PostServices).ThenInclude(s => s.Service)
-                .Where(p => p.SellerId == entity.SellerId && p.StoreId == entity.StoreId && p.PostStatus == PostStatus.Available);
-
+       .Include(p => p.Store)
+       .Include(p => p.Seller)
+       .Include(p => p.Flower)
+       .Include(p => p.PostServices).ThenInclude(s => s.Service)
+       // Apply SellerId filter only if SellerId is provided
+       .Where(p => entity.SellerId == Guid.Empty || p.SellerId == entity.SellerId)
+       // Apply StoreId filter only if StoreId is provided
+       .Where(p => entity.StoreId == Guid.Empty || p.StoreId == entity.StoreId)
             // Apply search filter if provided
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                query = query.Where(p => p.Title.ToLower().Contains(searchString.Trim().ToLower())
-                    || p.Description.ToLower().Contains(searchString.Trim().ToLower())
-                    || p.Flower.Name.ToLower().Contains(searchString.Trim().ToLower())
-                    || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower()));
-            }
+            .Where(p => (string.IsNullOrEmpty(searchString)
+                || p.Title.ToLower().Contains(searchString.Trim().ToLower())
+                || p.Description.ToLower().Contains(searchString.Trim().ToLower())
+                || p.Flower.Name.ToLower().Contains(searchString.Trim().ToLower())
+                || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower())))
+        // Pagination
+        .Skip((currentPage - 1) * pageSize)
+                     .Take(pageSize);
 
-            // Pagination
-            query = query.Skip((currentPage - 1) * pageSize)
-                         .Take(pageSize);
-
+            // Execute the query and return the result
             return await query.ToListAsync();
         }
+
 
         public async Task<List<Post>> GetTopActivePostsWithNonExpiredServices(Post entity, int currentPage, int pageSize, int top, string? searchString = null)
         {
             var now = DateTime.Now;
 
             var query = _dbContext.Posts
-                .Include(p => p.PostStatus)
-                .Include(p => p.Store)
-                .Include(p => p.Seller)
-                .Include(p => p.Flower)
-                .Include(p => p.PostServices).ThenInclude(s => s.Service)
-                .Where(p => p.SellerId == entity.SellerId && p.StoreId == entity.StoreId && p.PostStatus == PostStatus.Available);
-
-            // Apply search filter if provided
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                query = query.Where(p => p.Title.ToLower().Contains(searchString.Trim().ToLower())
-                    || p.Description.ToLower().Contains(searchString.Trim().ToLower())
-                    || p.Flower.Name.ToLower().Contains(searchString.Trim().ToLower())
-                    || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower()));
-            }
-
-            query.Where(p => p.PostServices.Any(ps => ps.ExpiredAt > now))
-                .OrderBy(p => p.CreatedAt)
-                .OrderByDescending(p => p.ExpiredAt);
-
-
-            return await query.Take(top).ToListAsync();
+   .Include(p => p.Store)
+   .Include(p => p.Seller)
+   .Include(p => p.Flower)
+   .Include(p => p.PostServices).ThenInclude(s => s.Service)
+   // Apply SellerId filter only if SellerId is provided
+   .Where(p => entity.SellerId == Guid.Empty || p.SellerId == entity.SellerId)
+   // Apply StoreId filter only if StoreId is provided
+   .Where(p => entity.StoreId == Guid.Empty || p.StoreId == entity.StoreId)
+        // Apply search filter if provided
+        .Where(p => (string.IsNullOrEmpty(searchString)
+            || p.Title.ToLower().Contains(searchString.Trim().ToLower())
+            || p.Description.ToLower().Contains(searchString.Trim().ToLower())
+            || p.Flower.Name.ToLower().Contains(searchString.Trim().ToLower())
+            || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower())))
+        .Where(p => p.PostServices.Any(ps => ps.ExpiredAt > now))
+        .OrderBy(p => p.CreatedAt)
+                .OrderByDescending(p => p.ExpiredAt)
+                .Take(top);
+            return await query.ToListAsync();
         }
 
         public async Task<PagedList<Post>> GetPostsByUserIdAsync(Guid userId, PostParameters postParameters)

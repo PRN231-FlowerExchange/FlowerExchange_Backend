@@ -82,7 +82,10 @@ namespace Presentation.Controllers
         }
 
         // Kept GetPost as POST with its own path
-        [HttpPost("get")]
+        [HttpPost("list-view-post")]
         public async Task<List<PostViewDTO>> GetPost([FromBody] GetPostQuery query) => await Mediator.Send(query);
+
+        [HttpPost("list-top-post")]
+        public async Task<List<PostViewDTO>> GetTopPost([FromBody] GetTopPostQuery query) => await Mediator.Send(query);
     }
 }
