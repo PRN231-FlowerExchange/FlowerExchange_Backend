@@ -1,12 +1,4 @@
-﻿using Application.Report.DTOs;
-using Application.UserStore.DTOs;
-using Domain.Constants.Enums;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Constants.Enums;
 
 namespace Application.Post.DTOs
 {

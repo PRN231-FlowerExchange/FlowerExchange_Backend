@@ -72,9 +72,9 @@ namespace Application.PostFlower.Commands.UpdatePostCommand
             return request.UpdatePost;
         }
 
-        private Post CovertUpdatePostDTOToPost(PostUpdateDTO source)
+        private Domain.Entities.Post CovertUpdatePostDTOToPost(PostUpdateDTO source)
         {
-            return ConvertFuction.ConvertObjectToObject<Post, PostUpdateDTO>(source);
+            return ConvertFuction.ConvertObjectToObject<Domain.Entities.Post, PostUpdateDTO>(source);
         }
     }
 }

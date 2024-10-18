@@ -3,21 +3,13 @@
 using Application.PostFlower.Commands.UpdatePostCommand;
 using Application.PostFlower.DTOs;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Application.PostFlower.Queries.GetPostService;
-using Domain.Entities;
 using Application.PostFlower.Commands.AddServiceToPostCommand;
 ﻿using Application.Post.Queries.GetDetailPost;
-using Domain.Entities;
 using Domain.Models;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Application.Post.Commands.CreatePost;
 using Application.Post.DTOs;
-using MediatR;
-using System.Threading.Tasks;
-using DomainEntities = Domain.Entities;
 
 
 namespace Presentation.Controllers

@@ -2,17 +2,12 @@
 using Application.PostFlower.Services;
 using AutoMapper;
 using Domain.Commons.BaseRepositories;
-using Domain.Entities;
+using Entity = Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Storage;
 using Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace Application.PostFlower.Commands.AddServiceToPostCommand
 {
@@ -48,7 +43,7 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
         public async Task<PostViewDTO> Handle(AddServiceToPostCommand request, CancellationToken cancellationToken)
         {
             // Fetch the post
-            Post post = await _postRepository.GetByIdAsync(request.Post.Id);
+            Entity.Post post = await _postRepository.GetByIdAsync(request.Post.Id);
 
             if (post == null)
             {
@@ -93,7 +88,7 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                 throw new Exception("Not enough money to pay");
             }
 
-            List<PostService> entityList = (List<PostService>)await _postServiceRepository.GetByPostIdAsync(serviceDTO.Id);
+            List<PostService> entityList = (List<PostService>)await _postServiceRepository.GetByPostIdAsync(request.Post.Id);
             if (entityList.Any())
             {
                 await _postServiceRepository.DeleteRangeAsync(entityList);
@@ -111,9 +106,9 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
             return ConvertPostToView(await _postRepository.GetByIdAsync(post.Id));
         }
 
-        private PostViewDTO ConvertPostToView(Post source)
+        private PostViewDTO ConvertPostToView(Entity.Post source)
         {
-            return ConvertFuction.ConvertObjectToObject<PostViewDTO, Post>(source);
+            return ConvertFuction.ConvertObjectToObject<PostViewDTO, Entity.Post>(source);
         }
 
     }

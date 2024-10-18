@@ -1,6 +1,4 @@
-﻿using Application.Post.Queries.GetDetailPost;
-using Application.Wallet.Queries;
-using Application.Wallet.Queries.GetAllWalletTransactionQuery;
+﻿using Application.Wallet.Queries.GetAllWalletTransactionQuery;
 using Application.Wallet.Queries.GetDetailWalletTransactionQuery;
 using Domain.Entities;
 using Domain.Models;
