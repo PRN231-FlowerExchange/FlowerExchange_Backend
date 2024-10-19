@@ -68,7 +68,7 @@ namespace Persistence.RepositoryAdapter
             {
                 var query = _dbContext.Posts
                     .Include(c => c.Store)
-                    //.Include(c => c.Flower)
+                    .Include(c => c.Flower)
                     .Where(post => post.StoreId == userId);
 
                 SearchByName(ref query, postParameters.Title);
@@ -91,6 +91,26 @@ namespace Persistence.RepositoryAdapter
                     .Include(c => c.Store)
                     .Include(c => c.Flower)
                     .FirstOrDefault(post => post.Id == id);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception here if necessary
+                throw;
+            }
+        }
+
+        public async Task<PagedList<Post>> GetAllPostAsync(PostParameters postParameters)
+        {
+            try
+            {
+                var query = _context.Posts
+                    .Include(c => c.Store)
+                    .Include(c => c.Flower).AsNoTracking();
+
+                SearchByName(ref query, postParameters.Title);
+                ApplySort(ref query, postParameters.OrderBy);
+
+                return await PagedList<Post>.ToPagedList(query, postParameters.PageNumber, postParameters.PageSize);
             }
             catch (Exception ex)
             {
