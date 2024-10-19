@@ -103,7 +103,7 @@ namespace Persistence.RepositoryAdapter
         {
             try
             {
-                var query = _context.Posts
+                var query = _dbContext.Posts
                     .Include(c => c.Store)
                     .Include(c => c.Flower).AsNoTracking();
 
