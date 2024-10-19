@@ -17,7 +17,7 @@ namespace Persistence.RepositoryAdapter
         {
         }
 
-        public async Task<List<Post>> GetPosts(Post entity, int currentPage, int pageSize, string? searchString = null)
+        public async Task<List<Post>> GetPosts(Post entity, int currentPage, int pageSize)
         {
             var query = _dbContext.Posts
        .Include(p => p.Store)
@@ -55,13 +55,6 @@ namespace Persistence.RepositoryAdapter
    // Apply SellerId filter only if SellerId is provided
    .Where(p => entity.SellerId == Guid.Empty || p.SellerId == entity.SellerId)
    // Apply StoreId filter only if StoreId is provided
-   .Where(p => entity.StoreId == Guid.Empty || p.StoreId == entity.StoreId)
-        // Apply search filter if provided
-        .Where(p => (string.IsNullOrEmpty(searchString)
-            || p.Title.ToLower().Contains(searchString.Trim().ToLower())
-            || p.Description.ToLower().Contains(searchString.Trim().ToLower())
-            || p.Flower.Name.ToLower().Contains(searchString.Trim().ToLower())
-            || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower())))
         .Where(p => p.PostServices.Any(ps => ps.ExpiredAt > now))
         .OrderBy(p => p.CreatedAt)
                 .OrderByDescending(p => p.ExpiredAt)

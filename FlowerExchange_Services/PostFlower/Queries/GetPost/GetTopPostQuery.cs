@@ -10,9 +10,8 @@ namespace Application.PostFlower.Queries.GetPost
     public class GetTopPostQuery : IRequest<List<PostViewDTO>>
     {
         public int Top {  get; set; }
-        public Guid StoreId { get; set; }
-        public Guid SellerId { get; set; }
-        public string SearchString { get; set; }
+        public Guid StoreId { get; set; } = Guid.Empty;
+        public Guid SellerId { get; set; } = Guid.Empty;
         public PaginateRequest PaginateRequest { get; set; }
     }
 
@@ -39,7 +38,7 @@ namespace Application.PostFlower.Queries.GetPost
             try
             {
                 // Await the async call
-                List<Domain.Entities.Post> listPost = (List<Domain.Entities.Post>)await _postRepository.GetTopActivePostsWithNonExpiredServices(postEntity, request.PaginateRequest.CurrentPage, request.PaginateRequest.PageSize,request.Top, request.SearchString);
+                List<Domain.Entities.Post> listPost = (List<Domain.Entities.Post>)await _postRepository.GetTopActivePostsWithNonExpiredServices(postEntity, request.PaginateRequest.CurrentPage, request.PaginateRequest.PageSize,request.Top);
 
                 if (listPost == null || !listPost.Any())
                 {
