@@ -9,7 +9,7 @@ namespace Application.PostFlower.Queries.GetPost
 {
     public class GetTopPostQuery : IRequest<List<PostViewDTO>>
     {
-        public int Top {  get; set; }
+        public int Top { get; set; } =  10;
         public Guid StoreId { get; set; } = Guid.Empty;
         public Guid SellerId { get; set; } = Guid.Empty;
         public PaginateRequest PaginateRequest { get; set; }

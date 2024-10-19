@@ -17,7 +17,7 @@ namespace Persistence.RepositoryAdapter
         {
         }
 
-        public async Task<List<Post>> GetPosts(Post entity, int currentPage, int pageSize)
+        public async Task<List<Post>> GetPosts(Post entity, int currentPage, int pageSize, string? searchString = null)
         {
             var query = _dbContext.Posts
        .Include(p => p.Store)
@@ -43,9 +43,9 @@ namespace Persistence.RepositoryAdapter
         }
 
 
-        public async Task<List<Post>> GetTopActivePostsWithNonExpiredServices(Post entity, int currentPage, int pageSize, int top, string? searchString = null)
+        public async Task<List<Post>> GetTopActivePostsWithNonExpiredServices(Post entity, int currentPage, int pageSize, int top)
         {
-            var now = DateTime.Now;
+            var now = DateTime.Now.ToUniversalTime();
 
             var query = _dbContext.Posts
    .Include(p => p.Store)
