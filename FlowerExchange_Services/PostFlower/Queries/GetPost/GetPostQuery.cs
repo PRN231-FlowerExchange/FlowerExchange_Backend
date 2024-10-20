@@ -5,6 +5,8 @@ using Domain.Entities;
 using Application.PostFlower.Services;
 using Application.PostFlower.DTOs;
 using Domain.Exceptions;
+using Domain.Models;
+using Application.PostFlower.Queries.GetPost;
 
 namespace Application.PostFlower.Queries.GetPost
 {
@@ -15,6 +17,7 @@ namespace Application.PostFlower.Queries.GetPost
         public Guid SellerId { get; set; } = Guid.Empty; // Default to an empty GUID
         public string SearchString { get; set; } = ""; // Default to null
         public PaginateRequest PaginateRequest { get; set; }
+        public List<SortCriteria>? sortCriterias {get;set;} = null;
     }
 
     public class GetPostQueryHandler : IRequestHandler<GetPostQuery, List<PostViewDTO>>
@@ -40,7 +43,8 @@ namespace Application.PostFlower.Queries.GetPost
             try
             {
                 // Await the async call
-                List<Domain.Entities.Post> listPost = (List<Domain.Entities.Post>)await _postRepository.GetPosts(postEntity, request.PaginateRequest.CurrentPage, request.PaginateRequest.PageSize, request.SearchString);
+                List<Domain.Entities.Post> listPost = (List<Domain.Entities.Post>)await _postRepository.GetPosts(postEntity, request.PaginateRequest.CurrentPage, request.PaginateRequest.PageSize, request.SearchString,
+                    request.sortCriterias);
 
                 if (listPost == null || !listPost.Any())
                 {

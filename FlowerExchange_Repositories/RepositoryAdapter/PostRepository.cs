@@ -1,5 +1,5 @@
-﻿using Domain.Commons.BaseRepositories;
-using Domain.Constants.Enums;
+﻿using CrossCuttingConcerns.Utils;
+using Domain.Commons.BaseRepositories;
 using Domain.Entities;
 using Domain.Models;
 using Domain.Repository;
@@ -17,7 +17,11 @@ namespace Persistence.RepositoryAdapter
         {
         }
 
-        public async Task<List<Post>> GetPosts(Post entity, int currentPage, int pageSize, string? searchString = null)
+        public async Task<List<Post>> GetPosts(Post entity,
+                                               int currentPage,
+                                               int pageSize,
+                                               string? searchString = null,
+                                               List<SortCriteria>? sortCriteria = null)
         {
             var query = _dbContext.Posts
        .Include(p => p.Store)
@@ -33,30 +37,49 @@ namespace Persistence.RepositoryAdapter
                 || p.Title.ToLower().Contains(searchString.Trim().ToLower())
                 || p.Description.ToLower().Contains(searchString.Trim().ToLower())
                 || p.Flower.Name.ToLower().Contains(searchString.Trim().ToLower())
-                || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower())))
-        // Pagination
-        .Skip((currentPage - 1) * pageSize)
-                     .Take(pageSize);
+                || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower())));
 
-            // Execute the query and return the result
+            if (sortCriteria != null && sortCriteria.Any())
+            {
+                IOrderedQueryable<Post>? orderedQuery = null;
+
+                for (int i = 0; i < sortCriteria.Count; i++)
+                {
+                    var criteria = sortCriteria[i];
+                    if (i == 0)
+                    {
+                        orderedQuery = query.OrderByDynamic(criteria.SortBy, criteria.IsDescending);
+                    }
+                    else
+                    {
+                        orderedQuery = orderedQuery.ThenByDynamic(criteria.SortBy, criteria.IsDescending);
+                    }
+                }
+
+                query = orderedQuery ?? query;
+            }
+
+            query = query.Skip((currentPage - 1) * pageSize)
+                             .Take(pageSize);
+
+            // Execute the query and return the result  
             return await query.ToListAsync();
         }
-
 
         public async Task<List<Post>> GetTopActivePostsWithNonExpiredServices(Post entity, int currentPage, int pageSize, int top)
         {
             var now = DateTime.Now.ToUniversalTime();
 
             var query = _dbContext.Posts
-   .Include(p => p.Store)
-   .Include(p => p.Seller)
-   .Include(p => p.Flower)
-   .Include(p => p.PostServices).ThenInclude(s => s.Service)
-   // Apply SellerId filter only if SellerId is provided
-   .Where(p => entity.SellerId == Guid.Empty || p.SellerId == entity.SellerId)
-   // Apply StoreId filter only if StoreId is provided
-        .Where(p => p.PostServices.Any(ps => ps.ExpiredAt > now))
-        .OrderBy(p => p.CreatedAt)
+                .Include(p => p.Store)
+                .Include(p => p.Seller)
+                .Include(p => p.Flower)
+                .Include(p => p.PostServices).ThenInclude(s => s.Service)
+                // Apply SellerId filter only if SellerId is provided
+                .Where(p => entity.SellerId == Guid.Empty || p.SellerId == entity.SellerId)
+                // Apply StoreId filter only if StoreId is provided
+                .Where(p => p.PostServices.Any(ps => ps.ExpiredAt > now))
+                .OrderBy(p => p.CreatedAt)
                 .OrderByDescending(p => p.ExpiredAt)
                 .Take(top);
             return await query.ToListAsync();
@@ -167,4 +190,5 @@ namespace Persistence.RepositoryAdapter
             posts = posts.OrderBy(orderQuery);
         }
     }
+
 }
