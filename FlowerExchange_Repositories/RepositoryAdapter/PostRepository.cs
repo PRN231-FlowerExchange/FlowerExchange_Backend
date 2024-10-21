@@ -27,6 +27,7 @@ namespace Persistence.RepositoryAdapter
        .Include(p => p.Store)
        .Include(p => p.Seller)
        .Include(p => p.Flower)
+       .Include(p => p.PostCategories)
        .Include(p => p.PostServices).ThenInclude(s => s.Service)
        // Apply SellerId filter only if SellerId is provided
        .Where(p => entity.SellerId == Guid.Empty || p.SellerId == entity.SellerId)

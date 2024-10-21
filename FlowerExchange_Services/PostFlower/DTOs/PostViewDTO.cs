@@ -1,6 +1,7 @@
 ﻿using Application.Report.DTOs;
 using Application.UserApplication.DTOs;
 using Domain.Constants.Enums;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace Application.PostFlower.DTOs
 
         public string MainImageUrl { get; set; }
 
-        //public List<PostCategoryModel> PostCategories { get; set; }
+        public List<PostCategory> PostCategories { get; set; }
 
         public List<ReportModel> Reports { get; set; }
 
