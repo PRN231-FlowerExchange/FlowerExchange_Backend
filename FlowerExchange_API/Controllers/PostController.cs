@@ -1,16 +1,18 @@
 
-﻿using Application.PostFlower.Queries.GetPost;
+using Application.PostFlower.Queries.GetPost;
 using Application.PostFlower.Commands.UpdatePostCommand;
 using Application.PostFlower.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.PostFlower.Commands.AddServiceToPostCommand;
-﻿using Application.Post.Queries.GetDetailPost;
+using Application.Post.Queries.GetDetailPost;
 using Domain.Models;
 using Newtonsoft.Json;
 using Application.Post.Commands.CreatePost;
 using Application.Post.DTOs;
 using Application.Post.Queries.GetAllPost;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Domain.Exceptions;
 
 namespace Presentation.Controllers
 {
@@ -107,9 +109,39 @@ namespace Presentation.Controllers
 
         // Kept GetPost as POST with its own path
         [HttpPost("list-view-post")]
-        public async Task<List<PostViewDTO>> GetPost([FromBody] GetPostQuery query) => await Mediator.Send(query);
+        public async Task<IActionResult> GetPost([FromBody] GetPostQuery query)
+        {
+            try
+            {
+                var response = await Mediator.Send(query);
+                return Ok(response);
+            }
+            catch (NotFoundException ex)
+            {
+                return StatusCode(200, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
 
         [HttpPost("list-top-post")]
-        public async Task<List<PostViewDTO>> GetTopPost([FromBody] GetTopPostQuery query) => await Mediator.Send(query);
+        public async Task<IActionResult> GetTopPost([FromBody] GetTopPostQuery query) {
+            try
+            {
+                var response = await Mediator.Send(query);
+                return Ok(response);
+            }
+            catch (NotFoundException ex)
+            {
+                return StatusCode(200, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        } 
     }
 }
