@@ -40,6 +40,15 @@ namespace Persistence.RepositoryAdapter
                 || p.Flower.Name.ToLower().Contains(searchString.Trim().ToLower())
                 || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower())));
 
+
+            if (entity.PostCategories.Any())
+            {
+                foreach (var category in entity.PostCategories)
+                {
+                    query = query.Where(p => p.PostCategories.Any(pc => pc.CategoryId == category.CategoryId));
+                }
+            }
+
             if (sortCriteria != null && sortCriteria.Any())
             {
                 IOrderedQueryable<Post>? orderedQuery = null;

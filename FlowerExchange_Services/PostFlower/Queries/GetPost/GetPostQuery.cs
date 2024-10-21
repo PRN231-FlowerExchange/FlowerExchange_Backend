@@ -1,12 +1,10 @@
 ﻿using Domain.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Domain.Entities;
 using Application.PostFlower.Services;
 using Application.PostFlower.DTOs;
 using Domain.Exceptions;
 using Domain.Models;
-using Application.PostFlower.Queries.GetPost;
 
 namespace Application.PostFlower.Queries.GetPost
 {
@@ -14,7 +12,8 @@ namespace Application.PostFlower.Queries.GetPost
     {
         //public Post? Post { get; set; }//filter entity
         public Guid StoreId { get; set; } = Guid.Empty; // Default to an empty GUID
-        public Guid SellerId { get; set; } = Guid.Empty; // Default to an empty GUID
+        public Guid SellerId { get; set; } = Guid.Empty;
+        public List<Guid>? Categories { get; set; } = null;// Default to an empty GUID
         public string SearchString { get; set; } = ""; // Default to null
         public PaginateRequest PaginateRequest { get; set; }
         public List<SortCriteria>? sortCriterias {get;set;} = null;
@@ -23,12 +22,14 @@ namespace Application.PostFlower.Queries.GetPost
     public class GetPostQueryHandler : IRequestHandler<GetPostQuery, List<PostViewDTO>>
     {
         private IPostRepository _postRepository;
+        private ICategoriesRepository _cateRepository;
 
         private readonly ILogger<GetPostQueryHandler> _logger;
 
-        public GetPostQueryHandler(IPostRepository postRepository, ILogger<GetPostQueryHandler> logger)
+        public GetPostQueryHandler(IPostRepository postRepository, ICategoriesRepository cateRepository, ILogger<GetPostQueryHandler> logger)
         {
             _postRepository = postRepository;
+            _cateRepository = cateRepository;
             _logger = logger;
         }
 
@@ -39,7 +40,18 @@ namespace Application.PostFlower.Queries.GetPost
             {
                 StoreId = request.StoreId,
                 SellerId = request.SellerId,
+                PostCategories = new List<Domain.Entities.PostCategory>()
             };
+
+            // Add Categories if provided
+            if (request.Categories != null && request.Categories.Any())
+            {
+                request.Categories.ForEach(category =>
+                {
+                    postEntity.PostCategories.Add(new Domain.Entities.PostCategory { CategoryId = category });
+                });
+            }
+
             try
             {
                 // Await the async call
@@ -57,7 +69,12 @@ namespace Application.PostFlower.Queries.GetPost
                     {
                         if (post.PostServices == null || !post.PostServices.Any())
                         {
-                            result.Add(ConvertFuction.ConvertObjectToObject<PostViewDTO, Domain.Entities.Post>(post));
+                            PostViewDTO viewDTO = ConvertFuction.ConvertObjectToObject<PostViewDTO, Domain.Entities.Post>(post);
+
+                            List<Domain.Entities.Category> listCates = await _cateRepository.GetCategoryByPostId(post.Id);
+                            viewDTO.Categories = ConvertFuction.ConvertListToList<PostCategoryDTO, Domain.Entities.Category>(listCates);
+
+                            result.Add(viewDTO);
                         }
                         else
                         {
@@ -66,6 +83,8 @@ namespace Application.PostFlower.Queries.GetPost
                                 if (service.ExpiredAt > DateTime.UtcNow)
                                 {
                                     PostViewDTO viewPost = ConvertFuction.ConvertObjectToObject<PostViewDTO, Domain.Entities.Post>(post);
+                                    List<Domain.Entities.Category> listCates = await _cateRepository.GetCategoryByPostId(post.Id);
+                                    viewPost.Categories = ConvertFuction.ConvertListToList<PostCategoryDTO, Domain.Entities.Category>(listCates);
                                     viewPost.priority = 1;
                                     result.Add(viewPost);
                                 }
