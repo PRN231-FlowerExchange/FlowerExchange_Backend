@@ -1,17 +1,11 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Application.PostFlower.Commands.AddServiceToPostCommand
 {
     class AddServiceToPostCommandValidator : AbstractValidator<AddServiceToPostCommand>
     {
         public AddServiceToPostCommandValidator()
         {
-            RuleFor(c => c.ListService)
+            RuleFor(c => c.ListServices)
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("Service required");

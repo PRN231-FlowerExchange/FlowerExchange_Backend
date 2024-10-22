@@ -45,6 +45,6 @@ namespace Application.PostFlower.DTOs
 
         //public List<PostServiceModel>? PostServices { get; set; }
 
-        public int priority { get; set; } = 0;
+        public int priority { get; set; } = 2;
     }
 }

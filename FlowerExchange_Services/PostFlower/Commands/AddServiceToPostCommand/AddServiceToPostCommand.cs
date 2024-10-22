@@ -13,8 +13,8 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
 {
     public class AddServiceToPostCommand : IRequest<PostViewDTO>
     {
-        public PostViewDTO Post { get; set; }
-        public List<ServiceViewDTO> ListService { get; set; }
+        public Guid PostId { get; set; }
+        public List<Guid> ListServices { get; set; }
         public int ServiceDay { get; set; }
     }
 
@@ -43,7 +43,7 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
         public async Task<PostViewDTO> Handle(AddServiceToPostCommand request, CancellationToken cancellationToken)
         {
             // Fetch the post
-            Entity.Post post = await _postRepository.GetByIdAsync(request.Post.Id);
+            Entity.Post post = await _postRepository.GetByIdAsync(request.PostId);
 
             if (post == null)
             {
@@ -54,10 +54,10 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
             List<PostService> listPostService = new List<PostService>();
 
             // Iterate through requested services
-            foreach (ServiceViewDTO serviceDTO in request.ListService)
+            foreach (Guid serviceDTO in request.ListServices)
             {
                 // Fetch the service entity
-                Service serviceEntity = await _serviceRepository.GetByIdAsync(serviceDTO.Id);
+                Service serviceEntity = await _serviceRepository.GetByIdAsync(serviceDTO);
 
                 // Check if service exists before calculating total price
                 if (serviceEntity == null)
@@ -71,14 +71,15 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                 // Create a new PostService entry
                 PostService postService = new PostService
                 {
-                    PostId = request.Post.Id,
+                    PostId = request.PostId,
                     Post = post,
                     ServiceId = serviceEntity.Id,
                     Service = serviceEntity,
+                    ServiceOrderId = Guid.Empty,
                     CreatedAt = DateTime.UtcNow,
                     ExpiredAt = DateTime.UtcNow.AddDays(request.ServiceDay),
                 };
-                listPostService.Add(postService);
+                listPostService.Add(postService);   
             }
 
             // Check if the user has enough money in the wallet (implement wallet logic)
@@ -88,11 +89,11 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                 throw new Exception("Not enough money to pay");
             }
 
-            List<PostService> entityList = (List<PostService>)await _postServiceRepository.GetByPostIdAsync(request.Post.Id);
-            if (entityList.Any())
-            {
-                await _postServiceRepository.DeleteRangeAsync(entityList);
-            }
+            //List<PostService> entityList = (List<PostService>) await _postServiceRepository.GetByPostIdAsync(request.PostId);
+            //if (entityList.Any())
+            //{
+            //    await _postServiceRepository.DeleteRangeAsync(entityList);
+            //}
 
             if (listPostService == null || !listPostService.Any())
             {
