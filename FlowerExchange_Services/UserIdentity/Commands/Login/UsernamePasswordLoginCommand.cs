@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Persistence;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Application.UserIdentity.Commands.Login
@@ -97,12 +98,17 @@ namespace Application.UserIdentity.Commands.Login
 
         private async Task<AuthenticatedToken> GenerateAuthenticatedSignInSuccess(User user)
         {
+            IList<String> roles = await _userManager.GetRolesAsync(user);
+
             List<Claim> claims = new List<Claim>() {
                   new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                   new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
-                  new Claim(ClaimTypes.Email, user.Email),
-                  new Claim(ClaimTypes.Name, user.Email)
+                  new Claim(ClaimTypes.Name, user.Email),
+                  new Claim(ClaimTypes.GivenName, user.Fullname),
             };
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+
 
             var accessToken = _jwtTokenService.GenerateAccessToken(claims, TokenConstants.ACCESS_TOKEN_PERIOD_MINISECOND);
             var refreshToken = _jwtTokenService.GenerateRefreshToken(TokenConstants.REFRESH_TOKEN_PERIOD_MINISECOND);
