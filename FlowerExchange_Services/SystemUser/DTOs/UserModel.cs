@@ -1,8 +1,8 @@
 ﻿using Application.Conversation.DTOs;
 using Application.Order.DTOs;
-using Application.Post.DTOs;
+using Application.PostFlower.DTOs;
 using Application.Report.DTOs;
-using Application.UserStore.DTOs;
+using Application.UserApplication.DTOs;
 using Application.Wallet.DTOs;
 using Domain.Constants.Enums;
 

@@ -8,6 +8,7 @@ namespace Domain.Exceptions
 {
     public class NotFoundException : Exception
     {
+
         /// <summary>
         /// Initializes a new instance of the NotFoundException class with a specified name of a specified error message
         /// </summary>

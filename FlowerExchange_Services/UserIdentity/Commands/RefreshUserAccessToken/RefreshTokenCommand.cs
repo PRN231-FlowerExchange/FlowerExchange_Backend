@@ -1,11 +1,11 @@
-﻿using Application.UserIdentity.Commands.Register;
+﻿using Application.Services.JwtTokenService;
+using Application.UserIdentity.Commands.Register;
 using Domain.Commons.BaseRepositories;
 using Domain.Constants;
 using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Models;
 using Domain.Security.Identity;
-using Domain.Security.JwtTokenService;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

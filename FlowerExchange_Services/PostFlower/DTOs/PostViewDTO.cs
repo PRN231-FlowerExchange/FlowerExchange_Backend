@@ -1,18 +1,9 @@
-﻿using Application.Category.DTOs;
-using Application.Report.DTOs;
-using Application.UserStore.DTOs;
+﻿using Application.Report.DTOs;
 using Domain.Constants.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Post.DTOs
+namespace Application.PostFlower.DTOs
 {
-    public class PostModel
+    public class PostViewDTO
     {
         public Guid Id { get; set; }
 
@@ -38,21 +29,22 @@ namespace Application.Post.DTOs
 
         public string MainImageUrl { get; set; }
 
-        //public List<PostCategoryModel> PostCategories { get; set; }
+        public List<PostCategoryDTO> Categories { get; set; }
 
         public List<ReportModel> Reports { get; set; }
 
         public Guid SellerId { get; set; }
 
-        public UserModel Seller { get; set; }
+        //public UserModel? Seller { get; set; }
 
         public Guid StoreId { get; set; }
 
-        public StoreModel Store { get; set; }
+        //public StoreModel? Store { get; set; }
 
-        public FlowerModel Flower { get; set; }
+        //public FlowerModel? Flower { get; set; }
 
-        public List<PostServiceModel>? PostServices { get; set; }
+        //public List<PostServiceModel>? PostServices { get; set; }
 
+        public int priority { get; set; } = 0;
     }
 }

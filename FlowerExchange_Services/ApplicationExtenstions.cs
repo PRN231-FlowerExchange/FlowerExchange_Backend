@@ -3,11 +3,11 @@ using Application.Services.EmailForIdentityService;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Application;
 
 public static class ApplicationExtenstions
 {
@@ -29,7 +29,7 @@ public static class ApplicationExtenstions
         // Register pipeline behaviors
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         services.AddScoped<EmailForIdentityService>();
-                
+
         return services;
     }
 

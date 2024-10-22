@@ -17,6 +17,7 @@ using Persistence;
 using Presentation.OptionsSetup;
 
 using System.Reflection;
+using Application;
 
 var builder = WebApplication.CreateBuilder(args);
 

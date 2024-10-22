@@ -1,4 +1,4 @@
-﻿using Application.UserStore.DTOs;
+﻿using Application.UserApplication.DTOs;
 using Domain.Constants.Enums;
 
 
