@@ -17,6 +17,8 @@ namespace Domain.Entities
 
         public virtual FlowerOrder FlowerOrder { get; set; }
 
+        //TODO: Flower Status bỏ vô category
+
 
     }
 }
