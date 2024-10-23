@@ -9,11 +9,10 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("Service required");
-            RuleFor(c => c.ServiceDay)
-                .NotEmpty()
-                .NotNull()
-                .GreaterThan(0)
-                .WithMessage("Service duration are requied and greater than 0");
+            RuleFor(c => c.PostId)
+               .NotEmpty()
+               .NotNull()
+               .WithMessage("Post required");
         }
     }
 }

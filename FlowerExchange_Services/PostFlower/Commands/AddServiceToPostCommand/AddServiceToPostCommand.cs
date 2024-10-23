@@ -50,7 +50,6 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                 throw new NotFoundException("Post not found");
             }
 
-            double totalPrice = 0;
             List<PostService> listPostService = new List<PostService>();
 
             // Iterate through requested services
@@ -65,8 +64,12 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                     throw new NotFoundException("Service not found");
                 }
 
-                // Calculate the total price for the services
-                totalPrice += serviceEntity.Price * request.ServiceDay;
+                PostService entityPostService = await _postServiceRepository.GetAsync(post.Id, serviceEntity.Id);
+
+                if (entityPostService != null)
+                {
+                    throw new DuplicateWaitObjectException("PostService already existed");
+                }
 
                 // Create a new PostService entry
                 PostService postService = new PostService
@@ -77,16 +80,9 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
                     Service = serviceEntity,
                     ServiceOrderId = Guid.Empty,
                     CreatedAt = DateTime.UtcNow,
-                    ExpiredAt = DateTime.UtcNow.AddDays(request.ServiceDay),
+                    ExpiredAt = DateTime.UtcNow,
                 };
                 listPostService.Add(postService);   
-            }
-
-            // Check if the user has enough money in the wallet (implement wallet logic)
-            bool hasEnoughMoney = true; // Replace with actual wallet balance check
-            if (!hasEnoughMoney)
-            {
-                throw new Exception("Not enough money to pay");
             }
 
             //List<PostService> entityList = (List<PostService>) await _postServiceRepository.GetByPostIdAsync(request.PostId);

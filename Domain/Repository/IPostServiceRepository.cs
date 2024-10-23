@@ -13,5 +13,6 @@ namespace Domain.Repository
         Task DeleteRangeAsync(List<PostService> entityList);
         Task<IEnumerable<PostService>> GetByPostIdAsync(Guid postId);
         Task InsertRangeAsync(List<PostService> listPostService);
+        Task<PostService> GetAsync(Guid postId, Guid ServiceId)
     }
 }
