@@ -118,6 +118,18 @@ namespace Persistence.RepositoryAdapter
             return await Task.Run(() => _dbSet.Where(predicate).AsQueryable());
         }
 
+
+        public virtual IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+
+            return _dbSet.Where(predicate).AsQueryable();
+        }
+
+
         public virtual async Task<TEntity> FindAsync(Func<TEntity, bool> predicate)
         {
             if (predicate == null)
@@ -147,19 +159,6 @@ namespace Persistence.RepositoryAdapter
             }
 
             return await _dbSet.FirstOrDefaultAsync(predicate);
-        }
-
-        public virtual async Task<TEntity> FistOrDefault(Func<TEntity, bool> predicate)
-        {
-            if (predicate == null)
-            {
-                throw new ArgumentNullException(nameof(predicate));
-            }
-
-            // Convert the Func to an Expression
-            var expression = ConvertToExpression(predicate);
-
-            return await _dbSet.FirstOrDefaultAsync(expression);
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -308,6 +307,9 @@ namespace Persistence.RepositoryAdapter
             // Create the lambda expression
             return Expression.Lambda<Func<TEntity, bool>>(body, parameter);
         }
+
+   
+
     }
 
 }

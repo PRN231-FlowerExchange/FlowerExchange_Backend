@@ -13,6 +13,7 @@ namespace Domain.Commons.BaseRepositories
         public Task<TEntity> FindAsync(Func<TEntity, bool> predicate);
         public Task<TEntity> FindByConditionAsync(Expression<Func<TEntity, bool>> predicate);
         public Task<IQueryable<TEntity>> FindAll(Func<TEntity, bool> predicate);
+        public IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate);
 
         public Task<IEnumerable<TEntity>> GetAllAsync();
         public Task<TEntity> GetByIdAsync(object id);
@@ -33,7 +34,6 @@ namespace Domain.Commons.BaseRepositories
         public Task<TEntity> AnyAsync(Func<TEntity, bool> predicate);
         public Task<int> CountAsync(Func<TEntity, bool> predicate);
         public Task<int> CountAsync();
-        public Task<TEntity> FistOrDefault(Func<TEntity, bool> predicate);
         public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
         public Task SaveChagesAysnc();

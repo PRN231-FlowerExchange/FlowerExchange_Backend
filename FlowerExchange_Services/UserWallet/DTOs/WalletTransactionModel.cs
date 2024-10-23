@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Wallet.DTOs
+namespace Application.UserWallet.DTOs
 {
     public class WalletTransactionModel
     {

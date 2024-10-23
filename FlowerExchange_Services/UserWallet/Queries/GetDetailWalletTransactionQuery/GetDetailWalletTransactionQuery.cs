@@ -10,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Wallet.Queries.GetDetailWalletTransactionQuery
+namespace Application.UserWallet.Queries.GetDetailWalletTransactionQuery
 {
-    public class GetDetailWalletTransactionQuery : IRequest<Domain.Entities.WalletTransaction>
+    public class GetDetailWalletTransactionQuery : IRequest<WalletTransaction>
     {
         public Guid Id { get; set; }
         public GetDetailWalletTransactionQuery(Guid id)
@@ -21,9 +21,9 @@ namespace Application.Wallet.Queries.GetDetailWalletTransactionQuery
         }
     }
 
-    public class GetDetailWalletTransactionQueryHandler : IRequestHandler<GetDetailWalletTransactionQuery, Domain.Entities.WalletTransaction>
+    public class GetDetailWalletTransactionQueryHandler : IRequestHandler<GetDetailWalletTransactionQuery, WalletTransaction>
     {
-        private Domain.Repository.IWalletTransactionRepository _iWalletTransactionRepository;
+        private IWalletTransactionRepository _iWalletTransactionRepository;
 
         private readonly ILogger<GetDetailWalletTransactionQueryHandler> _logger;
 
@@ -33,7 +33,7 @@ namespace Application.Wallet.Queries.GetDetailWalletTransactionQuery
             _logger = logger;
         }
 
-        public async Task<Domain.Entities.WalletTransaction> Handle(GetDetailWalletTransactionQuery request, CancellationToken cancellationToken)
+        public async Task<WalletTransaction> Handle(GetDetailWalletTransactionQuery request, CancellationToken cancellationToken)
         {
             var walletTransaction = await _iWalletTransactionRepository.GetByIdAsync(request.Id);
             if (walletTransaction == null)

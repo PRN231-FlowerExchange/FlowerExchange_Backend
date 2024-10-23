@@ -1,5 +1,4 @@
-﻿using Application.Post.DTOs;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Commons.BaseRepositories;
 using Domain.Entities;
 using MediatR;
@@ -8,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Repository;
 using DomainEntities = Domain.Entities; // Post bị tên namesapce nên đặt alias
 using Persistence;
+using Application.PostFlower.DTOs;
 
 namespace Application.Post.Commands.CreatePost
 {

@@ -2,7 +2,7 @@
 using Domain.Constants.Enums;
 
 
-namespace Application.Wallet.DTOs
+namespace Application.UserWallet.DTOs
 {
     public class WalletModel
     {
@@ -20,7 +20,7 @@ namespace Application.Wallet.DTOs
 
         public UserModel User { get; set; }
 
-       // public List<DepositTransactionModel>? DepositTransactions { get; set; }
+        // public List<DepositTransactionModel>? DepositTransactions { get; set; }
 
         public List<WalletTransactionModel>? WalletTransactions { get; set; }
     }
