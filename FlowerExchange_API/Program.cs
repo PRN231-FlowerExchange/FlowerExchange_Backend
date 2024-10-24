@@ -17,6 +17,9 @@ using Persistence;
 using Presentation.OptionsSetup;
 
 using System.Reflection;
+using Domain.Payment;
+using Infrastructure.Payment;
+using Domain.Payment.Models;
 using Application;
 using Microsoft.AspNetCore.Authentication.Google;
 using IdentityModel;
@@ -103,6 +106,13 @@ builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration, connectionString, Assembly.GetExecutingAssembly().GetName().Name);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
+// VNPAY service
+builder.Services.AddScoped<IVNPAYService, VNPAYService>();
+
+// Momo service
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
+
 //// Retrieve Firebase credentials from the environment variable
 //string credentialsPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS");
 //if (string.IsNullOrEmpty(credentialsPath))
@@ -136,14 +146,14 @@ var app = builder.Build();
 //Initialize data
 InitialiserExtensions.InitialiseDatabaseAsync(app);
 
-if(app.Environment.IsDevelopment())
-{
+//if(app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
     });
-}
+//}
 
 app.UseExceptionHandler(error =>
 {

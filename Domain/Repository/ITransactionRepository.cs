@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Repository
 {
-    public interface IWalletRepository : IRepositoryBase<Wallet, Guid>
+    public interface ITransactionRepository : IRepositoryBase<Transaction, Guid>
     {
-        Task<Wallet?> GetByUserId(Guid userId);
+
     }
 }
