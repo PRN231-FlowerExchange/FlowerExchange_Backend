@@ -1,6 +1,9 @@
+
+using Application.Category.DTOs;
 ﻿using Application.PostFlower.DTOs;
 using Application.UserApplication.DTOs;
 using Application.UserIdentity.DTOs;
+
 using Application.Weather.Commands.AddWeather;
 using Application.Weather.DTOs;
 using AutoMapper;
@@ -20,6 +23,7 @@ namespace Application.Common.Mappers
             CreateMap<CreatePostDTO, DomainEntities.Post>();
             CreateMap<FlowerDTO, Flower>().ReverseMap();
             CreateMap<Domain.Entities.Post, AllPostDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Category, CategoryDTO>().ReverseMap();
         }
     }
 }
