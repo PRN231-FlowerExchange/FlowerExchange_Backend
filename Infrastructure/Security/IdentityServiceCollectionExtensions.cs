@@ -28,8 +28,6 @@ public static class IdentityServiceCollectionExtensions
         string clientId = configuration["Authentication:LoginPurpose:Google:ClientId"] ?? throw new ArgumentNullException("Null ClientId");
 
         string clientSecret = configuration["Authentication:LoginPurpose:Google:ClientSecret"] ?? throw new ArgumentNullException("Null ClientSecret");
-        Console.WriteLine("Client ID: " + clientId);
-        Console.WriteLine("Client Secret: " + clientSecret);
 
         services.AddAuthentication(options =>
         {
@@ -47,30 +45,6 @@ public static class IdentityServiceCollectionExtensions
                     options.SignInScheme = IdentityConstants.ExternalScheme;
                     options.Events.OnCreatingTicket = (context) =>
                     {
-                        Console.WriteLine("\n==== EVENT DONE GOOGLE REDIRECTION - GOOGLE ON CREATING TICKET ====");
-                        Console.WriteLine("\nToken Google Endpoint: " + options.TokenEndpoint //The google handler will automatically request the token from the token endpoint by using the code, state, clientId, ClientSecret, RedirectUri
-                                        + "\nAuthorization Endpoint: " + options.AuthorizationEndpoint
-                                        + "\nUserInformation Endpoint: " + options.UserInformationEndpoint);
-                        Console.WriteLine("\n---> ClaimActions");
-                        foreach (var s in options.ClaimActions)
-                        {
-                            Console.WriteLine("Claim action type: " + s.ClaimType);
-                        }
-                        Console.WriteLine("\nAccessToken: " + context.AccessToken);
-                        Console.WriteLine("\nRefreshToken: " + context.RefreshToken);
-                        Console.WriteLine("\nTokenResponse: " + context.TokenResponse + " Context Token Type: " + context.TokenType);
-                        Console.WriteLine("\nContext User: " + context.User.GetRawText());
-                        Console.WriteLine("\n---> Request Query Values: ");
-                        foreach (var s in context.HttpContext.Request.Query)
-                        {
-                            Console.WriteLine("Query Key: " + s.Key + " - Value: " + s.Value);
-                        }
-                        Console.WriteLine("\n---> User Claims");
-                        foreach (var s in context.User.ToClaims())
-                        {
-                            Console.WriteLine("Claim type: " + s.Type + " - Value: " + s.Value);
-                        }
-
                         return Task.CompletedTask;
                     };
 
@@ -136,7 +110,7 @@ public static class IdentityServiceCollectionExtensions
 
         services.Configure<DataProtectionTokenProviderOptions>(options =>
         {
-            options.TokenLifespan = TimeSpan.FromHours(tokenLifespan);
+            options.TokenLifespan = TimeSpan.FromMinutes(emailTokenLifespan);
         });
 
         services.Configure<EmailConfirmationTokenProviderOptions>(options =>
@@ -145,17 +119,22 @@ public static class IdentityServiceCollectionExtensions
         });
 
 
+
         services.Configure<IdentityOptions>(options =>
         {
-            options.Tokens.EmailConfirmationTokenProvider = MyNewEmailTokenProviderName;
-
+            options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultPhoneProvider;
             //Default Lockout settings
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(defaultLockoutTimeSpan);
             options.Lockout.MaxFailedAccessAttempts = 3;
             options.Lockout.AllowedForNewUsers = true;
+            options.Tokens.ProviderMap.Add("CustomEmailConfirmation", new TokenProviderDescriptor(
+                typeof(EmailConfirmationTokenProvider<User>)));
+            options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
 
 
         });
+
+
 
         services.Configure<PasswordOptions>(options =>
         {
@@ -184,11 +163,13 @@ public static class IdentityServiceCollectionExtensions
             options.SignIn.RequireConfirmedEmail = false;
             options.SignIn.RequireConfirmedPhoneNumber = false;
             options.SignIn.RequireConfirmedAccount = false;
-
             options.User.RequireUniqueEmail = true;
+            
+            
 
-            options.Tokens.EmailConfirmationTokenProvider = MyNewEmailTokenProviderName; //or you default
         });
+
+
     }
 
 

@@ -37,7 +37,6 @@
     <Folder Include="Order\Services\" />
     <Folder Include="UserApplication\Commands\" />
     <Folder Include="UserApplication\Queries\" />
-    <Folder Include="UserIdentity\Commands\ForgotPassword\" />
     <Folder Include="UserIdentity\Commands\ResetPassword\" />
     <Folder Include="UserIdentity\Commands\SignOut\" />
     <Folder Include="Weather\Services\" />

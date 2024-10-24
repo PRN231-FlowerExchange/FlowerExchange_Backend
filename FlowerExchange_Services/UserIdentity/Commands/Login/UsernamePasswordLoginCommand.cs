@@ -97,7 +97,7 @@ namespace Application.UserIdentity.Commands.Login
             }
             else
             {
-                throw new BadHttpRequestException("Login failed ! Username or password is incorrect!");
+                throw new BadRequestException("Login failed ! Username or password is incorrect!");
             }
             
         }

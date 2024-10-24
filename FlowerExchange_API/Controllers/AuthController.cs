@@ -1,5 +1,6 @@
 ﻿using Application.UserIdentity.Commands.ConfirmEmail;
 using Application.UserIdentity.Commands.ExternalLogin;
+using Application.UserIdentity.Commands.ForgotPassword;
 using Application.UserIdentity.Commands.Login;
 using Application.UserIdentity.Commands.RefreshUserAccessToken;
 using Application.UserIdentity.Commands.Register;
@@ -87,7 +88,22 @@ namespace Presentation.Controllers
             
         }
 
-      
+        [HttpPost("send-email-reset-password-code")]
+        public async Task<IActionResult> SendEmaiResetPasswordCode(SendEmailResetPasswordCodeCommand command)
+        {
+            await Mediator.Send(command);
+            return Ok("Code has been sent already");
+
+        }
+
+        [HttpPost("verify-reset-password-code")]
+        public async Task<IActionResult> VeriryEmaiResetPasswordCode(VerifyResetPasswordCodeCommand command)
+        {
+           bool success = await Mediator.Send(command);
+           return Ok("Verify reset password code success");
+        }
+
+
 
 
 
