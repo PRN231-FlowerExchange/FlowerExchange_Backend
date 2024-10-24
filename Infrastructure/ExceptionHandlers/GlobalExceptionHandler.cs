@@ -34,11 +34,10 @@ namespace Infrastructure.ExceptionHandlers
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
                 { typeof(UnauthorizedAccessException), HandleUnAuthorizeException },
-                //{ typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+                { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
                 { typeof(BadRequestException), HandleBadRequestException },
             };
         }
-
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
@@ -208,6 +207,26 @@ namespace Infrastructure.ExceptionHandlers
                 Status = (int)HttpStatusCode.Unauthorized,
                 Title = "Unauthorized",
                 Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.5"
+            };
+
+            problemDetails.Extensions.Add("message", exception.Message);
+
+            response.ContentType = "application/problem+json";
+            response.StatusCode = problemDetails.Status.Value;
+
+            await response.WriteAsJsonAsync(problemDetails);
+        }
+
+        private async Task HandleForbiddenAccessException(HttpContext context, Exception exception)
+        {
+            var response = context.Response;
+            var problemDetails = new ProblemDetails
+            {
+                Detail = exception.Message ?? "Forbidden",
+                Instance = null,
+                Status = (int)HttpStatusCode.Forbidden,
+                Title = "Forbidden",
+                Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3"
             };
 
             problemDetails.Extensions.Add("message", exception.Message);
