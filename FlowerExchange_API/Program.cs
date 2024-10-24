@@ -146,14 +146,14 @@ var app = builder.Build();
 //Initialize data
 InitialiserExtensions.InitialiseDatabaseAsync(app);
 
-if(app.Environment.IsDevelopment())
-{
+//if(app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
     });
-}
+//}
 
 app.UseExceptionHandler(error =>
 {
