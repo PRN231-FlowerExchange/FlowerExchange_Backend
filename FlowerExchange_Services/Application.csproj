@@ -39,8 +39,13 @@
     <Folder Include="UserApplication\Queries\" />
     <Folder Include="UserIdentity\Commands\ResetPassword\" />
     <Folder Include="UserIdentity\Commands\SignOut\" />
+    <Folder Include="Wallet\Commands\" />
     <Folder Include="Weather\Services\" />
     <Folder Include="UserApplication\Services\" />
+    <Folder Include="Wallet\Services\" />
+    <Folder Include="SystemUser\Commands\" />
+    <Folder Include="SystemUser\Services\" />
+    <Folder Include="SystemUser\Queries\" />
     <Folder Include="UserWallet\Commands\" />
     <Folder Include="UserWallet\Services\" />
   </ItemGroup>
