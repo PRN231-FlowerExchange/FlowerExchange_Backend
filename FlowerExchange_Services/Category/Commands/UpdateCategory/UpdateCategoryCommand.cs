@@ -1,5 +1,4 @@
-﻿using Application.Post.DTOs;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Commons.BaseRepositories;
 using Domain.Constants.Enums;
 using Domain.Entities;

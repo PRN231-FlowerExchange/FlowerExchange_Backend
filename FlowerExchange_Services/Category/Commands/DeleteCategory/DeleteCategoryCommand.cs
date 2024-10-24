@@ -36,7 +36,6 @@ namespace Application.Category.Commands.DeleteCategory
             // Đổi trạng thái của danh mục sang Inactive
             category.Status = CategoryStatus.Inactive;
 
-            await _categoryRepository.UpdateAsync(category);
             await _unitOfWork.SaveChangesAsync();
 
             return category.Id;
