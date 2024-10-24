@@ -27,6 +27,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using IdentityModel.Client;
 using Infrastructure.Security;
+using Domain.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -163,6 +164,7 @@ app.UseExceptionHandler(error =>
         var exception = (context.Features.Get<IExceptionHandlerFeature>()?.Error);
     });
 });
+
 
 app.UseCors("AllowAnyOrigin");
 

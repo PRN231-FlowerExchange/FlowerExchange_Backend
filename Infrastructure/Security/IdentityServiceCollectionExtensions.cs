@@ -6,6 +6,7 @@ using Infrastructure.Security.TokenProvider;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,9 +33,21 @@ public static class IdentityServiceCollectionExtensions
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
         })
-                .AddJwtBearer()
+                .AddJwtBearer(options =>
+                {
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnChallenge = context =>
+                        {
+                            // Không tự động trả về lỗi 403
+                            context.HandleResponse();
+
+                            // Trả về lỗi 401 Unauthorized khi không có JWT hoặc không hợp lệ
+                            throw new UnauthorizedAccessException("Unauthorized. You need to log in to access this resource.");
+                        }
+                    };
+                })
                 .AddGoogle(options =>
                 {
                     options.ClientId = configuration["Authentication:LoginPurpose:Google:ClientId"];
