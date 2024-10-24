@@ -104,7 +104,7 @@ namespace Application.UserIdentity.Commands.Login
                   new Claim(ClaimTypes.Name, user.Email)
             };
 
-            var accessToken = _jwtTokenService.GenerateAccessToken(claims, TokenConstants.ACCESS_TOKEN_PERIOD_MINISECOND);
+            var accessToken = _jwtTokenService.GenerateAccessToken(claims, TokenConstants.ACCESS_TOKEN_PERIOD_MINISECOND * 100);
             var refreshToken = _jwtTokenService.GenerateRefreshToken(TokenConstants.REFRESH_TOKEN_PERIOD_MINISECOND);
             AuthenticatedToken authenticatedToken = new AuthenticatedToken()
             {

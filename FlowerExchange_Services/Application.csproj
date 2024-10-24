@@ -44,10 +44,10 @@
     <Folder Include="UserIdentity\Commands\ForgotPassword\" />
     <Folder Include="UserIdentity\Commands\ResetPassword\" />
     <Folder Include="UserIdentity\Commands\SignOut\" />
+    <Folder Include="Wallet\Commands\" />
     <Folder Include="Weather\Services\" />
     <Folder Include="UserApplication\Queries\" />
     <Folder Include="UserApplication\Services\" />
-    <Folder Include="Wallet\Commands\" />
     <Folder Include="Wallet\Services\" />
     <Folder Include="SystemUser\Commands\" />
     <Folder Include="SystemUser\Services\" />

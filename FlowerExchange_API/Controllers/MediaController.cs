@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/media")]
     public class MediaController : APIControllerBase
     {
         private readonly ILogger<MediaController> _logger;

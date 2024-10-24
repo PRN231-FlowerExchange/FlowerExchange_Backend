@@ -17,6 +17,9 @@ using Persistence;
 using Presentation.OptionsSetup;
 
 using System.Reflection;
+using Domain.Payment;
+using Infrastructure.Payment;
+using Domain.Payment.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -101,6 +104,13 @@ string connectionString = builder.Configuration.GetConnectionString("FlowerExcha
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration, connectionString, Assembly.GetExecutingAssembly().GetName().Name);
 builder.Services.AddInfrastructureServices();
+
+// VNPAY service
+builder.Services.AddScoped<IVNPAYService, VNPAYService>();
+
+// Momo service
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
 
 //// Retrieve Firebase credentials from the environment variable
 //string credentialsPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS");
