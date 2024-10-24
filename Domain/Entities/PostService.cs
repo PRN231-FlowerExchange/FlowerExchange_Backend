@@ -19,6 +19,6 @@ namespace Domain.Entities
 
         public virtual ServiceOrder? ServiceOrder { get; set; }
 
-
+        public DateTime ExpiredAt { get; set; }
     }
 }

@@ -5,9 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Application.Post.DTOs;
+using Application.PostFlower.DTOs;
+using Application.UserIdentity.DTOs;
 
-namespace Application.UserStore.DTOs
+namespace Application.UserApplication.DTOs
 {
     public class StoreModel
     {
@@ -21,7 +22,7 @@ namespace Application.UserStore.DTOs
 
         public Guid OwnerId { get; set; }
 
-        public UserModel Owner { get; set; }
+       // public UserModel Owner { get; set; }
 
         public List<PostModel>? Posts { get; set; }
 

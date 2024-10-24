@@ -4,6 +4,7 @@ using Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace Persistence.RepositoryAdapter
         {
             try
             {
-                if(!_context.Wallets.Any())
+                if (!_context.Wallets.Any())
                 {
                     return null;
                 }

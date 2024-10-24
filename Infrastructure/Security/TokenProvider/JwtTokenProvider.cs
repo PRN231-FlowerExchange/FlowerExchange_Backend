@@ -1,5 +1,5 @@
-﻿using Domain.Constants;
-using Domain.Security.JwtTokenService;
+﻿using Application.Services.JwtTokenService;
+using Domain.Constants;
 using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

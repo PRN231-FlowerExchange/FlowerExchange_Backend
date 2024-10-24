@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities;
+using Domain.Repository;
+using System.Data.Entity.Validation;
 
 namespace Persistence.RepositoryAdapter
 {
@@ -23,7 +26,7 @@ namespace Persistence.RepositoryAdapter
         public async Task<List<PostService>> GetPostServicesByPostIdAndServiceIdsAndStatus(Guid postId, List<Guid> serviceIds, PostServiceStatus postServiceStatus)
         {
             var postServices = new List<PostService>();
-            if(!await _context.PostServices.AnyAsync())
+            if (!await _context.PostServices.AnyAsync())
                 return postServices;
             try
             {
@@ -40,6 +43,43 @@ namespace Persistence.RepositoryAdapter
                 throw new Exception(ex.Message);
             }
             return postServices;
+        }
+
+        public async Task DeleteRangeAsync(List<PostService> entityList)
+        {
+            try
+            {
+                if (entityList == null)
+                    throw new ArgumentNullException(nameof(entityList));
+                if (entityList.Any())
+                    _dbContext.RemoveRange(entityList);
+
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                throw new Exception("Fail", dbEx);
+            }
+        }
+
+        public async Task<IEnumerable<PostService>> GetByPostIdAsync(Guid postId)
+        {
+            return _dbContext.PostServices.Where(p => p.PostId.Equals(postId));
+        }
+
+        public async Task InsertRangeAsync(List<PostService> listPostService)
+        {
+            try
+            {
+                if (listPostService == null)
+                    throw new ArgumentNullException(nameof(listPostService));
+
+                if (listPostService.Any())
+                    await _dbContext.PostServices.AddRangeAsync(listPostService);
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                throw new Exception("Add fail", dbEx);
+            }
         }
     }
 }

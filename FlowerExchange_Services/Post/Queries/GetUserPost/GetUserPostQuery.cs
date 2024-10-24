@@ -1,4 +1,4 @@
-﻿using Application.Post.DTOs;
+﻿using Application.PostFlower.DTOs;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Exceptions;

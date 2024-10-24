@@ -5,6 +5,8 @@ namespace Domain.Entities
 {
     public class Post : BaseEntity<Post, Guid>
     {
+        public Guid Id { get; set; }
+
         public string Title { get; set; }
 
         public string Description { get; set; }
@@ -15,7 +17,7 @@ namespace Domain.Entities
 
         public DateTime ExpiredAt { get; set; }
 
-        public PostStatus PostStatus { get; set; }
+        public PostStatus PostStatus { get; set; } //tinh trang bai post góc nhìn admin bài post được activated
 
         public List<string> ImageUrls { get; set; } = new List<string>();
 
@@ -23,7 +25,7 @@ namespace Domain.Entities
 
         public string MainImageUrl { get; set; }
 
-        public virtual ICollection<PostCategory> PostCategories { get; set; }
+        public virtual ICollection<PostCategory> PostCategories { get; set; } //tập trung các category mà hoa của bài post thuộc về
 
         public virtual ICollection<Report> Reports { get; set; }
 

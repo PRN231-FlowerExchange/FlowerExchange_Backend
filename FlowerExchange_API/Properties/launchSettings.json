@@ -19,7 +19,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-        "applicationUrl": "https://localhost:7246;http://localhost:5223;https://flowerexchange.azurewebsites.net"
+        "applicationUrl": "https://localhost:7246;https://flowerexchange.azurewebsites.net"
     },
     "IIS Express": {
       "commandName": "IISExpress",
