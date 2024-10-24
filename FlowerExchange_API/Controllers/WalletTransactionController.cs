@@ -1,5 +1,6 @@
-﻿using Application.Wallet.Queries.GetAllWalletTransactionQuery;
-using Application.Wallet.Queries.GetDetailWalletTransactionQuery;
+﻿
+using Application.UserWallet.Queries.GetAllWalletTransactionQuery;
+using Application.UserWallet.Queries.GetDetailWalletTransactionQuery;
 using Domain.Entities;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;

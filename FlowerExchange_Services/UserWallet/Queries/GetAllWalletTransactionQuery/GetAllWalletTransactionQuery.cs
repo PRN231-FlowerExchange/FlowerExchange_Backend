@@ -1,5 +1,4 @@
-﻿using Application.Post.DTOs;
-using Application.Wallet.Queries.GetAllWalletTransactionQuery;
+﻿using Application.UserWallet.Queries.GetAllWalletTransactionQuery;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Exceptions;
@@ -13,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Wallet.Queries.GetAllWalletTransactionQuery
+namespace Application.UserWallet.Queries.GetAllWalletTransactionQuery
 {
     public class GetAllWalletTransactionQuery : IRequest<PagedList<WalletTransaction>>
     {

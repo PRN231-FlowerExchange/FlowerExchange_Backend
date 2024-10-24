@@ -1,5 +1,6 @@
 ﻿using Application.Services.JwtTokenService;
 using Application.UserIdentity.Commands.Register;
+using Application.UserIdentity.Services;
 using Domain.Commons.BaseRepositories;
 using Domain.Constants;
 using Domain.Entities;
@@ -39,6 +40,7 @@ namespace Application.UserIdentity.Commands.Login
         private readonly RoleManager<Role> _roleManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly SignInManager<User> _signInManager;
+        private readonly TokenFactory _tokenFactory;
        
         private readonly IJwtTokenProvider _jwtTokenService;
 
@@ -53,6 +55,7 @@ namespace Application.UserIdentity.Commands.Login
             _httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
             _signInManager = serviceProvider.GetRequiredService<SignInManager<User>>();
             _jwtTokenService = serviceProvider.GetRequiredService<IJwtTokenProvider>();
+            _tokenFactory = serviceProvider.GetRequiredService<TokenFactory>();
         }
         public async Task<AuthenticatedToken> Handle(UsernamePasswordLoginCommand request, CancellationToken cancellationToken)
         {
@@ -71,8 +74,11 @@ namespace Application.UserIdentity.Commands.Login
                 {
                     throw new NotFoundException(request.Email, nameof(User));
                 }
+                user.LastLogin = DateTime.UtcNow;
+                _unitofwork.SaveChanges();
 
-                AuthenticatedToken token =  await this.GenerateAuthenticatedSignInSuccess(user);
+                IList<string> roles = await _userManager.GetRolesAsync(user);
+                AuthenticatedToken token =  await _tokenFactory.GenerateAuthenticatedSignInSuccess(user, roles);
                 
                 await _userManager.SetAuthenticationTokenAsync(user, TokenConstants.TOKEN_LOGIN_PROVIDER_NAME, TokenConstants.REFRESH_TOKEN_NAME, token.RefreshToken);
                 return token;
@@ -94,31 +100,6 @@ namespace Application.UserIdentity.Commands.Login
                 throw new BadHttpRequestException("Login failed ! Username or password is incorrect!");
             }
             
-        }
-
-        private async Task<AuthenticatedToken> GenerateAuthenticatedSignInSuccess(User user)
-        {
-            IList<String> roles = await _userManager.GetRolesAsync(user);
-
-            List<Claim> claims = new List<Claim>() {
-                  new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                  new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
-                  new Claim(ClaimTypes.Name, user.Email),
-                  new Claim(ClaimTypes.GivenName, user.Fullname),
-            };
-            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
-
-
-            var accessToken = _jwtTokenService.GenerateAccessToken(claims, TokenConstants.ACCESS_TOKEN_PERIOD_MINISECOND);
-            var refreshToken = _jwtTokenService.GenerateRefreshToken(TokenConstants.REFRESH_TOKEN_PERIOD_MINISECOND);
-            AuthenticatedToken authenticatedToken = new AuthenticatedToken()
-            {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                TokenType = "Bearer"
-            };
-            return authenticatedToken;
         }
     }
 }

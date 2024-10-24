@@ -1,10 +1,9 @@
-﻿
-
-
 
 using Application.Category.DTOs;
-using Application.Post.DTOs;
-using Application.SystemUser.DTOs;
+﻿using Application.PostFlower.DTOs;
+using Application.UserApplication.DTOs;
+using Application.UserIdentity.DTOs;
+
 using Application.Weather.Commands.AddWeather;
 using Application.Weather.DTOs;
 using AutoMapper;
@@ -17,7 +16,7 @@ namespace Application.Common.Mappers
     {
         public MappingProfiles() {
 
-            CreateMap<User, UserModel>();
+            CreateMap<User, CurrentUserModel>();
             CreateMap<WeatherForecastDTO, WeatherForecast>().ReverseMap();
             CreateMap<Store, StoreDTO>().ReverseMap();
             CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap() ;
