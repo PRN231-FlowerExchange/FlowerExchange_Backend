@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.PostFlower.DTOs;
+using Application.UserIdentity.DTOs;
 
 namespace Application.UserApplication.DTOs
 {
@@ -21,7 +22,7 @@ namespace Application.UserApplication.DTOs
 
         public Guid OwnerId { get; set; }
 
-        public UserModel Owner { get; set; }
+       // public UserModel Owner { get; set; }
 
         public List<PostModel>? Posts { get; set; }
 

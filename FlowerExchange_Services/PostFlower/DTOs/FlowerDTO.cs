@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Post.DTOs
+namespace Application.PostFlower.DTOs
 {
     public class FlowerDTO
     {

@@ -1,6 +1,6 @@
 ﻿using Domain.Constants.Enums;
 
-namespace Application.Post.DTOs
+namespace Application.PostFlower.DTOs
 {
     public class PostDTO
     {

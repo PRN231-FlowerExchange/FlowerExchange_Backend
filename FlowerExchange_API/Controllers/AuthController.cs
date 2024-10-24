@@ -3,8 +3,11 @@ using Application.UserIdentity.Commands.Login;
 using Application.UserIdentity.Commands.RefreshUserAccessToken;
 using Application.UserIdentity.Commands.Register;
 using Application.UserIdentity.Commands.SendConfirmEmail;
+using Application.UserIdentity.DTOs;
+using Application.UserIdentity.Queries.CurrentUser;
 using Domain.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -48,6 +51,14 @@ namespace Presentation.Controllers
         public async Task<AuthenticatedToken> RefreshToken([FromBody] RefreshTokenCommand command)
         {
             return await this.Mediator.Send(command);
+        }
+
+
+        [HttpGet("current-user")]
+        [Authorize]
+        public async Task<CurrentUserModel> CurrentUser()
+        {
+            return await Mediator.Send(new CurrentUserQuery());
         }
 
 
