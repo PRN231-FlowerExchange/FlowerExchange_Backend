@@ -16,8 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Category\Commands\" />
-    <Folder Include="Category\Queries\" />
     <Folder Include="Category\Services\" />
     <Folder Include="Common\Services\" />
     <Folder Include="Post\Commands\" />
