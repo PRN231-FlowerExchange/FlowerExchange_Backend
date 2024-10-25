@@ -9,13 +9,19 @@
   <ItemGroup>
     <Compile Remove="Implements\**" />
     <Compile Remove="Interfaces\**" />
+    <Compile Remove="SystemUser\**" />
+    <Compile Remove="Wallet\**" />
     <EmbeddedResource Remove="Implements\**" />
     <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="SystemUser\**" />
+    <EmbeddedResource Remove="Wallet\**" />
     <None Remove="Implements\**" />
     <None Remove="Interfaces\**" />
     <Compile Remove="Payment\Commands\CreateFlowerServicePaymentTransactionCommand\**" />
     <EmbeddedResource Remove="Payment\Commands\CreateFlowerServicePaymentTransactionCommand\**" />
     <None Remove="Payment\Commands\CreateFlowerServicePaymentTransactionCommand\**" />
+    <None Remove="SystemUser\**" />
+    <None Remove="Wallet\**" />
   </ItemGroup>
 
   <ItemGroup>

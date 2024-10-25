@@ -1,6 +1,8 @@
 ﻿using Application.UserIdentity.Commands.ConfirmEmail;
 using Application.UserIdentity.Commands.ExternalLogin;
+using Application.UserIdentity.Commands.ForgotPassword;
 using Application.UserIdentity.Commands.Login;
+using Application.UserIdentity.Commands.Logout;
 using Application.UserIdentity.Commands.RefreshUserAccessToken;
 using Application.UserIdentity.Commands.Register;
 using Application.UserIdentity.Commands.SendConfirmEmail;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Presentation.Controllers
 {
@@ -66,28 +69,80 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("google-login")]
-        public async Task<IActionResult> LoginByGoogle([FromRoute(Name = "provider")] string externalLoginProvider = "Google")
+        public async Task<IActionResult> LoginByGoogle([FromQuery] string returnUrl, [FromQuery(Name = "provider")] string externalLoginProvider = "Google")
         {
-            string redirectUrl = Url.Action(nameof(this.CallbackWithExternalLoginProvider), "Auth");
-            AuthenticationProperties properties = await this.Mediator.Send(new ExternalLoginCommand() { AuthenticationScheme = externalLoginProvider, RedirectUrl = redirectUrl });
+            if(string.IsNullOrEmpty(returnUrl))
+            {
+                throw new BadHttpRequestException("returnUrl is required !");
+            }    
+            string redirectUrl = Url.Action(nameof(this.CallbackWithExternalLoginProvider), "Auth", new { returnUrl = returnUrl});
+            AuthenticationProperties properties = await this.Mediator.Send(new ExternalLoginRedirectQuery() { AuthenticationScheme = externalLoginProvider, RedirectUrl = redirectUrl });
             ChallengeResult challengeResult = Challenge(properties, externalLoginProvider);
             return challengeResult;//forward to the redirectUrl
         }
 
         [HttpGet("external-login-callback")]
-        public async Task<AuthenticatedToken> CallbackWithExternalLoginProvider() { 
-                return await Mediator.Send(new CallbackExternalLoginCommand());
+        public async Task<IActionResult> CallbackWithExternalLoginProvider([FromQuery] string returnUrl)
+        {
+            AuthenticatedToken token = await Mediator.Send(new CallbackExternalLoginCommand());
+
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                throw new BadHttpRequestException("returnUrl is required!");
+            }
+
+            IList<AuthenticationScheme> schemes = await Mediator.Send(new ExternalLoginProvidersQuery());
+
+            // Assuming tokens are obtained here after successful authentication
+            string accessToken = token.AccessToken;   // replace with actual access token
+            string refreshToken = token.RefreshToken; // replace with actual refresh token
+            string tokenType = token.TokenType;      // replace with actual token type
+
+            // Append tokens to the returnUrl
+            var redirectUrl = $"{returnUrl}?" +
+                              $"access_token={Uri.EscapeDataString(accessToken)}" +
+                              $"&refresh_token={Uri.EscapeDataString(refreshToken)}" +
+                              $"&token_type={Uri.EscapeDataString(tokenType)}";
+
+            return Redirect(redirectUrl);
+
         }
+
 
         [HttpGet("external-login-provider-options")]
         public async Task<IActionResult> GetExternalLoginProviderOptions()
         {
+            
             IList<AuthenticationScheme> schemes = await Mediator.Send(new ExternalLoginProvidersQuery());
             return Ok(schemes.Select(x => new { x.Name, }).ToList());
             
         }
 
-      
+
+        [HttpPost("send-email-reset-password-code")]
+        public async Task<IActionResult> SendEmaiResetPasswordCode(SendEmailResetPasswordCodeCommand command)
+        {
+            await Mediator.Send(command);
+            return Ok("Code has been sent already");
+
+        }
+
+        [HttpPut("verify-reset-password-code")]
+        public async Task<IActionResult> VeriryEmaiResetPasswordCode(VerifyResetPasswordCodeCommand command)
+        {
+           bool success = await Mediator.Send(command);
+           return Ok("Verify reset password code success");
+        }
+
+        [HttpGet("logout-current-user")]
+        [Authorize]
+        public async Task<IActionResult> LogoutCurrentUser()
+        {
+            await Mediator.Send(new RevokeTokenAfterLogOutCommand());
+            return Ok("Log Out Successfully");
+        }
+
+
 
 
 

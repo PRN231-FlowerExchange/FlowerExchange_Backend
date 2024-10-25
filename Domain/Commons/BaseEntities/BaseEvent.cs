@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Commons.BaseEntities
 {
-    public interface IEntityWitkKey<TKey> 
+    public abstract class BaseEvent : INotification
     {
-        TKey Id { get; set; }
+
     }
 }
