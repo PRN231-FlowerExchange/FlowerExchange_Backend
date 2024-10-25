@@ -2,6 +2,8 @@
 
 
 
+using Application.Conversation.DTOs;
+using Application.Message.DTOs;
 using Application.Post.DTOs;
 using Application.SystemUser.DTOs;
 using Application.Weather.Commands.AddWeather;
@@ -23,6 +25,10 @@ namespace Application.Common.Mappers
             CreateMap<CreatePostDTO, DomainEntities.Post>();
             CreateMap<FlowerDTO, Flower>().ReverseMap();
             CreateMap<Domain.Entities.Post, AllPostDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Conversation, ConversationDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Message, MessageDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Message, MessageThreadDTO>().ReverseMap();
+
         }
     }
 }

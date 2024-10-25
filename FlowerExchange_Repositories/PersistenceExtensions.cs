@@ -50,7 +50,11 @@ public static class PersistenceExtensions
                 .AddScoped<IPostRepository, PostRepository>()
                 .AddScoped<IWalletTransactionRepository, WalletTransactionRepository>()
                 .AddScoped(typeof(IFlowerRepository), typeof(FlowerRepository))
+                .AddScoped(typeof(IConversationRepository), typeof(ConversationRepository))
+                .AddScoped(typeof(IMessageRepository), typeof(MessageRepository))
+                .AddScoped(typeof(IUserConversationRepository), typeof(UserConversationRepository))
                 .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
+
 
 
         //.AddScoped(typeof(IUserRepository), typeof(UserRepository))

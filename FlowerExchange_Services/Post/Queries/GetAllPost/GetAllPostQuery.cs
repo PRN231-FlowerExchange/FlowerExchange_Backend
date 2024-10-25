@@ -21,8 +21,6 @@ namespace Application.Post.Queries.GetAllPost
         {
             PostParameters = postParameters;
         }
-
-
     }
     public class GetAllPostQueryHandler : IRequestHandler<GetAllPostQuery, PagedList<AllPostDTO>>
     {
