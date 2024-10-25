@@ -51,6 +51,7 @@ namespace Presentation.Controllers
             }
         }
 
+        [HttpPost("active-service-to-post")]
         public async Task<IActionResult> ActiveService([FromBody] ActiveServiceCommand command)
         {
             try

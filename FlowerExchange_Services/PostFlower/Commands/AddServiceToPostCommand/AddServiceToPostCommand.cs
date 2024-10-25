@@ -15,7 +15,6 @@ namespace Application.PostFlower.Commands.AddServiceToPostCommand
     {
         public Guid PostId { get; set; }
         public List<Guid> ListServices { get; set; }
-        public int ServiceDay { get; set; }
     }
 
     public class AddServicePostCommandHandle : IRequestHandler<AddServiceToPostCommand, PostViewDTO>
