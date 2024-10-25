@@ -48,7 +48,6 @@
     <Folder Include="Weather\Services\" />
     <Folder Include="UserApplication\Services\" />
     <Folder Include="UserWallet\Commands\" />
-    <Folder Include="UserWallet\Services\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,6 +4,7 @@ using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using Domain.Security.Identity;
+using Duende.IdentityServer.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
