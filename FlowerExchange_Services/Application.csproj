@@ -13,6 +13,9 @@
     <EmbeddedResource Remove="Interfaces\**" />
     <None Remove="Implements\**" />
     <None Remove="Interfaces\**" />
+    <Compile Remove="Payment\Commands\CreateFlowerServicePaymentTransactionCommand\**" />
+    <EmbeddedResource Remove="Payment\Commands\CreateFlowerServicePaymentTransactionCommand\**" />
+    <None Remove="Payment\Commands\CreateFlowerServicePaymentTransactionCommand\**" />
   </ItemGroup>
 
   <ItemGroup>

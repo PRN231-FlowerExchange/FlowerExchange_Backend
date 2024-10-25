@@ -17,5 +17,7 @@ namespace Domain.Repository
         Task<Post> GetPostsByIdAsync(Guid id);
         Task<List<Post>> GetTopActivePostsWithNonExpiredServices(Post entity, int currentPage, int pageSize, int top);
         Task<PagedList<Post>> GetAllPostAsync(PostParameters postParameters);
+        
+        Task<Post?> GetPostByIdWithFlowerAsync(Guid id);
     }
 }

@@ -16,21 +16,19 @@ namespace Persistence.RepositoryAdapter
 {
     public class PostServiceRepository : RepositoryBase<PostService, Guid>, IPostServiceRepository
     {
-        private readonly FlowerExchangeDbContext _context;
 
         public PostServiceRepository(IUnitOfWork<FlowerExchangeDbContext> unitOfWork) : base(unitOfWork)
         {
-            _context = unitOfWork.Context;
         }
 
         public async Task<List<PostService>> GetPostServicesByPostIdAndServiceIdsAndStatus(Guid postId, List<Guid> serviceIds, PostServiceStatus postServiceStatus)
         {
             var postServices = new List<PostService>();
-            if (!await _context.PostServices.AnyAsync())
+            if (!await _dbContext.PostServices.AnyAsync())
                 return postServices;
             try
             {
-                postServices = await _context.PostServices
+                postServices = await _dbContext.PostServices
                     .Include(ps => ps.Post)
                     .Include(ps => ps.Service)
                     .Where(ps => ps.PostId.Equals(postId))

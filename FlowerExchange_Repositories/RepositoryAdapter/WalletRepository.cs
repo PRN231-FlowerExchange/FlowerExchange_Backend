@@ -12,22 +12,20 @@ namespace Persistence.RepositoryAdapter
 {
     public class WalletRepository : RepositoryBase<Wallet, Guid>, IWalletRepository
     {
-        private readonly FlowerExchangeDbContext _context;
 
         public WalletRepository(IUnitOfWork<FlowerExchangeDbContext> unitOfWork) : base(unitOfWork)
         {
-            _context = unitOfWork.Context;
         }
 
         public async Task<Wallet?> GetByUserId(Guid userId)
         {
             try
             {
-                if (!_context.Wallets.Any())
+                if (!_dbContext.Wallets.Any())
                 {
                     return null;
                 }
-                return await _context.Users
+                return await _dbContext.Users
                     .Where(u => u.Id.Equals(userId))
                     .Select(u => u.Wallet)
                     .FirstOrDefaultAsync();
