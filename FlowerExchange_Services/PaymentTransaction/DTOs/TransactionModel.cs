@@ -1,5 +1,5 @@
 ﻿using Application.Order.DTOs;
-using Application.Wallet.DTOs;
+using Application.UserWallet.DTOs;
 using Domain.Constants.Enums;
 using System;
 using System.Collections.Generic;

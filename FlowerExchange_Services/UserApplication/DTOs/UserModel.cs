@@ -2,7 +2,7 @@
 using Application.Order.DTOs;
 using Application.PostFlower.DTOs;
 using Application.Report.DTOs;
-using Application.Wallet.DTOs;
+using Application.UserWallet.DTOs;
 using Domain.Constants.Enums;
 
 

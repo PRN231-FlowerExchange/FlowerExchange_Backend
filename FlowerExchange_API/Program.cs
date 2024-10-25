@@ -17,7 +17,17 @@ using Persistence;
 using Presentation.OptionsSetup;
 
 using System.Reflection;
+using Domain.Payment;
+using Infrastructure.Payment;
+using Domain.Payment.Models;
 using Application;
+using Microsoft.AspNetCore.Authentication.Google;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using IdentityModel.Client;
+using Infrastructure.Security;
+using Domain.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,11 +37,9 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddHttpContextAccessor();
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
-
+//Allow Cors Origin
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",
@@ -43,8 +51,7 @@ builder.Services.AddCors(options =>
                   .AllowAnyMethod();
         });
 });
-
-
+//Swagger Configuration
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -73,7 +80,6 @@ builder.Services.AddSwaggerGen(c =>
             new List<string>()
         }
     });
-
     // Define multiple server URLs for Swagger
     c.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
     {
@@ -93,15 +99,20 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Local Development Server (HTTP)"
     });
 });
-
-
-
+//Add Exception Handler
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-
+//Add Other File Configuration
 string connectionString = builder.Configuration.GetConnectionString("FlowerExchangeDB") ?? throw new ArgumentNullException("NUL CONECTION");
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration, connectionString, Assembly.GetExecutingAssembly().GetName().Name);
-builder.Services.AddInfrastructureServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
+// VNPAY service
+builder.Services.AddScoped<IVNPAYService, VNPAYService>();
+
+// Momo service
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
 
 //// Retrieve Firebase credentials from the environment variable
 //string credentialsPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS");
@@ -126,26 +137,23 @@ Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", tempFilePat
 
 // Register the Firebase storage service
 builder.Services.AddSingleton<IFirebaseStorageService>(s => new FirebaseStorageService(StorageClient.Create()));
+
 builder.Services.ConfigureOptions<JwtConfigOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 builder.Services.ConfigureOptions<EmailOptionsSetup>();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer();
-
 var app = builder.Build();
 
-//initial data
+//Initialize data
 InitialiserExtensions.InitialiseDatabaseAsync(app);
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{ 
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
-});
+//if(app.Environment.IsDevelopment())
+//{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
+    });
 //}
 
 app.UseExceptionHandler(error =>
@@ -156,6 +164,7 @@ app.UseExceptionHandler(error =>
         var exception = (context.Features.Get<IExceptionHandlerFeature>()?.Error);
     });
 });
+
 
 app.UseCors("AllowAnyOrigin");
 

@@ -1,4 +1,4 @@
-﻿using Application.Post.DTOs;
+﻿using Application.PostFlower.DTOs;
 using Application.Weather.Queries.GetWeather;
 using AutoMapper;
 using Domain.Entities;

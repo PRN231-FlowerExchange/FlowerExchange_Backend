@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Application.Post.DTOs
+namespace Application.PostFlower.DTOs
 {
     public class StoreDTO
     {

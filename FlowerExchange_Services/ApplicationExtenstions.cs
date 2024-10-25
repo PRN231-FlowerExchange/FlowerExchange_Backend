@@ -1,5 +1,8 @@
 ﻿using Application.Common.Behaviors;
 using Application.Services.EmailForIdentityService;
+using Application.UserIdentity.Services;
+using Application.UserWallet.Services;
+using Domain.Services.UserWallet;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +32,8 @@ public static class ApplicationExtenstions
         // Register pipeline behaviors
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         services.AddScoped<EmailForIdentityService>();
+        services.AddScoped<TokenFactory>();
+        services.AddScoped<IUserWalletService, UserWalletService>();
 
         return services;
     }

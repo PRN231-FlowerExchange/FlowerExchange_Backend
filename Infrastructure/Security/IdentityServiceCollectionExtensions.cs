@@ -1,14 +1,19 @@
 ﻿using Domain.Entities;
 using Domain.Security.Identity;
+using IdentityModel.Client;
 using Infrastructure.Security.Identity;
 using Infrastructure.Security.TokenProvider;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
+using System.Security.Claims;
 using System.Text;
 
 
@@ -18,6 +23,48 @@ namespace Infrastructure.Security;
 public static class IdentityServiceCollectionExtensions
 {
     private const string MyNewEmailTokenProviderName = "EmailConfirmation";
+
+    public static IServiceCollection AddAutheticationService(this IServiceCollection services, IConfiguration configuration)
+    {
+        string clientId = configuration["Authentication:LoginPurpose:Google:ClientId"] ?? throw new ArgumentNullException("Null ClientId");
+
+        string clientSecret = configuration["Authentication:LoginPurpose:Google:ClientSecret"] ?? throw new ArgumentNullException("Null ClientSecret");
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+                .AddJwtBearer(options =>
+                {
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnChallenge = context =>
+                        {
+                            // Không tự động trả về lỗi 403
+                            context.HandleResponse();
+
+                            // Trả về lỗi 401 Unauthorized khi không có JWT hoặc không hợp lệ
+                            throw new UnauthorizedAccessException("Unauthorized. You need to log in to access this resource.");
+                        }
+                    };
+                })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = configuration["Authentication:LoginPurpose:Google:ClientId"];
+                    options.ClientSecret = configuration["Authentication:LoginPurpose:Google:ClientSecret"];
+                    options.ClaimActions.MapJsonKey("picture", "picture");
+                    options.SaveTokens = true;
+                    options.CallbackPath = "/api/account/signin-google";
+                    options.SignInScheme = IdentityConstants.ExternalScheme;
+                    options.Events.OnCreatingTicket = (context) =>
+                    {
+                        return Task.CompletedTask;
+                    };
+
+                });
+        return services;
+    }
+
 
     public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services)
     {
@@ -76,7 +123,7 @@ public static class IdentityServiceCollectionExtensions
 
         services.Configure<DataProtectionTokenProviderOptions>(options =>
         {
-            options.TokenLifespan = TimeSpan.FromHours(tokenLifespan);
+            options.TokenLifespan = TimeSpan.FromMinutes(emailTokenLifespan);
         });
 
         services.Configure<EmailConfirmationTokenProviderOptions>(options =>
@@ -85,16 +132,22 @@ public static class IdentityServiceCollectionExtensions
         });
 
 
+
         services.Configure<IdentityOptions>(options =>
         {
-            options.Tokens.EmailConfirmationTokenProvider = MyNewEmailTokenProviderName;
-
+            options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultPhoneProvider;
             //Default Lockout settings
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(defaultLockoutTimeSpan);
             options.Lockout.MaxFailedAccessAttempts = 3;
             options.Lockout.AllowedForNewUsers = true;
+            options.Tokens.ProviderMap.Add("CustomEmailConfirmation", new TokenProviderDescriptor(
+                typeof(EmailConfirmationTokenProvider<User>)));
+            options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+
 
         });
+
+
 
         services.Configure<PasswordOptions>(options =>
         {
@@ -123,11 +176,12 @@ public static class IdentityServiceCollectionExtensions
             options.SignIn.RequireConfirmedEmail = false;
             options.SignIn.RequireConfirmedPhoneNumber = false;
             options.SignIn.RequireConfirmedAccount = false;
-
             options.User.RequireUniqueEmail = true;
+            
+            
 
-            options.Tokens.EmailConfirmationTokenProvider = MyNewEmailTokenProviderName; //or you default
         });
+
 
     }
 

@@ -9,7 +9,6 @@ using Application.Post.Queries.GetDetailPost;
 using Domain.Models;
 using Newtonsoft.Json;
 using Application.Post.Commands.CreatePost;
-using Application.Post.DTOs;
 using Application.Post.Queries.GetAllPost;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Domain.Exceptions;

@@ -9,15 +9,19 @@
   <ItemGroup>
     <Compile Remove="Implements\**" />
     <Compile Remove="Interfaces\**" />
+    <Compile Remove="SystemUser\**" />
+    <Compile Remove="Wallet\**" />
     <EmbeddedResource Remove="Implements\**" />
     <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="SystemUser\**" />
+    <EmbeddedResource Remove="Wallet\**" />
     <None Remove="Implements\**" />
     <None Remove="Interfaces\**" />
+    <None Remove="SystemUser\**" />
+    <None Remove="Wallet\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Category\Commands\" />
-    <Folder Include="Category\Queries\" />
     <Folder Include="Category\Services\" />
     <Folder Include="Common\Services\" />
     <Folder Include="Post\Commands\" />
@@ -38,25 +42,19 @@
     <Folder Include="Order\Queries\" />
     <Folder Include="Order\Services\" />
     <Folder Include="UserApplication\Commands\" />
-    <Folder Include="UserIdentity\DTOs\" />
-    <Folder Include="UserIdentity\Queries\" />
-    <Folder Include="UserIdentity\Commands\ForgotPassword\" />
+    <Folder Include="UserApplication\Queries\" />
     <Folder Include="UserIdentity\Commands\ResetPassword\" />
     <Folder Include="UserIdentity\Commands\SignOut\" />
     <Folder Include="Weather\Services\" />
-    <Folder Include="UserApplication\Queries\" />
     <Folder Include="UserApplication\Services\" />
-    <Folder Include="Wallet\Commands\" />
-    <Folder Include="Wallet\Services\" />
-    <Folder Include="SystemUser\Commands\" />
-    <Folder Include="SystemUser\Services\" />
-    <Folder Include="SystemUser\Queries\" />
+    <Folder Include="UserWallet\Commands\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="7.0.20" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

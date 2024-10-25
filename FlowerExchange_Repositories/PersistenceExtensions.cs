@@ -45,8 +45,6 @@ public static class PersistenceExtensions
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>))
-                //.AddScoped(typeof(IUserRepository), typeof(UserRepository))
-                //.AddScoped(typeof(IRoleRepository), typeof(RoleRepository))
                 .AddScoped(typeof(IUserRepository), typeof(UserRepository))
                 .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository))
                 .AddScoped(typeof(IPostRepository), typeof(PostRepossitory))
@@ -57,12 +55,17 @@ public static class PersistenceExtensions
                 .AddScoped<IWalletTransactionRepository, WalletTransactionRepository>()
                 .AddScoped(typeof(IFlowerRepository), typeof(FlowerRepository))
                 .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository))
-                .AddScoped(typeof(ICategoriesRepository), typeof(CategoryRepository));
+                .AddScoped(typeof(IWalletRepository), typeof(WalletRepository))
+                .AddScoped(typeof(ITransactionRepository), typeof(TransactionRepository))
+                .AddScoped(typeof(IPostServiceRepository), typeof(PostServiceRepository))
+                .AddScoped(typeof(IServiceOrderRepository), typeof(ServiceOrderRepository))
+                .AddScoped(typeof(ICategoriesRepository), typeof(CategoryRepository))
+                .AddScoped(typeof(IStoreRepository), typeof(StoreRepository))
+                .AddScoped(typeof(IWalletRepository), typeof(WalletRepository));
 
 
         //.AddScoped(typeof(IUserRepository), typeof(UserRepository))
         //.AddScoped(typeof(IRoleRepository), typeof(RoleRepository))
-        //.AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
 
 
 

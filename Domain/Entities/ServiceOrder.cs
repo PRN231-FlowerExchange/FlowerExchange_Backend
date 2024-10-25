@@ -14,7 +14,7 @@ namespace Domain.Entities
 
         public virtual User Buyer { get; set; }
 
-        public virtual ICollection<PostService> PostServices { get; set; }
+        public virtual ICollection<PostService>? PostServices { get; set; }
 
         public virtual ICollection<Transaction>? Transactions { get; set; }
     }
