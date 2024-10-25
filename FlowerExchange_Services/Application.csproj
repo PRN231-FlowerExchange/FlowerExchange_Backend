@@ -9,15 +9,19 @@
   <ItemGroup>
     <Compile Remove="Implements\**" />
     <Compile Remove="Interfaces\**" />
+    <Compile Remove="SystemUser\**" />
+    <Compile Remove="Wallet\**" />
     <EmbeddedResource Remove="Implements\**" />
     <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="SystemUser\**" />
+    <EmbeddedResource Remove="Wallet\**" />
     <None Remove="Implements\**" />
     <None Remove="Interfaces\**" />
+    <None Remove="SystemUser\**" />
+    <None Remove="Wallet\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Category\Commands\" />
-    <Folder Include="Category\Queries\" />
     <Folder Include="Category\Services\" />
     <Folder Include="Common\Services\" />
     <Folder Include="Post\Commands\" />
@@ -39,13 +43,11 @@
     <Folder Include="Order\Services\" />
     <Folder Include="UserApplication\Commands\" />
     <Folder Include="UserApplication\Queries\" />
-    <Folder Include="UserIdentity\Commands\ForgotPassword\" />
     <Folder Include="UserIdentity\Commands\ResetPassword\" />
     <Folder Include="UserIdentity\Commands\SignOut\" />
     <Folder Include="Weather\Services\" />
     <Folder Include="UserApplication\Services\" />
     <Folder Include="UserWallet\Commands\" />
-    <Folder Include="UserWallet\Services\" />
   </ItemGroup>
 
   <ItemGroup>

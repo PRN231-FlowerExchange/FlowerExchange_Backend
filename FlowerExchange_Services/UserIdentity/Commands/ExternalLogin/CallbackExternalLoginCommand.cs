@@ -57,51 +57,6 @@ namespace Application.UserIdentity.Commands.ExternalLogin
                 throw new ArgumentNullException("External Login Info is null");
             }
 
-            Console.WriteLine(
-             "\n\n==== External Login Information ==== "
-             + "\nProviderKey: " + externalLoginInfo.ProviderKey + "\n"
-             + "\nProviderDisplayName: " + externalLoginInfo.ProviderDisplayName + "\n"
-             + "\nLoginProvider: " + externalLoginInfo.LoginProvider + "\n"
-             + "\nPrincipal.Identity.Name: " + externalLoginInfo.Principal.Identity.Name + "\n"
-             + "\nPrincipal.Identity.AuthenticationType: " + externalLoginInfo.Principal.Identity.AuthenticationType + "\n"
-             + "\nIdentity.IsAuthenticated: " + externalLoginInfo.Principal.Identity.IsAuthenticated + "\n"
-             + "\nAuthenticationProperties.IsPersistent: " + externalLoginInfo.AuthenticationProperties.IsPersistent + "\n"
-             + "\nAuthenticationProperties.AllowRefresh: " + externalLoginInfo.AuthenticationProperties.AllowRefresh + "\n"
-             + "\nAuthenticationProperties.ExpiresUtc: " + externalLoginInfo.AuthenticationProperties.ExpiresUtc + "\n"
-             + "\nAuthenticationProperties.IssuedUtc: " + externalLoginInfo.AuthenticationProperties.IssuedUtc + "\n"
-             + "\nAuthenticationProperties.RedirectUri: " + externalLoginInfo.AuthenticationProperties.RedirectUri + "\n"
-             );
-
-            Console.WriteLine("\n==== External Login Info Principal Claims \n");
-            foreach (var claim in externalLoginInfo.Principal.Claims)
-            {
-                Console.WriteLine("Claim Type: " + claim.Type + " - Claim Value: " + claim.Value);
-            }
-            Console.WriteLine("\n==== External Login Info Authentication Tokens \n");
-            foreach (var token in externalLoginInfo.AuthenticationTokens)
-            {
-                Console.WriteLine("Token Name: " + token.Name + " - Token Value: " + token.Value);
-            }
-            Console.WriteLine("\n==== External Login Info Items \n");
-            foreach (var item in externalLoginInfo.AuthenticationProperties.Items)
-            {
-                Console.WriteLine("Item: " + item.Key + " - " + item.Value);
-            }
-            Console.WriteLine("\n==== External Login Info Client List \n");
-            foreach (var client in externalLoginInfo.AuthenticationProperties.GetClientList())
-            {
-                Console.WriteLine("Client: " + client);
-            }
-            Console.WriteLine("\n==== External Login Info Token List \n");
-            foreach (var token in externalLoginInfo.AuthenticationProperties.GetTokens())
-            {
-                Console.WriteLine("Token: " + token.Name + " - " + token.Value);
-            }
-
-            Console.WriteLine(
-            "\n\n==== END --- External Login Information ==== ");
-
-
            var accessToken = externalLoginInfo.AuthenticationTokens.FirstOrDefault(x => x.Name.Equals("access_token"));
 
             var info = new UserLoginInfo(externalLoginInfo.LoginProvider, externalLoginInfo.ProviderKey, externalLoginInfo.ProviderDisplayName);

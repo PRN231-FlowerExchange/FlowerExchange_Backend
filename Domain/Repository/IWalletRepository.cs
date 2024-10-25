@@ -10,6 +10,6 @@ namespace Domain.Repository
 {
     public interface IWalletRepository : IRepositoryBase<Wallet, Guid>
     {
-        
+        Task<Wallet?> GetByUserId(Guid userId);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Commons.BaseEntities
 {
-    public interface IEntityWitkKey<TKey>
+    public interface IEntityWitkKey<TKey> 
     {
         TKey Id { get; set; }
     }

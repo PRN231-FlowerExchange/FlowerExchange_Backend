@@ -18,11 +18,18 @@ namespace Infrastructure.Security.Identity
         IOptions<EmailConfirmationTokenProviderOptions> options, ILogger<DataProtectorTokenProvider<TUser>> logger)
         : base(dataProtectionProvider, options, logger)
         {
+            
         }
     }
 
+   
+
     public class EmailConfirmationTokenProviderOptions : DataProtectionTokenProviderOptions
     {
-
+        public EmailConfirmationTokenProviderOptions()
+        {
+            Name = "EmailDataProtectorTokenProvider";
+            TokenLifespan = TimeSpan.FromHours(4);
+        }
     }
 }

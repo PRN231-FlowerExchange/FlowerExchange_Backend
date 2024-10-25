@@ -1,6 +1,8 @@
 ﻿using Application.UserIdentity.Commands.ConfirmEmail;
 using Application.UserIdentity.Commands.ExternalLogin;
+using Application.UserIdentity.Commands.ForgotPassword;
 using Application.UserIdentity.Commands.Login;
+using Application.UserIdentity.Commands.Logout;
 using Application.UserIdentity.Commands.RefreshUserAccessToken;
 using Application.UserIdentity.Commands.Register;
 using Application.UserIdentity.Commands.SendConfirmEmail;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Presentation.Controllers
 {
@@ -69,7 +72,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> LoginByGoogle([FromRoute(Name = "provider")] string externalLoginProvider = "Google")
         {
             string redirectUrl = Url.Action(nameof(this.CallbackWithExternalLoginProvider), "Auth");
-            AuthenticationProperties properties = await this.Mediator.Send(new ExternalLoginCommand() { AuthenticationScheme = externalLoginProvider, RedirectUrl = redirectUrl });
+            AuthenticationProperties properties = await this.Mediator.Send(new ExternalLoginRedirectQuery() { AuthenticationScheme = externalLoginProvider, RedirectUrl = redirectUrl });
             ChallengeResult challengeResult = Challenge(properties, externalLoginProvider);
             return challengeResult;//forward to the redirectUrl
         }
@@ -87,7 +90,30 @@ namespace Presentation.Controllers
             
         }
 
-      
+        [HttpPost("send-email-reset-password-code")]
+        public async Task<IActionResult> SendEmaiResetPasswordCode(SendEmailResetPasswordCodeCommand command)
+        {
+            await Mediator.Send(command);
+            return Ok("Code has been sent already");
+
+        }
+
+        [HttpPut("verify-reset-password-code")]
+        public async Task<IActionResult> VeriryEmaiResetPasswordCode(VerifyResetPasswordCodeCommand command)
+        {
+           bool success = await Mediator.Send(command);
+           return Ok("Verify reset password code success");
+        }
+
+        [HttpGet("logout-current-user")]
+        [Authorize]
+        public async Task<IActionResult> LogoutCurrentUser()
+        {
+            await Mediator.Send(new RevokeTokenAfterLogOutCommand());
+            return Ok("Log Out Successfully");
+        }
+
+
 
 
 
