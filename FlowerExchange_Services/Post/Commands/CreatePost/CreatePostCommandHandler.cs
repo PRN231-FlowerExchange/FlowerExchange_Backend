@@ -1,13 +1,10 @@
-﻿using Application.Post.DTOs;
+﻿using Application.PostFlower.DTOs;
 using AutoMapper;
 using Domain.Commons.BaseRepositories;
-using Domain.Entities;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 using Domain.Repository;
-using DomainEntities = Domain.Entities; // Post bị tên namesapce nên đặt alias
+using MediatR;
 using Persistence;
+using DomainEntities = Domain.Entities; // Post bị tên namesapce nên đặt alias
 
 namespace Application.Post.Commands.CreatePost
 {
@@ -43,7 +40,7 @@ namespace Application.Post.Commands.CreatePost
 
             DomainEntities.Flower newFlower = _mapper.Map<DomainEntities.Flower>(request.CreatePostDTO.Flower);
             // Gắn flower vào post
-            newFlower.Post = newPost; 
+            newFlower.Post = newPost;
 
             // Thêm mới post và flower vào database
             await _postRepository.InsertAsync(newPost);

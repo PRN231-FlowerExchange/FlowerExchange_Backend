@@ -1,14 +1,16 @@
-﻿using Application.Post.Queries.GetDetailPost;
-using Domain.Entities;
+
+using Application.Post.Commands.CreatePost;
+using Application.Post.Queries.GetAllPost;
+using Application.Post.Queries.GetDetailPost;
+using Application.PostFlower.Commands.AddServiceToPostCommand;
+using Application.PostFlower.Commands.UpdatePostCommand;
+using Application.PostFlower.DTOs;
+using Application.PostFlower.Queries.GetPost;
+using Domain.Exceptions;
 using Domain.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Application.Post.Commands.CreatePost;
-using Application.Post.DTOs;
-using MediatR;
-using System.Threading.Tasks;
-using DomainEntities = Domain.Entities;
-using Application.Post.Queries.GetAllPost;
 
 namespace Presentation.Controllers
 {
@@ -85,6 +87,60 @@ namespace Presentation.Controllers
             var command = new CreatePostCommand(createPostDTO);
             Guid result = await _mediator.Send(command);
             return Ok(new { postId = result });
+        }
+
+        //[HttpPost(Name = "post")]
+        //public async Task<UpdatePostDTO> UpdatePost([FromBody] UpdatePostCommand command)
+        //{
+        //    return await Mediator.Send(command);
+        //}
+
+        [HttpPut(Name = "update-post")]
+        public async Task<PostUpdateDTO> UpdatePost([FromBody] UpdatePostCommand command) => await Mediator.Send(command);
+
+        // AddPostToService endpoint should have a unique name
+        [HttpPut("add-service")]
+        public async Task<PostViewDTO> AddServiceToPost([FromBody] AddServiceToPostCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        // Kept GetPost as POST with its own path
+        [HttpPost("list-view-post")]
+        public async Task<IActionResult> GetPost([FromBody] GetPostQuery query)
+        {
+            try
+            {
+                var response = await Mediator.Send(query);
+                return Ok(response);
+            }
+            catch (NotFoundException ex)
+            {
+                return StatusCode(200, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+
+        [HttpPost("list-top-post")]
+        public async Task<IActionResult> GetTopPost([FromBody] GetTopPostQuery query)
+        {
+            try
+            {
+                var response = await Mediator.Send(query);
+                return Ok(response);
+            }
+            catch (NotFoundException ex)
+            {
+                return StatusCode(200, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

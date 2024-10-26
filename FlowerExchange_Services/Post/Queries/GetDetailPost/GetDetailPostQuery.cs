@@ -1,18 +1,9 @@
-﻿using Application.Post.DTOs;
-using Application.Weather.Queries.GetWeather;
+﻿using Application.PostFlower.DTOs;
 using AutoMapper;
-using Domain.Entities;
 using Domain.Exceptions;
-using Domain.Models;
 using Domain.Repository;
 using MediatR;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Post.Queries.GetDetailPost
 {
@@ -47,7 +38,7 @@ namespace Application.Post.Queries.GetDetailPost
             {
                 var errorMessage = $"Post with Id: {request.Id} was not found.";
                 _logger.LogWarning(errorMessage);
-                throw new NotFoundException(errorMessage);  
+                throw new NotFoundException(errorMessage);
             }
             var response = _mapper.Map<PostDTO>(post);
             return response;

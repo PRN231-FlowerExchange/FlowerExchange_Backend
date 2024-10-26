@@ -1,10 +1,5 @@
 ﻿using Domain.Commons.BaseEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Commons.BaseRepositories
 {
@@ -12,7 +7,10 @@ namespace Domain.Commons.BaseRepositories
     {
         public Task<TEntity> FindAsync(Func<TEntity, bool> predicate);
         public Task<TEntity> FindByConditionAsync(Expression<Func<TEntity, bool>> predicate);
+        public Task<TEntity> FindAsyncWithIncludesAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
         public Task<IQueryable<TEntity>> FindAll(Func<TEntity, bool> predicate);
+
+        public IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate);
 
         public Task<IEnumerable<TEntity>> GetAllAsync();
         public Task<TEntity> GetByIdAsync(object id);
@@ -33,10 +31,15 @@ namespace Domain.Commons.BaseRepositories
         public Task<TEntity> AnyAsync(Func<TEntity, bool> predicate);
         public Task<int> CountAsync(Func<TEntity, bool> predicate);
         public Task<int> CountAsync();
-        public Task<TEntity> FistOrDefault(Func<TEntity, bool> predicate);
         public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
         public Task SaveChagesAysnc();
+
+        public Task<IEnumerable<TEntity>> GetAllWithIncludesAsync(params Expression<Func<TEntity, object>>[] includes);
+
+        public Task<IEnumerable<TEntity>> GetAllWithIncludesAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
+
+
 
     }
 }

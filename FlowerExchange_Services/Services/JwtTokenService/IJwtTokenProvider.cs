@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
 
 
-namespace Domain.Security.JwtTokenService
+namespace Application.Services.JwtTokenService
 {
-    public interface IJwtTokenProvider 
+    public interface IJwtTokenProvider
     {
         public string GenerateAccessToken(List<Claim> claims, int milisecondExpired);
         public string GenerateRefreshToken(int milisecondExpired);

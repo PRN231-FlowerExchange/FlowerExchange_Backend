@@ -1,12 +1,12 @@
 ﻿using Application.Conversation.DTOs;
 using Application.Order.DTOs;
-using Application.Post.DTOs;
+using Application.PostFlower.DTOs;
 using Application.Report.DTOs;
-using Application.Wallet.DTOs;
+using Application.UserWallet.DTOs;
 using Domain.Constants.Enums;
 
 
-namespace Application.UserStore.DTOs
+namespace Application.UserApplication.DTOs
 {
     public class UserModel
     {
@@ -38,13 +38,11 @@ namespace Application.UserStore.DTOs
 
         public RoleType Role { get; set; }
 
-        public StoreModel? Store { get; set; }
-
         public List<PostModel>? Posts { get; set; }
 
         public WalletModel? Wallet { get; set; }
 
-       // public List<UserConversationModel>? UserConversations { get; set; }
+        // public List<UserConversationModel>? UserConversations { get; set; }
 
         public List<MessageModel>? Messages { get; set; }
 

@@ -1,17 +1,9 @@
 ﻿using Application.Message.DTOs;
-using Application.Post.DTOs;
-using Application.Post.Queries.GetDetailPost;
 using AutoMapper;
 using Domain.Exceptions;
-using Domain.Models;
 using Domain.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Message.Queries.GetMessagesByConversationId
 {

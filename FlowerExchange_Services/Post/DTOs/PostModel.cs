@@ -1,5 +1,6 @@
 ﻿using Application.Category.DTOs;
 using Application.Report.DTOs;
+using Application.UserApplication.DTOs;
 using Application.UserStore.DTOs;
 using Domain.Constants.Enums;
 using System;

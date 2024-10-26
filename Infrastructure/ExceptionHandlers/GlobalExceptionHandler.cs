@@ -5,17 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SendGrid;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Infrastructure.ExceptionHandlers
 {
@@ -33,11 +23,12 @@ namespace Infrastructure.ExceptionHandlers
             {
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
-                //{ typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
-                //{ typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+                { typeof(UnauthorizedAccessException), HandleUnAuthorizeException },
+                { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+                { typeof(BadRequestException), HandleBadRequestException },
+                { typeof(ConflictException), HandleConflictException },
             };
         }
-
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
@@ -80,11 +71,11 @@ namespace Infrastructure.ExceptionHandlers
             var response = httpContext.Response;
             var problemDetails = new ProblemDetails
             {
-                Detail = exception.Message,
+                Detail = exception.Message ?? "Bad request",
                 Instance = null,
                 Status = (int)HttpStatusCode.BadRequest,
                 Title = "Bad Request",
-                Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4"
+                Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1"
             };
 
             problemDetails.Extensions.Add("message", exception.Message);
@@ -100,7 +91,7 @@ namespace Infrastructure.ExceptionHandlers
             var ex = (ValidationException)exception;
 
             var response = httpContext.Response;
-            
+
             var problemDetails = new ValidationProblemDetails(ex.Errors)
             {
                 Detail = ex.Message,
@@ -126,7 +117,7 @@ namespace Infrastructure.ExceptionHandlers
             _logger.LogError(exception, "[{Ticks}-{ThreadId}]", DateTime.UtcNow.Ticks, Environment.CurrentManagedThreadId);
 
             if (_options.DetailLevel != GlobalExceptionDetailLevel.Throw)
-            {            
+            {
 
                 var problemDetails = new ProblemDetails
                 {
@@ -146,7 +137,7 @@ namespace Infrastructure.ExceptionHandlers
                 await response.WriteAsJsonAsync(problemDetails);
             }
 
-            
+
         }
         private async Task HandleConflictException(HttpContext httpContext, Exception exception)
         {
@@ -195,6 +186,46 @@ namespace Infrastructure.ExceptionHandlers
                 //var result = JsonSerializer.Serialize(problemDetails);
                 await response.WriteAsJsonAsync(problemDetails);
             }
+        }
+
+        private async Task HandleUnAuthorizeException(HttpContext httpContext, Exception exception)
+        {
+            var response = httpContext.Response;
+            var problemDetails = new ProblemDetails
+            {
+                Detail = exception.Message ?? "Access Denied",
+                Instance = null,
+                Status = (int)HttpStatusCode.Unauthorized,
+                Title = "Unauthorized",
+                Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.5"
+            };
+
+            problemDetails.Extensions.Add("message", exception.Message);
+
+            response.ContentType = "application/problem+json";
+            response.StatusCode = problemDetails.Status.Value;
+
+            await response.WriteAsJsonAsync(problemDetails);
+        }
+
+        private async Task HandleForbiddenAccessException(HttpContext context, Exception exception)
+        {
+            var response = context.Response;
+            var problemDetails = new ProblemDetails
+            {
+                Detail = exception.Message ?? "Forbidden",
+                Instance = null,
+                Status = (int)HttpStatusCode.Forbidden,
+                Title = "Forbidden",
+                Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3"
+            };
+
+            problemDetails.Extensions.Add("message", exception.Message);
+
+            response.ContentType = "application/problem+json";
+            response.StatusCode = problemDetails.Status.Value;
+
+            await response.WriteAsJsonAsync(problemDetails);
         }
     }
 }

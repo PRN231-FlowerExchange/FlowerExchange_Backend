@@ -1,11 +1,7 @@
 ﻿using Domain.Commons.BaseRepositories;
-using Domain.Entities;
 using Domain.Repository;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Persistence.Interceptors;
 using Persistence.RepositoryAdapter;
@@ -45,23 +41,29 @@ public static class PersistenceExtensions
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>))
-
+                .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository))
+                .AddScoped(typeof(IPostRepository), typeof(PostRepossitory))
+                .AddScoped(typeof(IPostServiceRepository), typeof(PostServiceRepository))
+                .AddScoped(typeof(IServiceRepository), typeof(ServiceRepository))
                 .AddScoped(typeof(IUserRepository), typeof(UserRepository))
-                .AddScoped<IPostRepository, PostRepository>()
+                .AddScoped<IPostRepository, PostRepossitory>()
                 .AddScoped<IWalletTransactionRepository, WalletTransactionRepository>()
                 .AddScoped(typeof(IFlowerRepository), typeof(FlowerRepository))
                 .AddScoped(typeof(IConversationRepository), typeof(ConversationRepository))
                 .AddScoped(typeof(IMessageRepository), typeof(MessageRepository))
                 .AddScoped(typeof(IUserConversationRepository), typeof(UserConversationRepository))
-                .AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
+                .AddScoped(typeof(IWalletRepository), typeof(WalletRepository))
+                .AddScoped(typeof(ITransactionRepository), typeof(TransactionRepository))
+                .AddScoped(typeof(IServiceOrderRepository), typeof(ServiceOrderRepository))
+                .AddScoped(typeof(ICategoriesRepository), typeof(CategoryRepository))
+                .AddScoped(typeof(IStoreRepository), typeof(StoreRepository));
 
 
 
         //.AddScoped(typeof(IUserRepository), typeof(UserRepository))
         //.AddScoped(typeof(IRoleRepository), typeof(RoleRepository))
-        //.AddScoped(typeof(IWeatherForecastRepository), typeof(WeatherForecastRepository));
 
-               
+
 
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 

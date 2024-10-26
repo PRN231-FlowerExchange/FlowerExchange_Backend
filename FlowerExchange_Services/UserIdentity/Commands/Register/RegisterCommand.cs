@@ -1,17 +1,15 @@
 ﻿using Domain.Commons.BaseRepositories;
 using Domain.Constants.Enums;
 using Domain.Entities;
+using Domain.Events.UserEvents;
 using FluentValidation.Results;
 using MediatR;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Extensions;
 using Persistence;
-using Persistence.RepositoryAdapter;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using ValidationException = Domain.Exceptions.ValidationException;
 
 
@@ -38,6 +36,7 @@ namespace Application.UserIdentity.Commands.Register
         private readonly ILogger<RegisterCommand> _logger;
         private readonly IUnitOfWork<FlowerExchangeDbContext> _unitofwork;
         private readonly RoleManager<Role> _roleManager;
+        private readonly IPublisher _publisher; // or IMediator _mediator
 
 
         public RegisterCommandHandler(IServiceProvider serviceProvider)
@@ -47,6 +46,7 @@ namespace Application.UserIdentity.Commands.Register
             _logger = serviceProvider.GetRequiredService<ILogger<RegisterCommand>>();
             _unitofwork = serviceProvider.GetRequiredService<IUnitOfWork<FlowerExchangeDbContext>>();
             _roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
+            _publisher = serviceProvider.GetRequiredService<IPublisher>(); // Inject IPublisher
 
         }
         public async Task<string> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -92,14 +92,21 @@ namespace Application.UserIdentity.Commands.Register
                 }
 
                 // Retrieve saved user
-                var userSaved = await _userManager.FindByEmailAsync(request.Email);
+                User userSaved = await _userManager.FindByEmailAsync(request.Email);
 
                 // Add the user to the role
-               await _userManager.AddToRoleAsync(user, RoleType.Customer.GetDisplayName());
+                await _userManager.AddToRoleAsync(user, RoleType.Customer.GetDisplayName());
 
                 // Commit the transaction if everything succeeded
                 await _unitofwork.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync();
+
+                _logger.LogInformation("Publishing UserRegisteredCompleteEvent");
+                await _publisher.Publish(new UserRegisteredCompleteEvent(userSaved), cancellationToken);
+                //userSaved.AddDomainEvent(new UserRegisteredCompleteEvent(userSaved));
+                _logger.LogInformation("UserRegisteredCompleteEvent published");
+
+
 
                 return "Register successfully";
             }

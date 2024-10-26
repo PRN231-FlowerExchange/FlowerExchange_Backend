@@ -1,14 +1,9 @@
-﻿using Domain.Constants;
-using Domain.Security.JwtTokenService;
-using Microsoft.AspNet.Identity;
-using Microsoft.Extensions.Configuration;
+﻿using Application.Services.JwtTokenService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
-using System.CodeDom;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -47,9 +42,7 @@ namespace Infrastructure.Security.TokenProvider
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var JwtToken = tokenHandler.CreateToken(tokenDescriptor); //convert to jwt token format
-            //Console.WriteLine("SERIALIZE TOKEN " + JwtToken.ToString());
             var serializeTokenString = tokenHandler.WriteToken(JwtToken);
-            Console.WriteLine("SERIALIZE TOKEN " + serializeTokenString);
             return serializeTokenString;
         }
 

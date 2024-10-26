@@ -1,11 +1,6 @@
 ﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Commons.BaseEntities
 {
@@ -23,7 +18,7 @@ namespace Domain.Commons.BaseEntities
 
         public virtual DateTimeOffset? UpdatedAt { get; set; }
 
-        public virtual Guid? createById { get; set; }    
+        public virtual Guid? createById { get; set; }
 
         public virtual Guid? updateById { get; set; }
 
@@ -32,5 +27,23 @@ namespace Domain.Commons.BaseEntities
 
         [NotMapped]
         public virtual User? UpdatedBy { get; set; }
+
+        [NotMapped]
+        private readonly List<BaseEvent> _domainEvents = new();
+
+        public void AddDomainEvent(BaseEvent domainEvent)
+        {
+            _domainEvents.Add(domainEvent);
+        }
+
+        public void RemoveDomainEvent(BaseEvent domainEvent)
+        {
+            _domainEvents.Remove(domainEvent);
+        }
+
+        public void ClearDomainEvents()
+        {
+            _domainEvents.Clear();
+        }
     }
 }

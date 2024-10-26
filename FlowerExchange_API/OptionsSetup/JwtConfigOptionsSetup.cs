@@ -1,5 +1,4 @@
-﻿using Infrastructure.EmailProvider.Gmail;
-using Infrastructure.Security.TokenProvider;
+﻿using Infrastructure.Security.TokenProvider;
 using Microsoft.Extensions.Options;
 
 namespace Presentation.OptionsSetup
@@ -17,7 +16,7 @@ namespace Presentation.OptionsSetup
         {
             _configuration.GetSection(SectionName).Bind(options);
             options.JwtSecret = _configuration.GetValue<string>("JWTConfig:JwtSecret");
-            Console.WriteLine("SEECRETKEY ================= " +  options.JwtSecret);
+            Console.WriteLine("SEECRETKEY ================= " + options.JwtSecret);
 
         }
     }
