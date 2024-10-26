@@ -3,9 +3,9 @@ using Domain.Entities;
 using Domain.Models;
 using Domain.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Text;
-using System.Linq.Dynamic.Core;
 
 namespace Persistence.RepositoryAdapter
 {

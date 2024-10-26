@@ -41,12 +41,10 @@
     <Folder Include="Order\Commands\" />
     <Folder Include="Order\Queries\" />
     <Folder Include="Order\Services\" />
-    <Folder Include="UserApplication\Commands\" />
-    <Folder Include="UserApplication\Queries\" />
     <Folder Include="UserIdentity\Commands\ResetPassword\" />
     <Folder Include="UserIdentity\Commands\SignOut\" />
+    <Folder Include="UserStore\Services\" />
     <Folder Include="Weather\Services\" />
-    <Folder Include="UserApplication\Services\" />
     <Folder Include="UserWallet\Commands\" />
   </ItemGroup>
 

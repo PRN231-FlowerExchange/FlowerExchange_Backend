@@ -1,10 +1,7 @@
 ﻿using Application.PostFlower.DTOs;
 using Application.PostFlower.Queries.GetPostService;
 using Application.PostFlower.Queries.GetService;
-using Application.Weather.Queries.GetWeather;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -20,7 +17,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost(Name = "get-service")]
-        public async Task<List<PostService>> GetPostServiceByPostId([FromBody]GetPostServiceByPostIdQuery query)
+        public async Task<List<PostService>> GetPostServiceByPostId([FromBody] GetPostServiceByPostIdQuery query)
         {
             return await Mediator.Send(query);
         }

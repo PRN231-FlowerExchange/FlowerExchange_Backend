@@ -1,11 +1,8 @@
 
 using Application.Category.DTOs;
-﻿using Application.PostFlower.DTOs;
-using Application.UserApplication.DTOs;
+using Application.PostFlower.DTOs;
 using Application.UserIdentity.DTOs;
-
-using Application.Weather.Commands.AddWeather;
-using Application.Weather.DTOs;
+using Application.UserStore.DTOs;
 using AutoMapper;
 using Domain.Entities;
 using DomainEntities = Domain.Entities;
@@ -14,16 +11,32 @@ namespace Application.Common.Mappers
 {
     public class MappingProfiles : Profile
     {
-        public MappingProfiles() {
-
+        public MappingProfiles()
+        {
+            #region UserMappings
             CreateMap<User, CurrentUserModel>();
-            CreateMap<WeatherForecastDTO, WeatherForecast>().ReverseMap();
-            CreateMap<Store, StoreDTO>().ReverseMap();
-            CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap() ;
+            #endregion
+
+            #region PostMappings
             CreateMap<CreatePostDTO, DomainEntities.Post>();
-            CreateMap<FlowerDTO, Flower>().ReverseMap();
+            CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap();
             CreateMap<Domain.Entities.Post, AllPostDTO>().ReverseMap();
+            #endregion
+
+            #region FlowerMappings
+            CreateMap<FlowerDTO, Flower>().ReverseMap();
+            #endregion
+
+            #region StoreMappings
+            CreateMap<StoreCreateDTO, Store>();
+            CreateMap<Store, StoreDTO>().ReverseMap();
+            CreateMap<Store, StoreViewInDetailsDTO>();
+            #endregion
+
+            #region CategoryMappings
             CreateMap<Domain.Entities.Category, CategoryDTO>().ReverseMap();
+            #endregion
+
         }
     }
 }

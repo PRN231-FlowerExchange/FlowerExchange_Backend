@@ -28,5 +28,5 @@ namespace Persistence.RepositoryAdapter
         }
     }
 
-    
+
 }

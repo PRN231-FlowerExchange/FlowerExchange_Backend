@@ -20,10 +20,10 @@ namespace Infrastructure.Security.Identity
             get
             {
                 return _context
-                            .HttpContext ?
+                            .HttpContext?
                             .User
-                            .Identity ?
-                            .IsAuthenticated ?? 
+                            .Identity?
+                            .IsAuthenticated ??
                             throw new ApplicationException("User context is unvalable");
 
             }
@@ -44,7 +44,7 @@ namespace Infrastructure.Security.Identity
                                 .FindFirst("sub")?.Value ?? throw new ApplicationException("User Email context is unvalable");
 
                 return userEmail;
-                    
+
             }
         }
 

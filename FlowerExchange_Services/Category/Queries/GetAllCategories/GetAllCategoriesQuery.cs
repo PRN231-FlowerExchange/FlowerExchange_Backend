@@ -1,14 +1,7 @@
 ﻿using Application.Category.DTOs;
 using AutoMapper;
-using Domain.Commons.BaseRepositories;
-using Domain.Entities;
 using Domain.Repository;
 using MediatR;
-using Persistence;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Category.Queries.GetAllCategories
 {

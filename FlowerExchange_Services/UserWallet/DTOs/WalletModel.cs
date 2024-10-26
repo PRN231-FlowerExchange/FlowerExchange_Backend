@@ -20,7 +20,7 @@ namespace Application.UserWallet.DTOs
 
         public UserModel User { get; set; }
 
-        // public List<DepositTransactionModel>? DepositTransactions { get; set; }
+        //public List<DepositTransactionModel>? DepositTransactions { get; set; }
 
         public List<WalletTransactionModel>? WalletTransactions { get; set; }
     }

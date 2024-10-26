@@ -14,7 +14,8 @@ namespace Application.UserWallet.Services
         private readonly IUnitOfWork<FlowerExchangeDbContext> _unitOfWork;
         private readonly IUserRepository _userRepository;
 
-        public UserWalletService(IServiceProvider serviceProvider) { 
+        public UserWalletService(IServiceProvider serviceProvider)
+        {
             _walletRepository = serviceProvider.GetRequiredService<IWalletRepository>();
             _unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork<FlowerExchangeDbContext>>();
             _userRepository = serviceProvider.GetRequiredService<IUserRepository>();
@@ -43,13 +44,14 @@ namespace Application.UserWallet.Services
                 await _unitOfWork.SaveChangesAsync();
                 var savedWallet = await _walletRepository.FindByConditionAsync(x => x.UserId == user.Id);
                 return savedWallet;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 _unitOfWork.RollbackChanges();
                 throw;
             }
-            
-            
+
+
 
         }
     }

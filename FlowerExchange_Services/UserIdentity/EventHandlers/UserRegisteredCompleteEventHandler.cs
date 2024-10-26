@@ -12,7 +12,7 @@ namespace Application.UserIdentity.EventHandlers
     {
         private readonly ILogger<UserRegisteredCompleteEventHandler> _logger;
         private readonly IUserWalletService _userWalletService;
-        
+
         public UserRegisteredCompleteEventHandler(IServiceProvider serviceProvider)
         {
             _logger = serviceProvider.GetRequiredService<ILogger<UserRegisteredCompleteEventHandler>>();
@@ -25,18 +25,19 @@ namespace Application.UserIdentity.EventHandlers
             try
             {
                 _logger.LogInformation("Start created user wallet ");
-               Wallet wallet = await _userWalletService.CreateUserWallet(notification.User);
+                Wallet wallet = await _userWalletService.CreateUserWallet(notification.User);
                 if (wallet != null)
                 {
                     _logger.LogInformation("Success wallet created ");
                 }
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error in event: " + ex.Message);
             }
         }
 
-       
+
     }
 }

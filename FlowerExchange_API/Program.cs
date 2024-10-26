@@ -1,33 +1,16 @@
-using Domain.Constants.Enums;
-using Domain.Entities;
+using Application;
 using Domain.FirebaseStorage;
-using Google.Apis.Auth.OAuth2;
+using Domain.Payment;
+using Domain.Payment.Models;
 using Google.Cloud.Storage.V1;
-using Infrastructure.DateTimes;
-using Infrastructure.EmailProvider.Gmail;
 using Infrastructure.ExceptionHandlers;
 using Infrastructure.FirebaseStorage;
-using Microsoft.AspNetCore.Builder.Extensions;
+using Infrastructure.Payment;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Infrastructure.Security.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Persistence;
 using Presentation.OptionsSetup;
-
 using System.Reflection;
-using Domain.Payment;
-using Infrastructure.Payment;
-using Domain.Payment.Models;
-using Application;
-using Microsoft.AspNetCore.Authentication.Google;
-using IdentityModel;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
-using IdentityModel.Client;
-using Infrastructure.Security;
-using Domain.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -149,11 +132,11 @@ InitialiserExtensions.InitialiseDatabaseAsync(app);
 
 //if(app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
-    });
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flower Exchange API V1");
+});
 //}
 
 app.UseExceptionHandler(error =>

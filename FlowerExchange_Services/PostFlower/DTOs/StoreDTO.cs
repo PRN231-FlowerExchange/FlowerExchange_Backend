@@ -1,12 +1,4 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
-namespace Application.PostFlower.DTOs
+﻿namespace Application.PostFlower.DTOs
 {
     public class StoreDTO
     {
@@ -16,7 +8,6 @@ namespace Application.PostFlower.DTOs
         public string Address { get; set; }
 
         public Guid OwnerId { get; set; }
-        [JsonIgnore]
-        public virtual User Owner { get; set; }
+
     }
 }

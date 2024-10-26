@@ -3,7 +3,6 @@ using Domain.Commons.BaseRepositories;
 using Domain.Entities;
 using Domain.Repository;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.RepositoryAdapter
 {

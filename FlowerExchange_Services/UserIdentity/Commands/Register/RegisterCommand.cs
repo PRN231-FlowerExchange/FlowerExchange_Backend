@@ -4,15 +4,12 @@ using Domain.Entities;
 using Domain.Events.UserEvents;
 using FluentValidation.Results;
 using MediatR;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Extensions;
 using Persistence;
-using Persistence.RepositoryAdapter;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using ValidationException = Domain.Exceptions.ValidationException;
 
 
@@ -96,14 +93,14 @@ namespace Application.UserIdentity.Commands.Register
 
                 // Retrieve saved user
                 User userSaved = await _userManager.FindByEmailAsync(request.Email);
-              
+
                 // Add the user to the role
                 await _userManager.AddToRoleAsync(user, RoleType.Customer.GetDisplayName());
 
                 // Commit the transaction if everything succeeded
                 await _unitofwork.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync();
-               
+
                 _logger.LogInformation("Publishing UserRegisteredCompleteEvent");
                 await _publisher.Publish(new UserRegisteredCompleteEvent(userSaved), cancellationToken);
                 //userSaved.AddDomainEvent(new UserRegisteredCompleteEvent(userSaved));

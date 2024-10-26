@@ -1,7 +1,5 @@
-﻿using Domain.Entities;
-using Infrastructure.EmailProvider.Gmail;
+﻿using Infrastructure.EmailProvider.Gmail;
 using Microsoft.Extensions.Options;
-using System.Configuration;
 
 namespace Presentation.OptionsSetup
 {
@@ -9,7 +7,7 @@ namespace Presentation.OptionsSetup
     {
         private const string SectionName = "GmailOptions";
         private readonly IConfiguration _configuration;
-        
+
         public EmailOptionsSetup(IConfiguration configuration)
         {
             _configuration = configuration;

@@ -2,11 +2,6 @@
 using Domain.Entities;
 using Domain.Repository;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
 {
@@ -57,7 +52,7 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                 }
 
                 var postIds = request.postServicePaymentRequest.PostIds;
-                if(postIds == null || postIds.Length <= 0)
+                if (postIds == null || postIds.Length <= 0)
                 {
                     throw new Exception($"PostIds is required in CreatePostServicePaymentTransactionCommand!");
                 }
@@ -69,9 +64,9 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                 foreach (Guid postId in postIds)
                 {
                     await GetPostServicesForSelectedPostServicesAndTotalAmount(
-                            postId, 
-                            selectedPostServices, 
-                            totalAmount, 
+                            postId,
+                            selectedPostServices,
+                            totalAmount,
                             inputServiceIds.ToList()
                         );
 
@@ -90,13 +85,13 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                     Amount = totalAmount,
                     Status = Domain.Constants.Enums.OrderStatus.Success,
                     BuyerId = user.Id,
-                    
+
                 };
                 await _serviceOrderRepository.InsertAsync(serviceOrder);
                 await _serviceOrderRepository.SaveChagesAysnc();
 
                 // Update serviceOrderId for each postService
-                foreach(PostService postService in selectedPostServices)
+                foreach (PostService postService in selectedPostServices)
                 {
                     postService.ServiceOrderId = serviceOrder.Id;
                     await _postServiceRepository.UpdateByIdAsync(postService, postService.Id);

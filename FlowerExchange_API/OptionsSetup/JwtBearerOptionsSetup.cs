@@ -1,5 +1,4 @@
-﻿using Domain.Constants;
-using Infrastructure.Security.TokenProvider;
+﻿using Infrastructure.Security.TokenProvider;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

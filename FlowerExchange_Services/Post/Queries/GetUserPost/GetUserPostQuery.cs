@@ -1,13 +1,10 @@
 ﻿using Application.PostFlower.DTOs;
 using AutoMapper;
-using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Models;
 using Domain.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Globalization;
 
 public class GetUserPostQuery : IRequest<PagedList<PostDTO>>
 {
@@ -15,8 +12,8 @@ public class GetUserPostQuery : IRequest<PagedList<PostDTO>>
     public PostParameters PostParameters { get; set; }
     public GetUserPostQuery(Guid userId, PostParameters postParameters = null)
     {
-        UserId = userId; 
-        PostParameters = postParameters;  
+        UserId = userId;
+        PostParameters = postParameters;
 
     }
 }

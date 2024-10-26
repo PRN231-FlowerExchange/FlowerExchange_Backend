@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
-using ValidationException = Domain.Exceptions.ValidationException;
 
 namespace Application.UserIdentity.Commands.RefreshUserAccessToken
 {
@@ -21,7 +20,7 @@ namespace Application.UserIdentity.Commands.RefreshUserAccessToken
         public string AccessToken { get; set; }
         [Required]
         public string RefreshToken { get; set; }
-       
+
     }
 
     public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, AuthenticatedToken>
@@ -45,7 +44,7 @@ namespace Application.UserIdentity.Commands.RefreshUserAccessToken
         {
 
             var principal = await _jwtTokenService.GetPrincipalFromToken(request.AccessToken);
-            if(principal == null)
+            if (principal == null)
             {
                 throw new BadRequestException("Token is invalid");
             }
@@ -72,7 +71,7 @@ namespace Application.UserIdentity.Commands.RefreshUserAccessToken
             }
             IList<string> roles = await _userManager.GetRolesAsync(user);
             AuthenticatedToken token = await _tokenFactory.GenerateAuthenticatedSignInSuccess(user, roles);
-            
+
             await _userManager.SetAuthenticationTokenAsync(user, TokenLoginProviderName, RefreshTokenName, token.RefreshToken);
             return token;
 

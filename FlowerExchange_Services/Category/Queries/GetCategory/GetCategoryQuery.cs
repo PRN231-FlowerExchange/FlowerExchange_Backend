@@ -1,14 +1,8 @@
 ﻿using Application.Category.DTOs;
 using AutoMapper;
-using Domain.Commons.BaseRepositories;
-using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
-using Persistence;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Category.Queries.GetCategory
 {

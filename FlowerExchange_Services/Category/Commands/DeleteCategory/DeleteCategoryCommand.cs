@@ -1,14 +1,9 @@
-﻿using Application.Category.Commands.DeleteCategory;
-using Domain.Commons.BaseRepositories;
+﻿using Domain.Commons.BaseRepositories;
 using Domain.Constants.Enums;
-using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
 using Persistence;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Category.Commands.DeleteCategory
 {
@@ -17,7 +12,7 @@ namespace Application.Category.Commands.DeleteCategory
         public Guid Id { get; init; }
     }
 
-    public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Guid>    
+    public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Guid>
     {
         private readonly ICategoriesRepository _categoryRepository;
         private readonly IUnitOfWork<FlowerExchangeDbContext> _unitOfWork;

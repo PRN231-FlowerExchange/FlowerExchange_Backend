@@ -10,12 +10,8 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.UserIdentity.Commands.SendConfirmEmail
 {
@@ -61,7 +57,7 @@ namespace Application.UserIdentity.Commands.SendConfirmEmail
             Guid userId = Guid.Parse(await _userManager.GetUserIdAsync(user));
             var emailConfirmationCodeBase64UrlEncode = await _emailForIdentityService.GenerateEmailConfirmationBase64Code(user);
             KeyValuePair<Guid, string> userEmailConfirmationCode = new KeyValuePair<Guid, string>(userId, emailConfirmationCodeBase64UrlEncode);
-            
+
             var actionContext = new ActionContext(_httpContextAccessor.HttpContext, _httpContextAccessor.HttpContext.GetRouteData(), new Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor());
             var urlHelper = _urlHelperFactory.GetUrlHelper(actionContext);
 
@@ -70,7 +66,7 @@ namespace Application.UserIdentity.Commands.SendConfirmEmail
                 controller: "Auth",
                 values: new { UserId = userEmailConfirmationCode.Key, Code = userEmailConfirmationCode.Value },
                 protocol: _httpContextAccessor.HttpContext.Request.Scheme);
-            if(stringUrlCallback == null)
+            if (stringUrlCallback == null)
             {
                 throw new ArgumentNullException(nameof(stringUrlCallback));
             }

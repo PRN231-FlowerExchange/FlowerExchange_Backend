@@ -15,7 +15,8 @@ namespace Domain.Entities
         [NotMapped]
         public RoleType RoleType { get; set; }
 
-        public override string Name {
+        public override string Name
+        {
             get => base.Name;
             set => base.Name = RoleType.ToString() ?? throw new ArgumentNullException(nameof(RoleType), "RoleType must be set"); //get from the RoleType automatically
         }

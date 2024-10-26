@@ -8,11 +8,11 @@ namespace Domain.Events.UserEvents
     {
         public User User { get; }
 
-        public UserRegisteredCompleteEvent(User user) 
+        public UserRegisteredCompleteEvent(User user)
         {
             this.User = user;
         }
 
-       
+
     }
 }
