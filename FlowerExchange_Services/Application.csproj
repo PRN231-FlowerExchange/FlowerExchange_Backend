@@ -24,6 +24,7 @@
   <ItemGroup>
     <Folder Include="Category\Services\" />
     <Folder Include="Common\Services\" />
+    <Folder Include="Conversation\Commands\" />
     <Folder Include="Post\Commands\" />
     <Folder Include="Post\Services\" />
     <Folder Include="Report\Commands\" />
@@ -32,8 +33,6 @@
     <Folder Include="PlatformService\Commands\" />
     <Folder Include="PlatformService\Queries\" />
     <Folder Include="PlatformService\Services\" />
-    <Folder Include="Conversation\Commands\" />
-    <Folder Include="Conversation\Queries\" />
     <Folder Include="Conversation\Services\" />
     <Folder Include="PaymentTransaction\Commands\" />
     <Folder Include="PaymentTransaction\Queries\" />

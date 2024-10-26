@@ -22,8 +22,8 @@ namespace Persistence
         {
             optionsBuilder
             .UseLazyLoadingProxies()
-            //.UseNpgsql(this.GetConnectionString();
-            .UseNpgsql("Host=ep-cold-forest-a4tdd8ig-pooler.us-east-1.aws.neon.tech; Database=verceldb; Username=default; Password=Ym1Oz8GbMsEI");
+            .UseNpgsql(this.GetConnectionString());
+            //.UseNpgsql("Host=ep-cold-forest-a4tdd8ig-pooler.us-east-1.aws.neon.tech; Database=verceldb; Username=default; Password=Ym1Oz8GbMsEI");
 
         }
 
