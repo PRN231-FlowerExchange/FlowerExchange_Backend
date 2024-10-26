@@ -74,5 +74,10 @@ namespace Persistence.RepositoryAdapter
                 throw new Exception("Add fail", dbEx);
             }
         }
+
+        public async Task<PostService> GetAsync(Guid postId, Guid ServiceId)
+        {
+            return _dbContext.PostServices.Where(p => p.PostId.Equals(postId)).Where(p=>p.ServiceId.Equals(ServiceId)).FirstOrDefault();
+        }
     }
 }
