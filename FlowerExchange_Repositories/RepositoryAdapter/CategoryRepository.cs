@@ -1,13 +1,9 @@
 ﻿using Domain.Commons.BaseRepositories;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Repository;
 using Microsoft.EntityFrameworkCore;
-using CrossCuttingConcerns.Utils;
-using Domain.Models;
 using System.Linq.Dynamic.Core;
-using System.Reflection;
-using System.Text;
-using Domain.Exceptions;
 
 namespace Persistence.RepositoryAdapter
 {
@@ -39,7 +35,7 @@ namespace Persistence.RepositoryAdapter
         {
             // Truy vấn trực tiếp từ DbSet mà không sử dụng các hàm sẵn
             var category = await _dbContext.Categories
-                .FirstOrDefaultAsync(c => c.Id == id); 
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             // Kiểm tra xem danh mục có tồn tại không
             if (category == null)

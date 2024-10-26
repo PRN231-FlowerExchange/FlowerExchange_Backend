@@ -1,9 +1,7 @@
 ﻿using Application.FirebaseStorage.Commands.DeleteFile;
 using Application.FirebaseStorage.Commands.UploadFile;
 using Domain.FirebaseStorage;
-using Google.Apis.Storage.v1;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Presentation.Controllers
 {
@@ -23,7 +21,7 @@ namespace Presentation.Controllers
         [HttpPost("upload")]
         public async Task<IActionResult> UploadFile(UploadFileCommand command)
         {
-            Uri imageUrl =  await Mediator.Send(command);
+            Uri imageUrl = await Mediator.Send(command);
             return Ok(imageUrl);
         }
 

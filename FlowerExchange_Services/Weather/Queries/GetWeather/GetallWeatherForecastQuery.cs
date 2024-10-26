@@ -2,11 +2,6 @@
 using Domain.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Weather.Queries.GetWeather
 {
@@ -29,8 +24,8 @@ namespace Application.Weather.Queries.GetWeather
 
         public async Task<List<WeatherForecast>> Handle(GetallWeatherForecastQuery request, CancellationToken cancellationToken)
         {
-            IEnumerable<WeatherForecast> list =  await _weatherRepository.GetAllAsync();
-            
+            IEnumerable<WeatherForecast> list = await _weatherRepository.GetAllAsync();
+
             return list.ToList();
         }
     }

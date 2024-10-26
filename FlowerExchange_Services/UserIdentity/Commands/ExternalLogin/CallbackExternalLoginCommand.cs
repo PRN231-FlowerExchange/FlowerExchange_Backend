@@ -1,24 +1,20 @@
-﻿using Application.Services.JwtTokenService;
-using Application.UserIdentity.Commands.Register;
+﻿using Application.UserIdentity.Services;
 using Domain.Commons.BaseRepositories;
+using Domain.Constants;
+using Domain.Constants.Enums;
 using Domain.Entities;
+using Domain.Events.UserEvents;
+using Domain.Exceptions;
+using Domain.Models;
+using Duende.IdentityServer.Extensions;
+using FluentValidation.Results;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Persistence;
-using Duende.IdentityServer.Extensions;
-using System.Security.Claims;
-using Domain.Constants.Enums;
 using Microsoft.OpenApi.Extensions;
-using FluentValidation.Results;
-using Domain.Exceptions;
-using Application.UserIdentity.Services;
-using Domain.Models;
-using Domain.Constants;
+using Persistence;
+using System.Security.Claims;
 
 namespace Application.UserIdentity.Commands.ExternalLogin
 {
@@ -35,6 +31,7 @@ namespace Application.UserIdentity.Commands.ExternalLogin
         private readonly RoleManager<Role> _roleManager;
         private readonly SignInManager<User> _signInManager;
         private readonly TokenFactory _tokenFactory;
+        private readonly IPublisher _publisher; // or IMediator _mediator
 
 
         public CallbackExternalLoginCommandHandler(IServiceProvider serviceProvider)
@@ -46,6 +43,8 @@ namespace Application.UserIdentity.Commands.ExternalLogin
             _roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
             _signInManager = serviceProvider.GetRequiredService<SignInManager<User>>();
             _tokenFactory = serviceProvider.GetRequiredService<TokenFactory>();
+            _publisher = serviceProvider.GetRequiredService<IPublisher>(); // Inject IPublisher
+
         }
 
         public async Task<AuthenticatedToken> Handle(CallbackExternalLoginCommand request, CancellationToken cancellationToken)
@@ -57,7 +56,7 @@ namespace Application.UserIdentity.Commands.ExternalLogin
                 throw new ArgumentNullException("External Login Info is null");
             }
 
-           var accessToken = externalLoginInfo.AuthenticationTokens.FirstOrDefault(x => x.Name.Equals("access_token"));
+            var accessToken = externalLoginInfo.AuthenticationTokens.FirstOrDefault(x => x.Name.Equals("access_token"));
 
             var info = new UserLoginInfo(externalLoginInfo.LoginProvider, externalLoginInfo.ProviderKey, externalLoginInfo.ProviderDisplayName);
             var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
@@ -73,11 +72,11 @@ namespace Application.UserIdentity.Commands.ExternalLogin
                 }
                 // Sign in the user if they are allowed
                 await _signInManager.SignInAsync(user, isPersistent: false);
-               
+
                 IList<string> roles = await _userManager.GetRolesAsync(user);
                 AuthenticatedToken token = await _tokenFactory.GenerateAuthenticatedSignInSuccess(user, roles);
                 await _userManager.SetAuthenticationTokenAsync(user, TokenConstants.TOKEN_LOGIN_PROVIDER_NAME, TokenConstants.REFRESH_TOKEN_NAME, token.RefreshToken);
-               
+
                 return token;
             }
 
@@ -102,7 +101,7 @@ namespace Application.UserIdentity.Commands.ExternalLogin
                 IList<string> roles = await _userManager.GetRolesAsync(user);
                 AuthenticatedToken token = await _tokenFactory.GenerateAuthenticatedSignInSuccess(user, roles);
                 await _userManager.SetAuthenticationTokenAsync(user, TokenConstants.TOKEN_LOGIN_PROVIDER_NAME, TokenConstants.REFRESH_TOKEN_NAME, token.RefreshToken);
-                
+
                 return token;
             }
 
@@ -117,7 +116,7 @@ namespace Application.UserIdentity.Commands.ExternalLogin
                 Fullname = userFullName,
                 Status = UserStatus.Active,
                 LastLogin = DateTime.UtcNow,
-                
+
             };
             // Start a transaction using DbContext
             using var transaction = await _unitofwork.Context.Database.BeginTransactionAsync();
@@ -160,13 +159,15 @@ namespace Application.UserIdentity.Commands.ExternalLogin
                 // Commit the transaction if everything succeeded
                 await _unitofwork.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync();
-               
+
+                await _publisher.Publish(new UserRegisteredCompleteEvent(userSaved), cancellationToken);
+
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
                 IList<string> roles = await _userManager.GetRolesAsync(user);
                 AuthenticatedToken token = await _tokenFactory.GenerateAuthenticatedSignInSuccess(user, roles);
                 await _userManager.SetAuthenticationTokenAsync(user, TokenConstants.TOKEN_LOGIN_PROVIDER_NAME, TokenConstants.REFRESH_TOKEN_NAME, token.RefreshToken);
-                
+
                 return token;
             }
             catch (Exception ex)

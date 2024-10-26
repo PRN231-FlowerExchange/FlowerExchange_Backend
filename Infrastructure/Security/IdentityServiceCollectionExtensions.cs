@@ -1,20 +1,12 @@
 ﻿using Domain.Entities;
 using Domain.Security.Identity;
-using IdentityModel.Client;
 using Infrastructure.Security.Identity;
-using Infrastructure.Security.TokenProvider;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Persistence;
-using System.Security.Claims;
-using System.Text;
 
 
 namespace Infrastructure.Security;
@@ -91,11 +83,6 @@ public static class IdentityServiceCollectionExtensions
 
     private static IdentityBuilder AddTokenProviders(this IdentityBuilder identityBuilder)
     {
-        //AddDefaultTokenProviders : Adds the default token providers used to generate tokens for reset passwords,
-        //     change email and change telephone number operations, and for two factor authentication
-        //     token generation.
-
-        //EmailConfirmationTokenProvider: A custom email token provider generate toke for email confirmation
 
         identityBuilder
             .AddDefaultTokenProviders()
@@ -143,8 +130,6 @@ public static class IdentityServiceCollectionExtensions
             options.Tokens.ProviderMap.Add("CustomEmailConfirmation", new TokenProviderDescriptor(
                 typeof(EmailConfirmationTokenProvider<User>)));
             options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
-
-
         });
 
 
@@ -177,8 +162,6 @@ public static class IdentityServiceCollectionExtensions
             options.SignIn.RequireConfirmedPhoneNumber = false;
             options.SignIn.RequireConfirmedAccount = false;
             options.User.RequireUniqueEmail = true;
-            
-            
 
         });
 

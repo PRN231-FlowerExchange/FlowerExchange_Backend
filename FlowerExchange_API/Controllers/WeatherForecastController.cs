@@ -3,7 +3,6 @@ using Application.Weather.Queries.GetWeather;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Presentation;
 
 namespace Presentation.Controllers
 {
@@ -18,7 +17,7 @@ namespace Presentation.Controllers
             _logger = logger;
         }
 
-       
+
         [Authorize]
         [HttpGet("require-authorize")]
         public async Task<List<WeatherForecast>> GetAll()

@@ -21,8 +21,8 @@ namespace Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-            //.UseLazyLoadingProxies()
-            //.UseNpgsql(this.GetConnectionString());
+            .UseLazyLoadingProxies()
+            //.UseNpgsql(this.GetConnectionString();
             .UseNpgsql("Host=ep-cold-forest-a4tdd8ig-pooler.us-east-1.aws.neon.tech; Database=verceldb; Username=default; Password=Ym1Oz8GbMsEI");
 
         }
@@ -34,7 +34,7 @@ namespace Persistence
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", true, true).Build();
             var connection = configuration.GetConnectionString("FlowerExchangeDB");
-            if(connection == null)
+            if (connection == null)
             {
                 throw new ArgumentNullException("CONNECTION IS NULL");
             }
@@ -87,7 +87,7 @@ namespace Persistence
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            EntityIdentityConfiguration(modelBuilder);            
+            EntityIdentityConfiguration(modelBuilder);
 
         }
 
@@ -98,7 +98,7 @@ namespace Persistence
             builder.Entity<IdentityUserClaim<Guid>>(uc =>
                 uc.ToTable("UserClaim")
                    .HasKey(c => c.Id)
-            ); 
+            );
 
             builder.Entity<IdentityUserToken<Guid>>(ut =>
                 ut.ToTable("UserToken")

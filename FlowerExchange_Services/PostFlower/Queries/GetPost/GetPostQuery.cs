@@ -1,10 +1,10 @@
-﻿using Domain.Repository;
-using MediatR;
-using Microsoft.Extensions.Logging;
+﻿using Application.PostFlower.DTOs;
 using Application.PostFlower.Services;
-using Application.PostFlower.DTOs;
 using Domain.Exceptions;
 using Domain.Models;
+using Domain.Repository;
+using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.PostFlower.Queries.GetPost
 {
@@ -16,7 +16,7 @@ namespace Application.PostFlower.Queries.GetPost
         public List<Guid>? Categories { get; set; } = null;// Default to an empty GUID
         public string SearchString { get; set; } = ""; // Default to null
         public PaginateRequest PaginateRequest { get; set; }
-        public List<SortCriteria>? sortCriterias {get;set;} = null;
+        public List<SortCriteria>? sortCriterias { get; set; } = null;
     }
 
     public class GetPostQueryHandler : IRequestHandler<GetPostQuery, List<PostViewDTO>>

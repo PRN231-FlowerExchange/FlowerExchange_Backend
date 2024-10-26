@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Domain.Commons.BaseRepositories;
 using Domain.Constants.Enums;
-using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
 using Persistence;
-using Persistence.RepositoryAdapter;
 
 namespace Application.Category.Commands.UpdateCategory
 {

@@ -1,16 +1,10 @@
 ﻿using Application.Payment.DTOs;
-using Domain.Entities;
 using Domain.Payment;
 using Domain.Payment.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Payment.Commands.CreatePaymentUrl
 {
@@ -20,7 +14,7 @@ namespace Application.Payment.Commands.CreatePaymentUrl
 
         public HttpContext HttpContext { get; set; }
 
-        public string CurrentPath {  get; set; }
+        public string CurrentPath { get; set; }
 
         public CreatePaymentUrlCommand(WalletDepositRequest walletDepositRequest, HttpContext httpContext, string currentPath)
         {
@@ -30,7 +24,7 @@ namespace Application.Payment.Commands.CreatePaymentUrl
         }
     }
 
-    public class CreatePaymentUrlCommandHandler : IRequestHandler<CreatePaymentUrlCommand , string>
+    public class CreatePaymentUrlCommandHandler : IRequestHandler<CreatePaymentUrlCommand, string>
     {
         private IConfiguration _configuration;
         private IVNPAYService _VNPAYService;

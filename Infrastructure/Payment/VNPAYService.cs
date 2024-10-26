@@ -1,15 +1,8 @@
-﻿using Domain.Entities;
-using Domain.Payment;
+﻿using Domain.Payment;
 using Domain.Payment.Models;
 using Infrastructure.Payment.Libraries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Constants.Enums;
 
 namespace Infrastructure.Payment
 {
@@ -61,7 +54,7 @@ namespace Infrastructure.Payment
                 var response = pay.GetFullResponseData(collections, _configuration["Vnpay:HashSecret"]);
 
                 // Payment unsuccess
-                if(!response.Success)
+                if (!response.Success)
                 {
                     return null;
                 }
@@ -73,7 +66,7 @@ namespace Infrastructure.Payment
                 // Parse user id to Guid
                 Guid userId;
                 var parseGuidSuccess = Guid.TryParse(userIdString, out userId);
-                if(!parseGuidSuccess)
+                if (!parseGuidSuccess)
                 {
                     throw new Exception("Invalid user id!");
                 }

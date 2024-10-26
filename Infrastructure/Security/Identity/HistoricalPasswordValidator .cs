@@ -1,10 +1,5 @@
 ﻿using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Security.Identity
 {
@@ -19,7 +14,7 @@ namespace Infrastructure.Security.Identity
                 {
                     Code = "HistoricalPassword",
                     Description = "HistoricalPasswordValidator testing",
-                })) ;
+                }));
             }
 
             //TODO: Should replcae to implment you own mechanims to check historical password
