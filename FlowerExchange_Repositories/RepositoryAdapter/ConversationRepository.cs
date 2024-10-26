@@ -33,33 +33,17 @@ namespace Persistence.RepositoryAdapter
 
         public async Task<List<Conversation>> GetConversationsByUserIdAsync(Guid userId)
         {
-            // Ensure UserConversations is a DbSet in your DbContext
-            var conversations = _context.UserConversations
-                .Where(uc => uc.UserId == userId)
-                .Select(uc => uc.Conversation)
-                .Include(c => c.Messages) // Include all messages
-                .ToList(); // Use ToListAsync for asynchronous operation
-
-            // Check if any messages are present
-            foreach (var conversation in conversations)
-            {
-                // If Messages is null, initialize it to an empty list
-                conversation.Messages ??= new List<Message>();
-
-                // Log for debugging
-                Console.WriteLine($"Conversation ID: {conversation.Id}, Messages Count: {conversation.Messages.Count}");
-            }
-
-            var conversations1 = _context.Conversations
-                .Include(c => c.Messages)
+            var conversations = _context.Conversations
+                .Where(c => c.UserConversations.Any(uc => uc.UserId == userId)) 
+                .Select(c => new Conversation
+                {
+                    Id = c.Id,
+                    Messages = c.Messages, 
+                    UserConversations = c.UserConversations
+                        .Where(uc => uc.UserId != userId) 
+                        .ToList() 
+                })
                 .ToList();
-
-            foreach (var conversation in conversations1)
-            {
-                Console.WriteLine($"Conversation ID: {conversation.Id}, Messages Count: {conversation.Messages.Count}");
-            }
-
-
             return conversations;
         }
 

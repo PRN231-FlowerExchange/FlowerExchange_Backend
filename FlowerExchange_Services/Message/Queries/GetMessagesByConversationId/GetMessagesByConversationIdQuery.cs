@@ -17,10 +17,10 @@ namespace Application.Message.Queries.GetMessagesByConversationId
 {
     public class GetMessagesByConversationIdQuery : IRequest<List<MessageThreadDTO>>
     {
-        public Guid UserId { get; set; }
-        public GetMessagesByConversationIdQuery(Guid userId)
+        public Guid ConversationId { get; set; }
+        public GetMessagesByConversationIdQuery(Guid conversationId)
         {
-            UserId = userId;
+            ConversationId = conversationId;
         }
     }
 
@@ -41,10 +41,10 @@ namespace Application.Message.Queries.GetMessagesByConversationId
 
         public async Task<List<MessageThreadDTO>> Handle(GetMessagesByConversationIdQuery request, CancellationToken cancellationToken)
         {
-            var messages = await _messageRepository.GetMessageThreadAsync(request.UserId);
+            var messages = await _messageRepository.GetMessageThreadAsync(request.ConversationId);
             if (messages == null)
             {
-                var errorMessage = $"Message with Conversation Id: {request.UserId} was not found.";
+                var errorMessage = $"Message with Conversation Id: {request.ConversationId} was not found.";
                 _logger.LogWarning(errorMessage);
                 throw new NotFoundException(errorMessage);
             }

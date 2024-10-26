@@ -27,8 +27,11 @@ namespace Application.Common.Mappers
             CreateMap<Domain.Entities.Post, AllPostDTO>().ReverseMap();
             CreateMap<Domain.Entities.Conversation, ConversationDTO>().ReverseMap();
             CreateMap<Domain.Entities.Message, MessageDTO>().ReverseMap();
-            CreateMap<Domain.Entities.Message, MessageThreadDTO>().ReverseMap();
-
+            CreateMap<Domain.Entities.Message, Message.DTOs.MessageThreadDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Message, MessageConversationDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Conversation, ConversationDetailDTO>().ReverseMap();
+            CreateMap<Domain.Entities.UserConversation, UserConversationDetailDTO>().ReverseMap();
+            CreateMap<Domain.Entities.User, UserMessageDTO>().ReverseMap();
         }
     }
 }

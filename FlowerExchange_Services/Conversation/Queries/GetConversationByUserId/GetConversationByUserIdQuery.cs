@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace Application.Conversation.Queries.GetConversationByUserIdQuery
 {
-    public class GetConversationByUserIdQuery : IRequest<List<ConversationDTO>>
+    public class GetConversationByUserIdQuery : IRequest<List<ConversationDetailDTO>>
     {
         public Guid userId { get; set; }
         public GetConversationByUserIdQuery(Guid UserId)
@@ -30,7 +30,7 @@ namespace Application.Conversation.Queries.GetConversationByUserIdQuery
         }
     }
 
-    public class GetConversationByUserIdQueryHandler : IRequestHandler<GetConversationByUserIdQuery, List<ConversationDTO>>
+    public class GetConversationByUserIdQueryHandler : IRequestHandler<GetConversationByUserIdQuery, List<ConversationDetailDTO>>
     {
         private IMapper _mapper;
         private IConversationRepository _conversationRepository;
@@ -46,10 +46,10 @@ namespace Application.Conversation.Queries.GetConversationByUserIdQuery
             _userConversationRepository = userConversationRepository;
         }
 
-        public async Task<List<ConversationDTO>> Handle(GetConversationByUserIdQuery request, CancellationToken cancellationToken)
+        public async Task<List<ConversationDetailDTO>> Handle(GetConversationByUserIdQuery request, CancellationToken cancellationToken)
         {
             var conversation = await _conversationRepository.GetConversationsByUserIdAsync(request.userId);
-            var response = _mapper.Map<List<ConversationDTO>>(conversation);
+            var response = _mapper.Map<List<ConversationDetailDTO>>(conversation);
             return response;
         }
     }

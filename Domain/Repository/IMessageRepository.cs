@@ -15,6 +15,6 @@ namespace Domain.Repository
         Task AddMessageAsync(Message message);
         Task SaveAsync();
         Task SendMessageAsync(Guid senderId, Guid recipientId, string content);
-        Task<List<Message>> GetMessageThreadAsync(Guid userId);
+        Task<List<Message>> GetMessageThreadAsync(Guid conversationId);
     }
 }

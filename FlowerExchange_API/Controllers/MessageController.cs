@@ -27,10 +27,10 @@ namespace Presentation.Controllers
             return Ok(messageId);
         }
 
-        [HttpGet("/thread/{userId}")]
-        public async Task<IActionResult> GetMessages(Guid userId)
+        [HttpGet("/thread/{conversationId}")]
+        public async Task<IActionResult> GetMessages(Guid conversationId)
         {
-            var response = await Mediator.Send(new GetMessagesByConversationIdQuery(userId));
+            var response = await Mediator.Send(new GetMessagesByConversationIdQuery(conversationId));
             return Ok(response);
         }
     }

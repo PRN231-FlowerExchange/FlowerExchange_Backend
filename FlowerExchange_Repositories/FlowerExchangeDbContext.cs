@@ -21,7 +21,7 @@ namespace Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-            //.UseLazyLoadingProxies()
+            .UseLazyLoadingProxies()
             .UseNpgsql(this.GetConnectionString());
             //.UseNpgsql("Host=localhost; Database=flowerexchangedb; Username=postgres; Password=hanh3533.");
 
