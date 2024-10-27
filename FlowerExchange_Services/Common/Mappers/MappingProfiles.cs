@@ -17,7 +17,7 @@ namespace Application.Common.Mappers
         public MappingProfiles()
         {
             CreateMap<User, CurrentUserModel>();
-            CreateMap<CreatePostDTO, DomainEntities.Post>();
+            CreateMap<CreatePostDTO, DomainEntities.Post>().ReverseMap();
             CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap();
             CreateMap<Domain.Entities.Post, AllPostDTO>().ReverseMap();
             CreateMap<Domain.Entities.Conversation, ConversationDTO>().ReverseMap();
