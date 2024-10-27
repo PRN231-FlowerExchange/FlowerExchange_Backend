@@ -1,5 +1,4 @@
-﻿
-namespace Domain.Constants
+﻿namespace Domain.Constants
 {
     public static class TokenConstants
     {

@@ -212,7 +212,21 @@ namespace Persistence.RepositoryAdapter
                 posts = posts.OrderBy(orderQuery);
             }
         }
-
+        
+        public async Task<Post?> GetPostByIdWithFlowerAsync(Guid id)
+        {
+            try
+            {
+                return await _dbContext.Posts
+                    .Include(p => p.Flower)
+                    .Include(p => p.Seller)
+                    .FirstOrDefaultAsync(p => p.Id.Equals(id));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 
 }

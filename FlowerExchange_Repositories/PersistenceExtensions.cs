@@ -57,6 +57,7 @@ public static class PersistenceExtensions
                 .AddScoped(typeof(IServiceOrderRepository), typeof(ServiceOrderRepository))
                 .AddScoped(typeof(ICategoriesRepository), typeof(CategoryRepository))
                 .AddScoped(typeof(IStoreRepository), typeof(StoreRepository))
+                .AddScoped(typeof(IFlowerOrderRepository), typeof(FlowerOrderRepository))
                 .AddScoped(typeof(IPostCategoryRepository), typeof(PostCategoryRepository));
 
 
