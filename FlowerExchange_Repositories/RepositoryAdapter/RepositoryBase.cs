@@ -95,7 +95,7 @@ namespace Persistence.RepositoryAdapter
             }
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             if (_dbContext != null)
                 _dbContext.Dispose();
@@ -300,9 +300,62 @@ namespace Persistence.RepositoryAdapter
             // Create the lambda expression
             return Expression.Lambda<Func<TEntity, bool>>(body, parameter);
         }
+        
+        // Method to get all entities with includes
+        public virtual async Task<IEnumerable<TEntity>> GetAllWithIncludesAsync(params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = _dbSet;
 
+            // Apply each include expression to the query
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
 
+            return await query.ToListAsync();
+        }
 
+        // Method to get entities with includes and a predicate
+        public virtual async Task<IEnumerable<TEntity>> GetAllWithIncludesAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            // Apply includes
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            // Apply the predicate for filtering
+            return await query.Where(predicate).ToListAsync();
+        }
+
+        public async Task<TEntity> FindAsyncWithIncludesAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            // Apply includes
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+
+            return await Task.Run(() => query.SingleOrDefault(predicate));
+        }
     }
 
 }

@@ -3,6 +3,7 @@ using Domain.Commons.BaseRepositories;
 using Domain.Constants;
 using Domain.Constants.Enums;
 using Domain.Entities;
+using Domain.Events.UserEvents;
 using Domain.Exceptions;
 using Domain.Models;
 using Duende.IdentityServer.Extensions;
@@ -30,6 +31,7 @@ namespace Application.UserIdentity.Commands.ExternalLogin
         private readonly RoleManager<Role> _roleManager;
         private readonly SignInManager<User> _signInManager;
         private readonly TokenFactory _tokenFactory;
+        private readonly IPublisher _publisher; // or IMediator _mediator
 
 
         public CallbackExternalLoginCommandHandler(IServiceProvider serviceProvider)
@@ -41,6 +43,8 @@ namespace Application.UserIdentity.Commands.ExternalLogin
             _roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
             _signInManager = serviceProvider.GetRequiredService<SignInManager<User>>();
             _tokenFactory = serviceProvider.GetRequiredService<TokenFactory>();
+            _publisher = serviceProvider.GetRequiredService<IPublisher>(); // Inject IPublisher
+
         }
 
         public async Task<AuthenticatedToken> Handle(CallbackExternalLoginCommand request, CancellationToken cancellationToken)
@@ -155,7 +159,9 @@ namespace Application.UserIdentity.Commands.ExternalLogin
                 // Commit the transaction if everything succeeded
                 await _unitofwork.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync();
-
+                
+                await _publisher.Publish(new UserRegisteredCompleteEvent(userSaved), cancellationToken);
+                
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
                 IList<string> roles = await _userManager.GetRolesAsync(user);

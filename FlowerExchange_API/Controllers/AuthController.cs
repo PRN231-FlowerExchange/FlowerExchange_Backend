@@ -72,37 +72,23 @@ namespace Presentation.Controllers
             {
                 throw new BadHttpRequestException("returnUrl is required !");
             }
-            string redirectUrl = Url.Action(nameof(this.CallbackWithExternalLoginProvider), "Auth", new { returnUrl = returnUrl });
-            AuthenticationProperties properties = await this.Mediator.Send(new ExternalLoginRedirectQuery() { AuthenticationScheme = externalLoginProvider, RedirectUrl = redirectUrl });
+            AuthenticationProperties properties = await this.Mediator.Send(new ExternalLoginRedirectQuery() { AuthenticationScheme = externalLoginProvider, RedirectUrl = returnUrl });
             ChallengeResult challengeResult = Challenge(properties, externalLoginProvider);
-            return challengeResult;//forward to the redirectUrl
+            return challengeResult;
         }
 
-        [HttpGet("external-login-callback")]
-        public async Task<IActionResult> CallbackWithExternalLoginProvider([FromQuery] string returnUrl)
+        //[HttpGet("external-login-callback")]
+        //public async Task<IActionResult> CallbackWithExternalLoginProvider()
+        //{
+        //    AuthenticatedToken token = await Mediator.Send(new CallbackExternalLoginCommand());
+        //    return Ok(token);
+        //}
+
+        [HttpGet("tokens-from-external-login")]
+        public async Task<IActionResult> GetTokensFromExternalLogin()
         {
             AuthenticatedToken token = await Mediator.Send(new CallbackExternalLoginCommand());
-
-            if (string.IsNullOrEmpty(returnUrl))
-            {
-                throw new BadHttpRequestException("returnUrl is required!");
-            }
-
-            IList<AuthenticationScheme> schemes = await Mediator.Send(new ExternalLoginProvidersQuery());
-
-            // Assuming tokens are obtained here after successful authentication
-            string accessToken = token.AccessToken;   // replace with actual access token
-            string refreshToken = token.RefreshToken; // replace with actual refresh token
-            string tokenType = token.TokenType;      // replace with actual token type
-
-            // Append tokens to the returnUrl
-            var redirectUrl = $"{returnUrl}?" +
-                              $"access_token={Uri.EscapeDataString(accessToken)}" +
-                              $"&refresh_token={Uri.EscapeDataString(refreshToken)}" +
-                              $"&token_type={Uri.EscapeDataString(tokenType)}";
-
-            return Redirect(redirectUrl);
-
+            return Ok(token);
         }
 
 

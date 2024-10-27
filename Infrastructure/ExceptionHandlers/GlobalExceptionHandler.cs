@@ -26,6 +26,7 @@ namespace Infrastructure.ExceptionHandlers
                 { typeof(UnauthorizedAccessException), HandleUnAuthorizeException },
                 { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
                 { typeof(BadRequestException), HandleBadRequestException },
+                { typeof(ConflictException), HandleConflictException },
             };
         }
 
