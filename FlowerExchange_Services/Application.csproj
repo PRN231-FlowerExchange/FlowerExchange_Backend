@@ -11,6 +11,8 @@
     <Compile Remove="Interfaces\**" />
     <Compile Remove="SystemUser\**" />
     <Compile Remove="Wallet\**" />
+    <Compile Include="Wallet\DTOs\WalletDetailsResponse.cs" />
+    <Compile Include="Wallet\Queries\GetWalletDetailsOfUser\GetaWalletDetailsOfUserCommand.cs" />
     <EmbeddedResource Remove="Implements\**" />
     <EmbeddedResource Remove="Interfaces\**" />
     <EmbeddedResource Remove="SystemUser\**" />
