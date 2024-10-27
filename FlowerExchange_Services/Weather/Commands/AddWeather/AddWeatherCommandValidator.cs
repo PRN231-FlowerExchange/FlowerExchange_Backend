@@ -6,7 +6,8 @@ namespace Application.Weather.Commands.AddWeather
 {
     public class AddWeatherCommandValidator : AbstractValidator<AddWeatherCommand>
     {
-        public AddWeatherCommandValidator() {
+        public AddWeatherCommandValidator()
+        {
             RuleFor(w => w.WeatherForecastDTO)
              .NotNull()
              .SetValidator(new AddWeatherForecastDTOValidator());

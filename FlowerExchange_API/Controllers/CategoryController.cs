@@ -3,11 +3,8 @@ using Application.Category.Commands.DeleteCategory;
 using Application.Category.Commands.UpdateCategory;
 using Application.Category.Queries.GetAllCategories;
 using Application.Category.Queries.GetCategory;
-using Domain.Constants.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {

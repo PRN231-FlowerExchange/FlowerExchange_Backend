@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.PostFlower.DTOs;
-using Application.UserIdentity.DTOs;
+﻿using Application.PostFlower.DTOs;
 
 namespace Application.UserApplication.DTOs
 {
@@ -22,7 +14,7 @@ namespace Application.UserApplication.DTOs
 
         public Guid OwnerId { get; set; }
 
-       // public UserModel Owner { get; set; }
+        // public UserModel Owner { get; set; }
 
         public List<PostModel>? Posts { get; set; }
 

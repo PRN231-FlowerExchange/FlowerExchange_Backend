@@ -1,15 +1,10 @@
-﻿using Domain.Entities;
+﻿using Application.Payment.DTOs;
+using Domain.Constants.Enums;
+using Domain.Entities;
 using Domain.Payment;
+using Domain.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Constants.Enums;
-using Domain.Repository;
-using Application.Payment.DTOs;
 
 namespace Application.Payment.Commands.CreateTransaction
 {
@@ -45,7 +40,7 @@ namespace Application.Payment.Commands.CreateTransaction
                 // Get vnpay payment response
                 var vnpayPaymentResponse = _vnpayService.PaymentExecute(request.vnpayResponseQueries);
 
-                if(vnpayPaymentResponse == null)
+                if (vnpayPaymentResponse == null)
                 {
                     return new IPNResponseVNPAY
                     {
@@ -56,7 +51,7 @@ namespace Application.Payment.Commands.CreateTransaction
 
                 // Find wallet id of user buy user id
                 var userWallet = await _walletRepository.GetByUserId(vnpayPaymentResponse.UserId);
-                
+
                 // Create wallet for user if userWallet is null
                 if (userWallet == null)
                 {

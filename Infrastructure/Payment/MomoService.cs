@@ -1,15 +1,10 @@
-﻿using Domain.Entities;
-using Domain.Payment;
+﻿using Domain.Payment;
 using Domain.Payment.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Payment
 {
@@ -27,7 +22,7 @@ namespace Infrastructure.Payment
             // Get value
             var partnerCode = _options.Value.PartnerCode;
             var requestId = Guid.NewGuid().ToString();
-            var amount = (long) model.Amount;
+            var amount = (long)model.Amount;
             var orderId = Guid.NewGuid().ToString();
             var orderInfo = $"Nạp {model.Amount} VND vào wallet.";
             var redirectUrl = "https://mealhunt.vercel.app/";

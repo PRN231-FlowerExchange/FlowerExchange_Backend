@@ -2,16 +2,10 @@
 using Application.PostFlower.Services;
 using AutoMapper;
 using Domain.Commons.BaseRepositories;
-using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
 using Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.PostFlower.Commands.UpdatePostCommand
 {

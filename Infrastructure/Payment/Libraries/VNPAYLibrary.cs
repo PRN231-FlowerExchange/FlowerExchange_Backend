@@ -1,14 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
+﻿using Domain.Payment.Models;
+using Microsoft.AspNetCore.Http;
 using System.Globalization;
-using System.Linq;
-using System.Net.Sockets;
 using System.Net;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using Domain.Payment.Models;
 
 namespace Infrastructure.Payment.Libraries
 {

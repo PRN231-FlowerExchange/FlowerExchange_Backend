@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Domain.Commons.BaseRepositories;
 using Domain.Constants.Enums;
-using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
 using Persistence;
-using Persistence.RepositoryAdapter;
 
 namespace Application.Category.Commands.AddCategory
 {
@@ -34,7 +32,7 @@ namespace Application.Category.Commands.AddCategory
             // Kiểm tra xem danh mục đã tồn tại chưa
             if (await _categoryRepository.ExistsByNameAsync(request.Name))
             {
-                throw new DuplicateException("Category with the same name already exists."); 
+                throw new DuplicateException("Category with the same name already exists.");
             }
             var category = new Domain.Entities.Category
             {

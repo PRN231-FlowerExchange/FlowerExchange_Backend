@@ -1,16 +1,10 @@
 ﻿using Application.PostFlower.DTOs;
 using AutoMapper;
-using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Models;
 using Domain.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Post.Queries.GetAllPost
 {

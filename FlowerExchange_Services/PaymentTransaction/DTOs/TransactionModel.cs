@@ -1,14 +1,6 @@
 ﻿using Application.Order.DTOs;
 using Application.UserWallet.DTOs;
 using Domain.Constants.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace Application.PaymentTransaction.DTOs
 {

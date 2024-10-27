@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Text;
 
 namespace Application.Services.EmailForIdentityService
@@ -14,7 +13,7 @@ namespace Application.Services.EmailForIdentityService
         private readonly UserManager<User> _userManager;
         private readonly IUserStore<User> _userStore;
         private readonly ILogger<User> _logger;
-      
+
 
 
         public EmailForIdentityService(IServiceProvider serviceProvider)
@@ -23,7 +22,7 @@ namespace Application.Services.EmailForIdentityService
             _signInManager = serviceProvider.GetRequiredService<SignInManager<User>>();
             _userStore = serviceProvider.GetRequiredService<IUserStore<User>>();
             _logger = serviceProvider.GetRequiredService<ILogger<User>>();
-          
+
 
         }
 

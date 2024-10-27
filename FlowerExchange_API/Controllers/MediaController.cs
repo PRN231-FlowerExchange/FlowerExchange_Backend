@@ -1,9 +1,7 @@
 ﻿using Application.FirebaseStorage.Commands.DeleteFile;
 using Application.FirebaseStorage.Commands.UploadFile;
 using Domain.FirebaseStorage;
-using Google.Apis.Storage.v1;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Presentation.Controllers
 {

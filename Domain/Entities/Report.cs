@@ -1,12 +1,5 @@
 ﻿using Domain.Commons.BaseEntities;
 using Domain.Constants.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -23,7 +16,7 @@ namespace Domain.Entities
 
         public virtual Post Post { get; set; }
 
-        public Guid reportByUserId {  get; set; }
+        public Guid reportByUserId { get; set; }
 
         public virtual User reportBy { get; set; }
     }

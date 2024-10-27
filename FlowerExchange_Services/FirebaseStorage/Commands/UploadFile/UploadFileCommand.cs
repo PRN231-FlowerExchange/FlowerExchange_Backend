@@ -3,11 +3,6 @@ using Domain.FirebaseStorage;
 using Domain.FirebaseStorage.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.FirebaseStorage.Commands.UploadFile
 {
@@ -27,7 +22,7 @@ namespace Application.FirebaseStorage.Commands.UploadFile
 
         public async Task<FileUploadedResponse> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
-            if(request.File == null)
+            if (request.File == null)
             {
                 throw new MediaException("File is required!");
             }
