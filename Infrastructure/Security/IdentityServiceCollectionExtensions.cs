@@ -83,11 +83,6 @@ public static class IdentityServiceCollectionExtensions
 
     private static IdentityBuilder AddTokenProviders(this IdentityBuilder identityBuilder)
     {
-        //AddDefaultTokenProviders : Adds the default token providers used to generate tokens for reset passwords,
-        //     change email and change telephone number operations, and for two factor authentication
-        //     token generation.
-
-        //EmailConfirmationTokenProvider: A custom email token provider generate toke for email confirmation
 
         identityBuilder
             .AddDefaultTokenProviders()
@@ -135,8 +130,6 @@ public static class IdentityServiceCollectionExtensions
             options.Tokens.ProviderMap.Add("CustomEmailConfirmation", new TokenProviderDescriptor(
                 typeof(EmailConfirmationTokenProvider<User>)));
             options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
-
-
         });
 
 
@@ -169,8 +162,6 @@ public static class IdentityServiceCollectionExtensions
             options.SignIn.RequireConfirmedPhoneNumber = false;
             options.SignIn.RequireConfirmedAccount = false;
             options.User.RequireUniqueEmail = true;
-
-
 
         });
 

@@ -38,8 +38,6 @@ namespace Application.UserApplication.DTOs
 
         public RoleType Role { get; set; }
 
-        public StoreModel? Store { get; set; }
-
         public List<PostModel>? Posts { get; set; }
 
         public WalletModel? Wallet { get; set; }

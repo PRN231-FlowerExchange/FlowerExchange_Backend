@@ -23,10 +23,10 @@ namespace Domain.Entities
         public Guid? updateById { get; set; }
 
         [NotMapped]
-        public User? CreatedBy { get; set; }
+        public virtual User? CreatedBy { get; set; }
 
         [NotMapped]
-        public User? UpdatedBy { get; set; }
+        public virtual User? UpdatedBy { get; set; }
 
         public string? Fullname { get; set; }
 

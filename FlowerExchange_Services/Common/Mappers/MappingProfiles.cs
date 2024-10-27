@@ -1,8 +1,11 @@
 
+
+using Application.Conversation.DTOs;
+using Application.Message.DTOs;
 using Application.Category.DTOs;
 using Application.PostFlower.DTOs;
 using Application.UserIdentity.DTOs;
-using Application.Weather.DTOs;
+using Application.UserStore.DTOs;
 using AutoMapper;
 using Domain.Entities;
 using DomainEntities = Domain.Entities;
@@ -13,14 +16,21 @@ namespace Application.Common.Mappers
     {
         public MappingProfiles()
         {
-
             CreateMap<User, CurrentUserModel>();
-            CreateMap<WeatherForecastDTO, WeatherForecast>().ReverseMap();
-            CreateMap<Store, StoreDTO>().ReverseMap();
-            CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap();
             CreateMap<CreatePostDTO, DomainEntities.Post>();
-            CreateMap<FlowerDTO, Flower>().ReverseMap();
+            CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap();
             CreateMap<Domain.Entities.Post, AllPostDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Conversation, ConversationDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Message, MessageDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Message, Message.DTOs.MessageThreadDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Message, MessageConversationDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Conversation, ConversationDetailDTO>().ReverseMap();
+            CreateMap<Domain.Entities.UserConversation, UserConversationDetailDTO>().ReverseMap();
+            CreateMap<Domain.Entities.User, UserMessageDTO>().ReverseMap();
+            CreateMap<FlowerDTO, Flower>().ReverseMap();
+            CreateMap<StoreCreateDTO, Store>();
+            CreateMap<Store, StoreDTO>().ReverseMap();
+            CreateMap<Store, StoreViewInDetailsDTO>();
             CreateMap<Domain.Entities.Category, CategoryDTO>().ReverseMap();
         }
     }

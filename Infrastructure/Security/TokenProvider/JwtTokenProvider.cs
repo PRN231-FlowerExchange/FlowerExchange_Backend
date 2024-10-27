@@ -42,9 +42,7 @@ namespace Infrastructure.Security.TokenProvider
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var JwtToken = tokenHandler.CreateToken(tokenDescriptor); //convert to jwt token format
-            //Console.WriteLine("SERIALIZE TOKEN " + JwtToken.ToString());
             var serializeTokenString = tokenHandler.WriteToken(JwtToken);
-            Console.WriteLine("SERIALIZE TOKEN " + serializeTokenString);
             return serializeTokenString;
         }
 
