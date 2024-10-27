@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Domain.FirebaseStorage.Models;
+using Google.Apis.Storage.v1.Data;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ namespace Domain.FirebaseStorage
 {
     public interface IFirebaseStorageService
     {
-        Task<Uri> UploadFile(string name, IFormFile file);
+        Task<FileUploadedResponse> UploadFile(string name, IFormFile file);
         Task DeleteFile(string fileName);
     }
 }

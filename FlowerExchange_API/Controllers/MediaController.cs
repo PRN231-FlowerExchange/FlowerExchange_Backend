@@ -23,8 +23,8 @@ namespace Presentation.Controllers
         [HttpPost("upload")]
         public async Task<IActionResult> UploadFile(UploadFileCommand command)
         {
-            Uri imageUrl =  await Mediator.Send(command);
-            return Ok(imageUrl);
+            var fileUploaded =  await Mediator.Send(command);
+            return Ok(fileUploaded);
         }
 
         [HttpDelete("delete/{fileName}")]

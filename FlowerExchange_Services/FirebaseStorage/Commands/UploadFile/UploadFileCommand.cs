@@ -1,5 +1,6 @@
 ﻿using Domain.Exceptions;
 using Domain.FirebaseStorage;
+using Domain.FirebaseStorage.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -10,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Application.FirebaseStorage.Commands.UploadFile
 {
-    public record UploadFileCommand : IRequest<Uri>
+    public record UploadFileCommand : IRequest<FileUploadedResponse>
     {
         public IFormFile File { get; init; } = default;
     }
 
-    public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, Uri>
+    public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, FileUploadedResponse>
     {
         private IFirebaseStorageService _firebaseStorageService;
 
@@ -24,7 +25,7 @@ namespace Application.FirebaseStorage.Commands.UploadFile
             _firebaseStorageService = firebaseStorageService;
         }
 
-        public async Task<Uri> Handle(UploadFileCommand request, CancellationToken cancellationToken)
+        public async Task<FileUploadedResponse> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
             if(request.File == null)
             {
