@@ -1,15 +1,8 @@
 ﻿using Domain.Commons.BaseEntities;
 using Domain.Commons.BaseRepositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.Validation;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Persistence.RepositoryAdapter
 {
@@ -60,8 +53,8 @@ namespace Persistence.RepositoryAdapter
                 if (entity == null)
                 {
                     throw new ArgumentNullException(nameof(entity));
-                }                  
-                _dbSet.Remove(entity);  
+                }
+                _dbSet.Remove(entity);
                 //commented out call to SaveChanges as Context save changes will be called with Unit of work
                 //_dbContext.SaveChanges(); /// SaveChanges should be called by UnitOfWork manually, so no need to call it here
             }
@@ -76,18 +69,18 @@ namespace Persistence.RepositoryAdapter
         {
             try
             {
-                if(entities == null)
+                if (entities == null)
                     throw new ArgumentNullException(nameof(entities));
                 if (entities.Any())
                     _dbContext.RemoveRange(entities);
-                
+
             }
-            catch(DbEntityValidationException dbEx)
+            catch (DbEntityValidationException dbEx)
             {
                 HandleUnitOfWorkException(dbEx);
                 throw new Exception(_errorMessage, dbEx);
             }
-           
+
         }
 
         public virtual async Task DeleteByIdAsync(object key)
@@ -104,7 +97,7 @@ namespace Persistence.RepositoryAdapter
 
         public void Dispose()
         {
-            if(_dbContext != null)
+            if (_dbContext != null)
                 _dbContext.Dispose();
             _isDisposed = true;
         }
@@ -204,9 +197,9 @@ namespace Persistence.RepositoryAdapter
             {
                 if (entities == null)
                     throw new ArgumentNullException(nameof(entities));
-                
+
                 if (entities.Any())
-                   await _dbContext.AddRangeAsync(entities);
+                    await _dbContext.AddRangeAsync(entities);
             }
             catch (DbEntityValidationException dbEx)
             {
@@ -246,7 +239,7 @@ namespace Persistence.RepositoryAdapter
                     _dbContext.Entry(existingEntity).State = EntityState.Modified;
                 }
             }
-            catch (DbEntityValidationException dbEx )
+            catch (DbEntityValidationException dbEx)
             {
                 HandleUnitOfWorkException(dbEx);
                 throw new Exception(_errorMessage, dbEx);
@@ -287,9 +280,9 @@ namespace Persistence.RepositoryAdapter
 
         private void HandleUnitOfWorkException(DbEntityValidationException dbEx)
         {
-           foreach(var validationErrors in dbEx.EntityValidationErrors)
+            foreach (var validationErrors in dbEx.EntityValidationErrors)
             {
-                foreach(var validationError in validationErrors.ValidationErrors)
+                foreach (var validationError in validationErrors.ValidationErrors)
                 {
                     _errorMessage = _errorMessage + $"Property: {validationError.PropertyName} Error: {validationError.ErrorMessage} {Environment.NewLine}";
                 }
@@ -308,7 +301,7 @@ namespace Persistence.RepositoryAdapter
             return Expression.Lambda<Func<TEntity, bool>>(body, parameter);
         }
 
-   
+
 
     }
 

@@ -2,12 +2,12 @@
 using Application.PostFlower.Services;
 using AutoMapper;
 using Domain.Commons.BaseRepositories;
-using Entity = Domain.Entities;
+using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Repository;
 using MediatR;
 using Persistence;
-using Domain.Entities;
+using Entity = Domain.Entities;
 
 namespace Application.PostFlower.Commands.AddServiceToPostCommand
 {

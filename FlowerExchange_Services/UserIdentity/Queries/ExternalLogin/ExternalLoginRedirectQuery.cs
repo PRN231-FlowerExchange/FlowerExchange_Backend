@@ -1,12 +1,8 @@
-﻿using Application.UserIdentity.Commands.ExternalLogin;
-using Domain.Commons.BaseRepositories;
-using Domain.Entities;
+﻿using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Persistence;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,8 +14,8 @@ namespace Application.UserIdentity.Queries.ExternalLogin
         [DefaultValue("Google")]
         public string AuthenticationScheme;
 
-        
-        [Required]        
+
+        [Required]
         public string RedirectUrl;
     }
 
@@ -35,7 +31,7 @@ namespace Application.UserIdentity.Queries.ExternalLogin
 
         public async Task<AuthenticationProperties> Handle(ExternalLoginRedirectQuery request, CancellationToken cancellationToken)
         {
-            AuthenticationProperties properties =  _signInManager.ConfigureExternalAuthenticationProperties(request.AuthenticationScheme, request.RedirectUrl);
+            AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties(request.AuthenticationScheme, request.RedirectUrl);
             return properties;
         }
     }

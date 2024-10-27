@@ -17,7 +17,7 @@ namespace Application.UserIdentity.Commands.ConfirmEmail
         [Required(ErrorMessage = "User id is required !")]
         public string UserId { get; init; }
         [Required(ErrorMessage = "Code is required !")]
-        public string Code { get; init; }       
+        public string Code { get; init; }
     }
 
     public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, string>
@@ -34,12 +34,12 @@ namespace Application.UserIdentity.Commands.ConfirmEmail
             _logger = serviceProvider.GetRequiredService<ILogger<ConfirmEmailCommand>>();
 
 
-        } 
+        }
         public async Task<string> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
             Console.WriteLine("USER ID REQUIRE CONFIRM EMAIL: " + request.UserId);
             User user = await _userManager.FindByIdAsync(request.UserId);
-            if(user == null)
+            if (user == null)
             {
                 throw new NotFoundException(nameof(User), request.UserId);
             }
@@ -49,7 +49,7 @@ namespace Application.UserIdentity.Commands.ConfirmEmail
             Console.WriteLine("CODE STRING AFTER DECODE: " + codeAfterDecode);
 
             IdentityResult result = await _userManager.ConfirmEmailAsync(user, codeAfterDecode);
-            if(result.Errors.Any())
+            if (result.Errors.Any())
             {
                 var failures = result.Errors.Select(e => new ValidationFailure(e.Code, e.Description)).ToList();
                 throw new ValidationException(failures);

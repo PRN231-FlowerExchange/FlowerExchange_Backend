@@ -18,7 +18,7 @@ namespace Domain.Commons.BaseEntities
 
         public virtual DateTimeOffset? UpdatedAt { get; set; }
 
-        public virtual Guid? createById { get; set; }    
+        public virtual Guid? createById { get; set; }
 
         public virtual Guid? updateById { get; set; }
 
@@ -41,9 +41,9 @@ namespace Domain.Commons.BaseEntities
             _domainEvents.Remove(domainEvent);
         }
 
-        public void ClearDomainEvents() 
-        { 
-            _domainEvents.Clear(); 
+        public void ClearDomainEvents()
+        {
+            _domainEvents.Clear();
         }
     }
 }

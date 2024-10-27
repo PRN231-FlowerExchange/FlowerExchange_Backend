@@ -3,11 +3,6 @@ using Domain.Commons.BaseEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Interceptors
 {
@@ -26,8 +21,8 @@ namespace Persistence.Interceptors
         }
 
         public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(
-            DbContextEventData eventData, 
-            InterceptionResult<int> result, 
+            DbContextEventData eventData,
+            InterceptionResult<int> result,
             CancellationToken cancellationToken = default)
         {
             Console.WriteLine("Interceptor SavingChanges is called");

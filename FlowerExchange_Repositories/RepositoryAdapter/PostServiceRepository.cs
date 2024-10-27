@@ -3,13 +3,6 @@ using Domain.Constants.Enums;
 using Domain.Entities;
 using Domain.Repository;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Entities;
-using Domain.Repository;
 using System.Data.Entity.Validation;
 
 namespace Persistence.RepositoryAdapter

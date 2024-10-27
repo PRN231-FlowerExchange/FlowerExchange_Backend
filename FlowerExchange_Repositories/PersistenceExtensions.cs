@@ -1,11 +1,7 @@
 ﻿using Domain.Commons.BaseRepositories;
-using Domain.Entities;
 using Domain.Repository;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Persistence.Interceptors;
 using Persistence.RepositoryAdapter;

@@ -13,9 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Persistence;
 using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Application.UserIdentity.Commands.Login
 {
@@ -24,7 +21,7 @@ namespace Application.UserIdentity.Commands.Login
         [EmailAddress(ErrorMessage = "Invalid Email !")]
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; init; }
-        
+
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; init; }
@@ -41,7 +38,7 @@ namespace Application.UserIdentity.Commands.Login
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly SignInManager<User> _signInManager;
         private readonly TokenFactory _tokenFactory;
-       
+
         private readonly IJwtTokenProvider _jwtTokenService;
 
 
@@ -70,7 +67,7 @@ namespace Application.UserIdentity.Commands.Login
             if (signInResult.Succeeded)
             {
                 User user = await _userManager.FindByEmailAsync(request.Email);
-                if(user == null)
+                if (user == null)
                 {
                     throw new NotFoundException(request.Email, nameof(User));
                 }
@@ -78,8 +75,8 @@ namespace Application.UserIdentity.Commands.Login
                 _unitofwork.SaveChanges();
 
                 IList<string> roles = await _userManager.GetRolesAsync(user);
-                AuthenticatedToken token =  await _tokenFactory.GenerateAuthenticatedSignInSuccess(user, roles);
-                
+                AuthenticatedToken token = await _tokenFactory.GenerateAuthenticatedSignInSuccess(user, roles);
+
                 await _userManager.SetAuthenticationTokenAsync(user, TokenConstants.TOKEN_LOGIN_PROVIDER_NAME, TokenConstants.REFRESH_TOKEN_NAME, token.RefreshToken);
                 return token;
             }
@@ -99,7 +96,7 @@ namespace Application.UserIdentity.Commands.Login
             {
                 throw new BadRequestException("Login failed ! Username or password is incorrect!");
             }
-            
+
         }
     }
 }

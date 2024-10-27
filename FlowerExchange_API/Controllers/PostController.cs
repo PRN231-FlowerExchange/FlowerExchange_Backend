@@ -1,17 +1,16 @@
 
-using Application.PostFlower.Queries.GetPost;
-using Application.PostFlower.Commands.UpdatePostCommand;
-using Application.PostFlower.DTOs;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Application.PostFlower.Commands.AddServiceToPostCommand;
-using Application.Post.Queries.GetDetailPost;
-using Domain.Models;
-using Newtonsoft.Json;
 using Application.Post.Commands.CreatePost;
 using Application.Post.Queries.GetAllPost;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Application.Post.Queries.GetDetailPost;
+using Application.PostFlower.Commands.AddServiceToPostCommand;
+using Application.PostFlower.Commands.UpdatePostCommand;
+using Application.PostFlower.DTOs;
+using Application.PostFlower.Queries.GetPost;
 using Domain.Exceptions;
+using Domain.Models;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Presentation.Controllers
 {
@@ -127,7 +126,8 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("list-top-post")]
-        public async Task<IActionResult> GetTopPost([FromBody] GetTopPostQuery query) {
+        public async Task<IActionResult> GetTopPost([FromBody] GetTopPostQuery query)
+        {
             try
             {
                 var response = await Mediator.Send(query);
@@ -141,6 +141,6 @@ namespace Presentation.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-        } 
+        }
     }
 }
