@@ -1,4 +1,5 @@
 using Application;
+using Domain.Entities;
 using Domain.FirebaseStorage;
 using Domain.Payment;
 using Domain.Payment.Models;
@@ -11,6 +12,7 @@ using Newtonsoft.Json;
 using Persistence;
 using Presentation;
 using Presentation.OptionsSetup;
+using System.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,12 +31,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAnyOrigin",
         builder =>
         {
-
             builder.AllowAnyOrigin()
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
 });
+
+
 //Swagger Configuration
 builder.Services.AddSwaggerGen(c =>
 {
@@ -149,7 +152,6 @@ app.UseExceptionHandler(error =>
         var exception = (context.Features.Get<IExceptionHandlerFeature>()?.Error);
     });
 });
-
 
 app.UseCors("AllowAnyOrigin");
 
