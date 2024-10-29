@@ -35,14 +35,6 @@ builder.Services.AddCors(options =>
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
-    //options.AddPolicy("AllowClientEndpointWithCredentials",
-    //    builder =>
-    //    {
-    //        builder.WithOrigins("http://192.168.1.12:3000", "http://localhost:3000")
-    //              .AllowAnyHeader()
-    //              .AllowAnyMethod()
-    //              .AllowCredentials();
-    //    });
 });
 
 
