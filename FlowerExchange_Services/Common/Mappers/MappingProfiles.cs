@@ -1,4 +1,7 @@
 
+
+using Application.Conversation.DTOs;
+using Application.Message.DTOs;
 using Application.Category.DTOs;
 using Application.PostFlower.DTOs;
 using Application.UserIdentity.DTOs;
@@ -13,30 +16,22 @@ namespace Application.Common.Mappers
     {
         public MappingProfiles()
         {
-            #region UserMappings
             CreateMap<User, CurrentUserModel>();
-            #endregion
-
-            #region PostMappings
-            CreateMap<CreatePostDTO, DomainEntities.Post>();
+            CreateMap<CreatePostDTO, DomainEntities.Post>().ReverseMap();
             CreateMap<Domain.Entities.Post, PostDTO>().ReverseMap();
             CreateMap<Domain.Entities.Post, AllPostDTO>().ReverseMap();
-            #endregion
-
-            #region FlowerMappings
+            CreateMap<Domain.Entities.Conversation, ConversationDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Message, MessageDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Message, Message.DTOs.MessageThreadDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Message, MessageConversationDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Conversation, ConversationDetailDTO>().ReverseMap();
+            CreateMap<Domain.Entities.UserConversation, UserConversationDetailDTO>().ReverseMap();
+            CreateMap<Domain.Entities.User, UserMessageDTO>().ReverseMap();
             CreateMap<FlowerDTO, Flower>().ReverseMap();
-            #endregion
-
-            #region StoreMappings
             CreateMap<StoreCreateDTO, Store>();
             CreateMap<Store, StoreDTO>().ReverseMap();
             CreateMap<Store, StoreViewInDetailsDTO>();
-            #endregion
-
-            #region CategoryMappings
             CreateMap<Domain.Entities.Category, CategoryDTO>().ReverseMap();
-            #endregion
-
         }
     }
 }

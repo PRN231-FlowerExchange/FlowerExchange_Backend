@@ -10,6 +10,7 @@ using Infrastructure.Payment;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
 using Persistence;
+using Presentation;
 using Presentation.OptionsSetup;
 using System.Configuration;
 using System.Reflection;
@@ -103,6 +104,7 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 
 // VNPAY service
 builder.Services.AddScoped<IVNPAYService, VNPAYService>();
+builder.Services.AddSignalR();
 
 // Momo service
 builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
@@ -168,7 +170,15 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseRouting();
 
 //app.MapIdentityApi<User>();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chatHub"); // SignalR Hub endpoint
+});
+
 
 app.Run();

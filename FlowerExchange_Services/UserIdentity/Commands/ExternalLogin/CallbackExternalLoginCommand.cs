@@ -159,9 +159,9 @@ namespace Application.UserIdentity.Commands.ExternalLogin
                 // Commit the transaction if everything succeeded
                 await _unitofwork.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync();
-
+                
                 await _publisher.Publish(new UserRegisteredCompleteEvent(userSaved), cancellationToken);
-
+                
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
                 IList<string> roles = await _userManager.GetRolesAsync(user);

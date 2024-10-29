@@ -17,6 +17,9 @@
     <EmbeddedResource Remove="Wallet\**" />
     <None Remove="Implements\**" />
     <None Remove="Interfaces\**" />
+    <Compile Remove="Payment\Commands\CreateFlowerServicePaymentTransactionCommand\**" />
+    <EmbeddedResource Remove="Payment\Commands\CreateFlowerServicePaymentTransactionCommand\**" />
+    <None Remove="Payment\Commands\CreateFlowerServicePaymentTransactionCommand\**" />
     <None Remove="SystemUser\**" />
     <None Remove="Wallet\**" />
   </ItemGroup>
@@ -24,6 +27,7 @@
   <ItemGroup>
     <Folder Include="Category\Services\" />
     <Folder Include="Common\Services\" />
+    <Folder Include="Conversation\Commands\" />
     <Folder Include="Post\Commands\" />
     <Folder Include="Post\Services\" />
     <Folder Include="Report\Commands\" />
@@ -41,11 +45,21 @@
     <Folder Include="Order\Commands\" />
     <Folder Include="Order\Queries\" />
     <Folder Include="Order\Services\" />
+    <Folder Include="UserApplication\Commands\" />
+    <Folder Include="UserApplication\Queries\" />
+    <Folder Include="UserIdentity\Commands\ForgotPassword\" />
     <Folder Include="UserIdentity\Commands\ResetPassword\" />
     <Folder Include="UserIdentity\Commands\SignOut\" />
     <Folder Include="UserStore\Services\" />
+    <Folder Include="Wallet\Commands\" />
     <Folder Include="Weather\Services\" />
+    <Folder Include="UserApplication\Services\" />
+    <Folder Include="Wallet\Services\" />
+    <Folder Include="SystemUser\Commands\" />
+    <Folder Include="SystemUser\Services\" />
+    <Folder Include="SystemUser\Queries\" />
     <Folder Include="UserWallet\Commands\" />
+    <Folder Include="UserWallet\Services\" />
   </ItemGroup>
 
   <ItemGroup>

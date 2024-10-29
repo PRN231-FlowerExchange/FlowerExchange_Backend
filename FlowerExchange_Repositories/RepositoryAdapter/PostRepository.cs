@@ -166,12 +166,11 @@ namespace Persistence.RepositoryAdapter
 
             if (string.IsNullOrWhiteSpace(orderByQueryString))
             {
-                posts = posts.OrderBy(x => x.CreatedAt);
+                posts = posts.OrderBy(x => x.Flower.Price); 
                 return;
             }
 
             var orderParams = orderByQueryString.Trim().Split(',');
-            var propertyInfos = typeof(Post).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var orderQueryBuilder = new StringBuilder();
 
             foreach (var param in orderParams)
@@ -180,24 +179,53 @@ namespace Persistence.RepositoryAdapter
                     continue;
 
                 var propertyFromQueryName = param.Split(" ")[0];
-                var objectProperty = propertyInfos.FirstOrDefault(pi => pi.Name.Equals(propertyFromQueryName, StringComparison.InvariantCultureIgnoreCase));
-
-                if (objectProperty == null)
-                    continue;
-
                 var sortingOrder = param.EndsWith(" desc") ? "descending" : "ascending";
 
-                orderQueryBuilder.Append($"{objectProperty.Name.ToString()} {sortingOrder}, ");
+                if (propertyFromQueryName.Equals("price", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    orderQueryBuilder.Append($"Flower.Price {sortingOrder}, ");
+                }
+                else if (propertyFromQueryName.Equals("storeName", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    orderQueryBuilder.Append($"Store.Name {sortingOrder}, ");
+                }
+                else
+                {
+                    var propertyInfos = typeof(Post).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                    var objectProperty = propertyInfos.FirstOrDefault(pi => pi.Name.Equals(propertyFromQueryName, StringComparison.InvariantCultureIgnoreCase));
+
+                    if (objectProperty != null)
+                    {
+                        orderQueryBuilder.Append($"{objectProperty.Name} {sortingOrder}, ");
+                    }
+                }
             }
 
             var orderQuery = orderQueryBuilder.ToString().TrimEnd(',', ' ');
 
             if (string.IsNullOrWhiteSpace(orderQuery))
             {
-                posts = posts.OrderBy(x => x.CreatedAt);
-                return;
+                posts = posts.OrderBy(x => x.Flower.Price);
             }
-            posts = posts.OrderBy(orderQuery);
+            else
+            {
+                posts = posts.OrderBy(orderQuery);
+            }
+        }
+        
+        public async Task<Post?> GetPostByIdWithFlowerAsync(Guid id)
+        {
+            try
+            {
+                return await _dbContext.Posts
+                    .Include(p => p.Flower)
+                    .Include(p => p.Seller)
+                    .FirstOrDefaultAsync(p => p.Id.Equals(id));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 

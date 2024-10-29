@@ -1,4 +1,5 @@
-﻿namespace Application.PostFlower.DTOs
+﻿
+namespace Application.PostFlower.DTOs
 {
     public class StoreDTO
     {

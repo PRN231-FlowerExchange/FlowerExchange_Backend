@@ -13,7 +13,7 @@ namespace Application.UserApplication.DTOs
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
 
         public Guid OwnerId { get; set; }
-
+        
         public UserModel Owner { get; set; }
 
         public List<PostModel>? Posts { get; set; }
