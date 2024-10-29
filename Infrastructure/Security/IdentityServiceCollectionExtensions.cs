@@ -52,6 +52,7 @@ public static class IdentityServiceCollectionExtensions
                     {
                         return Task.CompletedTask;
                     };                    
+  
                 });
         return services;
     }
