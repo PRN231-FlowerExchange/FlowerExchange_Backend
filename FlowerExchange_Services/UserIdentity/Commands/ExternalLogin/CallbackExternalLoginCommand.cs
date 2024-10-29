@@ -168,6 +168,9 @@ namespace Application.UserIdentity.Commands.ExternalLogin
                 AuthenticatedToken token = await _tokenFactory.GenerateAuthenticatedSignInSuccess(user, roles);
                 await _userManager.SetAuthenticationTokenAsync(user, TokenConstants.TOKEN_LOGIN_PROVIDER_NAME, TokenConstants.REFRESH_TOKEN_NAME, token.RefreshToken);
 
+
+                await _signInManager.SignOutAsync();
+
                 return token;
             }
             catch (Exception ex)

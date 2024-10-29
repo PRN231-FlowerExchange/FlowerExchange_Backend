@@ -1,4 +1,5 @@
 using Application;
+using Domain.Entities;
 using Domain.FirebaseStorage;
 using Domain.Payment;
 using Domain.Payment.Models;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
 using Persistence;
 using Presentation.OptionsSetup;
+using System.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,17 +25,28 @@ builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 //Allow Cors Origin
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",
         builder =>
         {
-
             builder.AllowAnyOrigin()
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
+    //options.AddPolicy("AllowClientEndpointWithCredentials",
+    //    builder =>
+    //    {
+    //        builder.WithOrigins("http://192.168.1.12:3000", "http://localhost:3000")
+    //              .AllowAnyHeader()
+    //              .AllowAnyMethod()
+    //              .AllowCredentials();
+    //    });
 });
+
+
 //Swagger Configuration
 builder.Services.AddSwaggerGen(c =>
 {
@@ -147,7 +160,6 @@ app.UseExceptionHandler(error =>
         var exception = (context.Features.Get<IExceptionHandlerFeature>()?.Error);
     });
 });
-
 
 app.UseCors("AllowAnyOrigin");
 

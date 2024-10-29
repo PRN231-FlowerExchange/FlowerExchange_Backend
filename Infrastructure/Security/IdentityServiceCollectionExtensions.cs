@@ -51,8 +51,7 @@ public static class IdentityServiceCollectionExtensions
                     options.Events.OnCreatingTicket = (context) =>
                     {
                         return Task.CompletedTask;
-                    };
-
+                    };                    
                 });
         return services;
     }

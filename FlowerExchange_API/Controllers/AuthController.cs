@@ -12,7 +12,10 @@ using Application.UserIdentity.Queries.ExternalLogin;
 using Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Dynamic.Core.Tokenizer;
+using System.Web;
 
 namespace Presentation.Controllers
 {
@@ -66,31 +69,64 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("google-login")]
-        public async Task<IActionResult> LoginByGoogle([FromQuery] string returnUrl, [FromQuery(Name = "provider")] string externalLoginProvider = "Google")
+        public async Task<IActionResult> LoginByGoogle([FromQuery(Name = "redirect_uri")] string redirect_uri = null, [FromQuery(Name = "purpose_get_token")] bool purpose_get_token = false, [FromQuery(Name = "provider")] string externalLoginProvider = "Google")
         {
-            if (string.IsNullOrEmpty(returnUrl))
+           
+            //if (HttpContext.Request.Cookies.Any(x => x.Key.Equals("Identity.External")))
+            //{
+            //    //AuthenticatedToken token = await Mediator.Send(new CallbackExternalLoginCommand());
+            //    //// string callbackTokenUrl = redirect_uri;
+            //    ////if(purpose_get_token)
+            //    ////{
+            //    ////    return Ok(token);
+            //    ////}
+            //    //return Redirect(redirect_uri);
+            //    Console.WriteLine("TRUE COOKIE");
+
+            //}
+            if(HttpContext.Request.Cookies.Any(x => x.Key.Equals("Identity.External")))
             {
-                throw new BadHttpRequestException("returnUrl is required !");
+                AuthenticatedToken token = await Mediator.Send(new CallbackExternalLoginCommand());
+                if(redirect_uri != null)
+                {
+                    return Redirect(redirect_uri + "?accessToken=" + token.AccessToken + "&refreshToken=" + token.RefreshToken + "&tokenType=" + token.TokenType);
+
+                }
+                else
+                {
+                    return Unauthorized();
+                }
             }
-            AuthenticationProperties properties = await this.Mediator.Send(new ExternalLoginRedirectQuery() { AuthenticationScheme = externalLoginProvider, RedirectUrl = returnUrl });
-            ChallengeResult challengeResult = Challenge(properties, externalLoginProvider);
-            return challengeResult;
+            else
+            {
+                string callbackTokenUrl = Url.Action(nameof(this.LoginByGoogle), "Auth") + "?redirect_uri=" + redirect_uri + "&purpose_get_token=" + true;
+                //var callbackTokenUrlBuilder = new UriBuilder(pathinternalgetoken);
+                //var query = HttpUtility.ParseQueryString(callbackTokenUrlBuilder.Query);
+                //query["redirect_uri"] = redirect_uri;
+                //query["purpose_get_token"] = "false";
+                //callbackTokenUrlBuilder.Query = query.ToString();
+
+                //string callbackTokenUrl = callbackTokenUrlBuilder.ToString();
+
+                //string callbackTokenUrl = redirect_uri;
+                Console.WriteLine("Callback: ", callbackTokenUrl);
+                AuthenticationProperties properties = await this.Mediator.Send(new ExternalLoginRedirectQuery() { AuthenticationScheme = externalLoginProvider, RedirectUrl = callbackTokenUrl });
+                ChallengeResult challengeResult = Challenge(properties, externalLoginProvider);
+                return challengeResult;
+            }
+
+            
         }
 
-        //[HttpGet("external-login-callback")]
-        //public async Task<IActionResult> CallbackWithExternalLoginProvider()
+        //[HttpGet("tokens-from-external-login")]
+        //public async Task<IActionResult> GetTokensFromExternalLogin()
         //{
-        //    AuthenticatedToken token = await Mediator.Send(new CallbackExternalLoginCommand());
-        //    return Ok(token);
+        //    foreach (var item in HttpContext.Request.Cookies.ToArray())
+        //    {
+        //        Console.WriteLine(item.Key + ": " + item.Value);
+        //    }
+            
         //}
-
-        [HttpGet("tokens-from-external-login")]
-        public async Task<IActionResult> GetTokensFromExternalLogin()
-        {
-            AuthenticatedToken token = await Mediator.Send(new CallbackExternalLoginCommand());
-            return Ok(token);
-        }
-
 
         [HttpGet("external-login-provider-options")]
         public async Task<IActionResult> GetExternalLoginProviderOptions()
