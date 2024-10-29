@@ -5,6 +5,8 @@ using Application.Payment.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Quic;
+using Application.Payment.Commands.CreateFlowerServicePaymentTransaction;
 
 namespace Presentation.Controllers
 {
@@ -80,7 +82,30 @@ namespace Presentation.Controllers
                 var userId = Guid.Parse(userIdClaim.Value);
 
                 await Mediator.Send(new CreatePostServicePaymentTransactionCommand(request, userId));
-                return Ok();
+                return Ok(new {message = "Create payment post service success!"});
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        
+        [HttpPost("flower-service")]
+        [Authorize]
+        public async Task<IActionResult> CreateFlowerServicePayment([FromBody] FlowerServicePaymentRequest request)
+        {
+            try
+            {
+                // Take userid from token
+                var userIdClaim = HttpContext.User.FindFirst(JwtRegisteredClaimNames.Jti);
+                if (userIdClaim == null)
+                {
+                    return Unauthorized();
+                }
+                var userId = Guid.Parse(userIdClaim.Value);
+
+                await Mediator.Send(new CreateFlowerServicePaymentTransactionCommand(request.PostId, userId));
+                return Ok(new {message = "Create payment flower service success!"});
             }
             catch (Exception ex)
             {

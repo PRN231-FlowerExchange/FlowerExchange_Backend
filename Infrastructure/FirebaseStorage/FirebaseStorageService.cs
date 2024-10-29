@@ -1,4 +1,5 @@
 ﻿using Domain.FirebaseStorage;
+using Domain.FirebaseStorage.Models;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Http;
 
@@ -19,7 +20,7 @@ namespace Infrastructure.FirebaseStorage
             await _storageClient.DeleteObjectAsync(BucketName, fileName);
         }
 
-        public async Task<Uri> UploadFile(string name, IFormFile file)
+        public async Task<FileUploadedResponse> UploadFile(string name, IFormFile file)
         {
             var randomGuid = Guid.NewGuid();
             using var stream = new MemoryStream();
@@ -27,7 +28,12 @@ namespace Infrastructure.FirebaseStorage
             var blob = await _storageClient.UploadObjectAsync(BucketName,
                 $"{name}-{randomGuid}", file.ContentType, stream);
             var photoUri = new Uri(blob.MediaLink);
-            return photoUri;
+            var fileName = blob.Name;
+            return new FileUploadedResponse
+            {
+                Uri = photoUri,
+                FileName = fileName
+            };
         }
     }
 }

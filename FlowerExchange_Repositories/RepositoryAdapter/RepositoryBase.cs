@@ -300,7 +300,7 @@ namespace Persistence.RepositoryAdapter
             // Create the lambda expression
             return Expression.Lambda<Func<TEntity, bool>>(body, parameter);
         }
-
+        
         // Method to get all entities with includes
         public virtual async Task<IEnumerable<TEntity>> GetAllWithIncludesAsync(params Expression<Func<TEntity, object>>[] includes)
         {

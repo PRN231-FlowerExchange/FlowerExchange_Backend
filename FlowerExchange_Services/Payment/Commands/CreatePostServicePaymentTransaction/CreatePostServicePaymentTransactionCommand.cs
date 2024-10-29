@@ -2,6 +2,13 @@
 using Domain.Entities;
 using Domain.Repository;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Domain.Commons.BaseRepositories;
+using Persistence;
 
 namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
 {
@@ -28,8 +35,9 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
         private IServiceOrderRepository _serviceOrderRepository;
         private ITransactionRepository _transactionRepository;
         private IWalletTransactionRepository _walletTransactionRepository;
+        private readonly IUnitOfWork<FlowerExchangeDbContext> _unitOfWork;
 
-        public CreatePostServicePaymentTransactionCommandHandler(IUserRepository userRepository, IPostRepository postRepository, IPostServiceRepository postServiceRepository, IWalletRepository walletRepository, IServiceOrderRepository serviceOrderRepository, ITransactionRepository transactionRepository, IWalletTransactionRepository walletTransactionRepository)
+        public CreatePostServicePaymentTransactionCommandHandler(IUserRepository userRepository, IPostRepository postRepository, IPostServiceRepository postServiceRepository, IWalletRepository walletRepository, IServiceOrderRepository serviceOrderRepository, ITransactionRepository transactionRepository, IWalletTransactionRepository walletTransactionRepository, IUnitOfWork<FlowerExchangeDbContext> unitOfWork)
         {
             _userRepository = userRepository;
             _postRepository = postRepository;
@@ -38,6 +46,7 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
             _serviceOrderRepository = serviceOrderRepository;
             _transactionRepository = transactionRepository;
             _walletTransactionRepository = walletTransactionRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(CreatePostServicePaymentTransactionCommand request, CancellationToken cancellationToken)
@@ -88,7 +97,7 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
 
                 };
                 await _serviceOrderRepository.InsertAsync(serviceOrder);
-                await _serviceOrderRepository.SaveChagesAysnc();
+                // await _serviceOrderRepository.SaveChagesAysnc();
 
                 // Update serviceOrderId for each postService
                 foreach (PostService postService in selectedPostServices)
@@ -96,7 +105,7 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                     postService.ServiceOrderId = serviceOrder.Id;
                     await _postServiceRepository.UpdateByIdAsync(postService, postService.Id);
                 }
-                await _postServiceRepository.SaveChagesAysnc();
+                // await _postServiceRepository.SaveChagesAysnc();
 
                 // Create transaction
                 var transaction = new Transaction
@@ -109,7 +118,7 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                     ServiceOrderId = serviceOrder.Id
                 };
                 await _transactionRepository.InsertAsync(transaction);
-                await _transactionRepository.SaveChagesAysnc();
+                // await _transactionRepository.SaveChagesAysnc();
 
                 // Create wallet transaction
                 var walletTransaction = new WalletTransaction
@@ -119,13 +128,14 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                     Type = Domain.Constants.Enums.TransDirection.Minus
                 };
                 await _walletTransactionRepository.InsertAsync(walletTransaction);
-                await _walletTransactionRepository.SaveChagesAysnc();
+                // await _walletTransactionRepository.SaveChagesAysnc();
 
                 // Update wallet balance
                 wallet.TotalBalance -= totalAmount;
                 await _walletRepository.UpdateByIdAsync(wallet, wallet.Id);
-                await _walletRepository.SaveChagesAysnc();
+                // await _walletRepository.SaveChagesAysnc();
 
+                await _unitOfWork.SaveChangesAsync();
             }
             catch
             {
