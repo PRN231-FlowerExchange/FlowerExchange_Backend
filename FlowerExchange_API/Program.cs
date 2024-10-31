@@ -153,18 +153,13 @@ app.UseExceptionHandler(error =>
     });
 });
 
-app.UseCors("AllowAnyOrigin");
+app.UseRouting();
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAnyOrigin");
 
 app.UseAuthentication();
 
 app.UseAuthorization();
-
-app.MapControllers();
-app.UseRouting();
-
-//app.MapIdentityApi<User>();
 
 app.UseEndpoints(endpoints =>
 {
@@ -172,5 +167,14 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<ChatHub>("/chatHub"); // SignalR Hub endpoint
 });
 
+app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();
+
+
+
+
+
+

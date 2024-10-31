@@ -3,10 +3,15 @@ using Domain.Security.Identity;
 using Infrastructure.Security.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
+using System;
+using System.Net;
+using System.Net.Http;
 
 
 namespace Infrastructure.Security;
@@ -30,13 +35,52 @@ public static class IdentityServiceCollectionExtensions
                 {
                     options.Events = new JwtBearerEvents
                     {
-                        OnChallenge = context =>
+                        OnChallenge = async context =>
                         {
-                            // Không tự động trả về lỗi 403
-                            context.HandleResponse();
+                            context.HandleResponse(); // Prevent default behavior
+                            var response = context.Response;
+                            var problemDetails = new ProblemDetails
+                            {
+                                Detail = "You are not authorized to access this resource. Please provide a valid token.",
+                                Instance = null,
+                                Status = (int)HttpStatusCode.Unauthorized,
+                                Title = "Unauthorized",
+                                Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.5"
+                            };
 
-                            // Trả về lỗi 401 Unauthorized khi không có JWT hoặc không hợp lệ
-                            throw new UnauthorizedAccessException("Unauthorized. You need to log in to access this resource.");
+                            problemDetails.Extensions.Add("message", "You are not authorized to access this resource. Please provide a valid token.");
+
+                            response.ContentType = "application/problem+json";
+                            response.StatusCode = problemDetails.Status.Value;
+
+                            await response.WriteAsJsonAsync(problemDetails);
+                        },
+                        OnForbidden = async context =>
+                        {
+                            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                            context.Response.ContentType = "application/json";
+
+                            await context.Response.WriteAsJsonAsync(new
+                            {
+                                error = "You do not have permission to access this resource."
+                            });
+
+                            var response = context.Response;
+                            var problemDetails = new ProblemDetails
+                            {
+                                Detail = "You do not have permission to access this resource.",
+                                Instance = null,
+                                Status = (int)HttpStatusCode.Forbidden,
+                                Title = "Forbidden",
+                                Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3"
+                            };
+
+                            problemDetails.Extensions.Add("message", "You are not authorized to access this resource. Please provide a valid token.");
+
+                            response.ContentType = "application/problem+json";
+                            response.StatusCode = problemDetails.Status.Value;
+
+                            await response.WriteAsJsonAsync(problemDetails);
                         }
                     };
                 })
