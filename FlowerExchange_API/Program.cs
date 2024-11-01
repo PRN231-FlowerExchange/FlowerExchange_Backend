@@ -4,6 +4,7 @@ using Domain.FirebaseStorage;
 using Domain.Payment;
 using Domain.Payment.Models;
 using Google.Cloud.Storage.V1;
+using Infrastructure;
 using Infrastructure.ExceptionHandlers;
 using Infrastructure.FirebaseStorage;
 using Infrastructure.Payment;

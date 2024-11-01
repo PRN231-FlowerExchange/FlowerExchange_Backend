@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Persistence;
 
-namespace Application.Conversation.Queries.GetConversationByUserIdQuery
+namespace Application.Conversation.Queries.GetConversationByUserId
 {
     public class GetConversationByUserIdQuery : IRequest<List<ConversationDetailDTO>>
     {

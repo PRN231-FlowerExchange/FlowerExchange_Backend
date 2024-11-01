@@ -1,6 +1,8 @@
 ﻿using Domain.Commons.BaseRepositories;
 using Domain.Entities;
 using Domain.Repository;
+using Persistence;
+using Persistence.RepositoryAdapter;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.RepositoryAdapter
+namespace Presentation
 {
     public class MessageRepository : RepositoryBase<Message, Guid>, IMessageRepository
     {
@@ -67,13 +69,13 @@ namespace Persistence.RepositoryAdapter
 
             // Kiểm tra xem đã có cuộc hội thoại giữa sender và recipient hay chưa
             var existingConversation = _context.UserConversations
-                .Where(uc => (uc.UserId == senderId || uc.UserId == recipientId))
+                .Where(uc => uc.UserId == senderId || uc.UserId == recipientId)
                 .GroupBy(uc => uc.ConversationId)
                 .Where(g => g.Count() == 2) // Có 2 user trong cuộc hội thoại
                 .Select(g => g.Key)
                 .FirstOrDefault();
 
-            if (existingConversation == default(Guid))
+            if (existingConversation == default)
             {
                 var newConversation = new Conversation
                 {

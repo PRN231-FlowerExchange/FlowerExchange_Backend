@@ -2,11 +2,11 @@
 using Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Persistence;
+using Microsoft.Extensions.DependencyInjection;
 using Persistence.Interceptors;
 using Persistence.RepositoryAdapter;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Persistence;
 
 
 public static class PersistenceExtensions

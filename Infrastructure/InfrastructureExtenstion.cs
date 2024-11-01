@@ -5,9 +5,10 @@ using Infrastructure.EmailProvider.Gmail;
 using Infrastructure.Security;
 using Infrastructure.Security.TokenProvider;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Infrastructure;
 
 public static class InfrastructureExtenstion
 {
