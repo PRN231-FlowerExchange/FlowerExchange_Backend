@@ -1,4 +1,5 @@
-
+﻿
+using Application.Post.Commands.ChangePostStatus;
 using Application.Post.Commands.CreatePost;
 using Application.Post.Queries.GetAllPost;
 using Application.Post.Queries.GetDetailPost;
@@ -6,6 +7,7 @@ using Application.PostFlower.Commands.AddServiceToPostCommand;
 using Application.PostFlower.Commands.UpdatePostCommand;
 using Application.PostFlower.DTOs;
 using Application.PostFlower.Queries.GetPost;
+using Domain.Constants.Enums;
 using Domain.Exceptions;
 using Domain.Models;
 using MediatR;
@@ -142,5 +144,14 @@ namespace Presentation.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPut("change-status/{id}")]
+        public async Task<IActionResult> ChangePostStatus(Guid id, [FromBody] PostStatus newStatus)
+        {
+            var command = new ChangePostStatusCommand(id, newStatus);
+            var result = await _mediator.Send(command);
+            return result ? Ok("Post status updated successfully") : StatusCode(500, "Failed to update post status");
+        }
+
     }
 }

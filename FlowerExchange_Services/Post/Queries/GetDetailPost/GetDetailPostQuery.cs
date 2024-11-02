@@ -34,7 +34,7 @@ namespace Application.Post.Queries.GetDetailPost
         public async Task<PostDTO> Handle(GetDetailPostQuery request, CancellationToken cancellationToken)
         {
             var post = await _iPostRepository.GetPostsByIdAsync(request.Id);
-            if (post == null)
+            if (post == null)   
             {
                 var errorMessage = $"Post with Id: {request.Id} was not found.";
                 _logger.LogWarning(errorMessage);
