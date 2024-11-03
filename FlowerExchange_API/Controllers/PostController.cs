@@ -101,11 +101,11 @@ namespace Presentation.Controllers
         public async Task<PostUpdateDTO> UpdatePost([FromBody] UpdatePostCommand command) => await Mediator.Send(command);
 
         // AddPostToService endpoint should have a unique name
-        [HttpPut("add-service")]
-        public async Task<PostViewDTO> AddServiceToPost([FromBody] AddServiceToPostCommand command)
-        {
-            return await Mediator.Send(command);
-        }
+        //[HttpPut("add-service")]
+        //public async Task<PostViewDTO> AddServiceToPost([FromBody] AddServiceToPostCommand command)
+        //{
+        //    return await Mediator.Send(command);
+        //}
 
         // Kept GetPost as POST with its own path
         [HttpPost("list-view-post")]
