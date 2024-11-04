@@ -12,21 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be3e27a2-2c75-4bc1-8539-3facec803cbd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/FlowerExchange_API/ChatHub.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FlowerExchange_Services/Post/Commands/UpdatePost/ChangePostStatusCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/GetUser/GetUserByIDPublicQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Domain.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/MessageController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/MessageController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/PostController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/PostController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Entities/Transaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Entities/Transaction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Application.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Post/Queries/GetDetailPost/GetDetailPostQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Post/Queries/GetDetailPost/GetDetailPostQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Commands/ExternalLogin/CallbackExternalLoginCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Commands/ExternalLogin/CallbackExternalLoginCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/CurrentUser/CurrentUserQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/CurrentUser/CurrentUserQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/ExternalLogin/ExternalLoginRedirectQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/ExternalLogin/ExternalLoginRedirectQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/Security/IdentityServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Security/IdentityServiceCollectionExtensions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +50,7 @@
   "keyToString": {
     ".NET Launch Settings Profile.Presentation: http.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging 42-view-user-account-wallet-in-details",
+    "git-widget-placeholder": "20-create-withdrawal-transaction-rt-tin",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
