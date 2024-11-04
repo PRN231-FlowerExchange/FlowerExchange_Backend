@@ -53,7 +53,7 @@ namespace Application.UserIdentity.Queries.CurrentUser
 
                 Store store = await _storeRepository.FirstOrDefaultAsync(x => x.OwnerId.Equals(currentUserLogin.Id));
 
-                Wallet wallet = await _walletRepository.FirstOrDefaultAsync(x => x.UserId.Equals(currentUserLogin.Id));
+                Domain.Entities.Wallet wallet = await _walletRepository.FirstOrDefaultAsync(x => x.UserId.Equals(currentUserLogin.Id));
                 currentUser.StoreId = store == null ? null : store.Id;
                 currentUser.WalletId = wallet == null ? null : wallet.Id;
 

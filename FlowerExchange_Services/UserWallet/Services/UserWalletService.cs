@@ -21,7 +21,7 @@ namespace Application.UserWallet.Services
             _userRepository = serviceProvider.GetRequiredService<IUserRepository>();
         }
 
-        public async Task<Wallet> CreateUserWallet(User user)
+        public async Task<Domain.Entities.Wallet> CreateUserWallet(User user)
         {
             if (user == null || user.Id == null)
             {
@@ -32,7 +32,7 @@ namespace Application.UserWallet.Services
             {
                 throw new ArgumentNullException("User cannot be null");
             }
-            Wallet wallet = new Wallet()
+            Domain.Entities.Wallet wallet = new Domain.Entities.Wallet()
             {
                 UserId = user.Id,
                 TotalBalance = 0,
