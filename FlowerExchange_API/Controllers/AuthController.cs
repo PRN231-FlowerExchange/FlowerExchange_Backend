@@ -9,6 +9,7 @@ using Application.UserIdentity.Commands.SendConfirmEmail;
 using Application.UserIdentity.DTOs;
 using Application.UserIdentity.Queries.CurrentUser;
 using Application.UserIdentity.Queries.ExternalLogin;
+using Application.UserIdentity.Queries.GetUser;
 using Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -123,6 +124,12 @@ namespace Presentation.Controllers
         {
             await Mediator.Send(new RevokeTokenAfterLogOutCommand());
             return Ok("Log Out Successfully");
+        }
+
+        [HttpGet("user-id/{userId}")]
+        public async Task<CurrentUserModel> GetUserById([FromRoute] Guid userId)
+        {
+            return await Mediator.Send(new GetUserByIDPublicQuery() { UserID = userId });
         }
 
     }
