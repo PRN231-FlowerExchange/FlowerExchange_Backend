@@ -9,6 +9,7 @@ using Application.UserIdentity.Commands.SendConfirmEmail;
 using Application.UserIdentity.DTOs;
 using Application.UserIdentity.Queries.CurrentUser;
 using Application.UserIdentity.Queries.ExternalLogin;
+using Application.UserIdentity.Queries.GetUser;
 using Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -18,7 +19,7 @@ namespace Presentation.Controllers
 {
     [ApiController]
     [Route("api/account")]
-    public class AuthController : APIControllerBase
+    public class AccountController : APIControllerBase
     {
         [HttpPost("register")]
         public async Task<string> Register([FromBody] RegisterCommand command)
@@ -77,13 +78,6 @@ namespace Presentation.Controllers
             return challengeResult;
         }
 
-        //[HttpGet("external-login-callback")]
-        //public async Task<IActionResult> CallbackWithExternalLoginProvider()
-        //{
-        //    AuthenticatedToken token = await Mediator.Send(new CallbackExternalLoginCommand());
-        //    return Ok(token);
-        //}
-
         [HttpGet("tokens-from-external-login")]
         public async Task<IActionResult> GetTokensFromExternalLogin()
         {
@@ -125,11 +119,11 @@ namespace Presentation.Controllers
             return Ok("Log Out Successfully");
         }
 
-
-
-
-
-
+        [HttpGet("user-public/{userId}")]
+        public async Task<CurrentUserModel> GetUserById([FromRoute] Guid userId)
+        {
+            return await Mediator.Send(new GetUserByIDPublicQuery() { UserID = userId });
+        }
 
     }
 
