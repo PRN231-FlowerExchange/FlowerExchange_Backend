@@ -5,6 +5,7 @@ using Application.Message.DTOs;
 using Application.Message.Queries.GetMessagesByConversationId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Presentation.Controllers
 {
@@ -14,16 +15,20 @@ namespace Presentation.Controllers
     {
         private readonly ILogger<MessageController> _logger;
         private readonly IMediator _mediator;
-        public MessageController(ILogger<MessageController> logger, IMediator mediator)
+        private readonly IHubContext<ChatHub> _chatHubContext;
+        public MessageController(ILogger<MessageController> logger, IMediator mediator, IHubContext<ChatHub> chatHubContext)
         {
             _logger = logger;
             _mediator = mediator;
+            _chatHubContext = chatHubContext;
         }
 
         [HttpPost]
         public async Task<IActionResult> SendMessage([FromBody] MessageDTO messageDTO)
         {
             var messageId = await Mediator.Send(new SendMessageCommand(messageDTO));
+            await _chatHubContext.Clients.Group(messageDTO.ConversationId.ToString())
+                .SendAsync("ReceiveMessage", messageDTO);
             return Ok(messageId);
         }
 

@@ -1,4 +1,5 @@
 using Application;
+using Domain.Entities;
 using Domain.FirebaseStorage;
 using Domain.Payment;
 using Domain.Payment.Models;
@@ -9,7 +10,9 @@ using Infrastructure.Payment;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
 using Persistence;
+using Presentation;
 using Presentation.OptionsSetup;
+using System.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,12 +31,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAnyOrigin",
         builder =>
         {
-
             builder.AllowAnyOrigin()
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
 });
+
+
 //Swagger Configuration
 builder.Services.AddSwaggerGen(c =>
 {
@@ -92,6 +96,7 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 
 // VNPAY service
 builder.Services.AddScoped<IVNPAYService, VNPAYService>();
+builder.Services.AddSignalR();
 
 // Momo service
 builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
@@ -148,17 +153,28 @@ app.UseExceptionHandler(error =>
     });
 });
 
+app.UseRouting();
 
 app.UseCors("AllowAnyOrigin");
-
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chatHub"); // SignalR Hub endpoint
+});
+
+app.UseHttpsRedirection();
+
 app.MapControllers();
 
-//app.MapIdentityApi<User>();
-
 app.Run();
+
+
+
+
+
+
