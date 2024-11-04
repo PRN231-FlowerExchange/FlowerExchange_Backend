@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Application.Wallet.Queries.GetWalletDetailsOfUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
@@ -16,6 +17,7 @@ public class WalletController : APIControllerBase
     }
 
     [HttpGet("{userId}")]
+    [Authorize]
     public async Task<IActionResult> GetWalletOfUser(Guid userId)
     {
         if (userId.Equals(Guid.Empty))
