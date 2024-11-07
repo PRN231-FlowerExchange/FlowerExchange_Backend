@@ -25,7 +25,7 @@ namespace Application.UserIdentity.EventHandlers
             try
             {
                 _logger.LogInformation("Start created user wallet ");
-                Wallet wallet = await _userWalletService.CreateUserWallet(notification.User);
+                Domain.Entities.Wallet wallet = await _userWalletService.CreateUserWallet(notification.User);
                 if (wallet != null)
                 {
                     _logger.LogInformation("Success wallet created ");

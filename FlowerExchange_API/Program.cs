@@ -1,4 +1,5 @@
 ﻿using Application;
+using Domain.Entities;
 using Domain.FirebaseStorage;
 using Domain.Payment;
 using Domain.Payment.Models;
@@ -11,6 +12,7 @@ using Newtonsoft.Json;
 using Persistence;
 using Presentation;
 using Presentation.OptionsSetup;
+using System.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +35,16 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod()
               .AllowCredentials(); // Đảm bảo điều này cho phép cookie/tokens
     });
+    //options.AddPolicy("AllowAnyOrigin",
+    //    builder =>
+    //    {
+    //        builder.AllowAnyOrigin()
+    //              .AllowAnyHeader()
+    //              .AllowAnyMethod();
+    //    });
 });
+
+
 //Swagger Configuration
 builder.Services.AddSwaggerGen(c =>
 {
@@ -153,12 +164,11 @@ app.UseExceptionHandler(error =>
     });
 });
 
+app.UseRouting();
 
 //app.UseCors("AllowAnyOrigin");
 
 app.UseCors("AllowSpecificOrigin");
-
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
@@ -169,7 +179,21 @@ app.UseRouting();
 
 //app.MapIdentityApi<User>();
 
-app.MapHub<ChatHub>("/chatHub");
+//app.MapHub<ChatHub>("/chatHub");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chatHub"); // SignalR Hub endpoint
+});
 
+app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();
+
+
+
+
+
+
