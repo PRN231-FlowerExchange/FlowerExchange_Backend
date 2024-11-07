@@ -40,5 +40,6 @@ namespace Application.PostFlower.DTOs
         //public virtual ICollection<PostService>? PostServices { get; set; }
         public StoreDTO Store { get; set; }
         public FlowerDTO Flower { get; set; }
+        public SellerDTO Seller { get; set; }
     }
 }
