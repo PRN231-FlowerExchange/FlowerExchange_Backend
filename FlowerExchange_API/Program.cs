@@ -179,7 +179,6 @@ app.UseRouting();
 
 //app.MapIdentityApi<User>();
 
-//app.MapHub<ChatHub>("/chatHub");
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
