@@ -17,16 +17,20 @@ namespace Persistence.RepositoryAdapter
             _context = unitOfWork.Context;
         }
 
-        public Task<PagedList<WalletTransaction>> GetAllWalletTransactionAsync(WalletTransactionParameter walletTransactionParameter)
+        public Task<PagedList<Transaction>> GetAllWalletTransactionAsync(WalletTransactionParameter walletTransactionParameter)
         {
             try
             {
-                var query = _context.WalletTransactions.AsNoTracking();
+                var query = _context.WalletTransactions
+                    .Include(wt => wt.Transaction)
+                    .AsNoTracking();
 
                 SearchByName(ref query, walletTransactionParameter.Title);
                 ApplySort(ref query, walletTransactionParameter.OrderBy);
 
-                return PagedList<WalletTransaction>.ToPagedList(query, walletTransactionParameter.PageNumber, walletTransactionParameter.PageSize);
+                var transactionQuery = query.Select(wt => wt.Transaction);
+
+                return PagedList<Domain.Entities.Transaction>.ToPagedList(transactionQuery, walletTransactionParameter.PageNumber, walletTransactionParameter.PageSize);
             }
             catch (Exception ex)
             {
@@ -81,6 +85,26 @@ namespace Persistence.RepositoryAdapter
                 return;
             }
             walletTransactions = walletTransactions.OrderBy(orderQuery);
+        }
+        
+        public async Task<PagedList<WalletTransaction>> GetWalletTransactionsByWalletIdAsync(Guid walletId, WalletTransactionParameter walletTransactionParameter)
+        {
+            try
+            {
+                var query = _context.WalletTransactions
+                    .Include(wt => wt.Transaction)
+                    .Where(wt => wt.WalletId.Equals(walletId))
+                    .AsNoTracking();
+
+                SearchByName(ref query, walletTransactionParameter.Title);
+                ApplySort(ref query, walletTransactionParameter.OrderBy);
+
+                return await PagedList<WalletTransaction>.ToPagedList(query, walletTransactionParameter.PageNumber, walletTransactionParameter.PageSize);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

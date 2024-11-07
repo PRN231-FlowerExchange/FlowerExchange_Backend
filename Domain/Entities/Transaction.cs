@@ -11,9 +11,9 @@ namespace Domain.Entities
 
         public TransactionType Type { get; set; }
 
-        public virtual Guid FromWallet { get; set; }
+        public virtual Guid? FromWallet { get; set; }
 
-        public virtual Guid ToWallet { get; set; }
+        public virtual Guid? ToWallet { get; set; }
 
         public Guid? FlowerOrderId { get; set; }
 

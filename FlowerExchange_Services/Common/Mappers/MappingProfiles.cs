@@ -6,6 +6,7 @@ using Application.Category.DTOs;
 using Application.PostFlower.DTOs;
 using Application.UserIdentity.DTOs;
 using Application.UserStore.DTOs;
+using Application.UserWallet.DTOs;
 using Application.Wallet.DTOs;
 using AutoMapper;
 using Domain.Entities;
@@ -40,6 +41,33 @@ namespace Application.Common.Mappers
                     dest => dest.Currency, 
                     opt => opt.MapFrom(src => src.Currency.GetDisplayName())
                     );
+            CreateMap<Domain.Entities.Transaction, WalletTransactionListResponse>()
+                .ForMember(
+                    dest => dest.Status, 
+                    opt 
+                        => opt.MapFrom(src => src.Status.GetDisplayName())
+                    )
+                .ForMember(
+                    dest => dest.Type, 
+                    opt 
+                        => opt.MapFrom(src => src.Type.GetDisplayName())
+                );
+            CreateMap<WalletTransaction, WalletTransactionOfUserListResponse>()
+                .ForMember(
+                    dest => dest.Id, 
+                    opt 
+                        => opt.MapFrom(src => src.Transaction.Id)
+                        )
+                .ForMember(
+                    dest => dest.Amount, 
+                    opt 
+                        => opt.MapFrom(src => src.Transaction.Amount)
+                )
+                .ForMember(
+                    dest => dest.Type, 
+                    opt 
+                        => opt.MapFrom(src => src.Type.GetDisplayName())
+                        );
         }
     }
 }

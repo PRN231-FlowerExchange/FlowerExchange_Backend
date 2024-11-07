@@ -12,21 +12,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be3e27a2-2c75-4bc1-8539-3facec803cbd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/FlowerExchange_API/ChatHub.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FlowerExchange_Services/Post/Commands/UpdatePost/ChangePostStatusCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/GetUser/GetUserByIDPublicQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Domain.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/MessageController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/MessageController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/PostController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/PostController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Application.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Post/Queries/GetDetailPost/GetDetailPostQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Post/Queries/GetDetailPost/GetDetailPostQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Commands/ExternalLogin/CallbackExternalLoginCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Commands/ExternalLogin/CallbackExternalLoginCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/CurrentUser/CurrentUserQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/CurrentUser/CurrentUserQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/ExternalLogin/ExternalLoginRedirectQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Queries/ExternalLogin/ExternalLoginRedirectQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/Security/IdentityServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Security/IdentityServiceCollectionExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Constants/Enums/TransStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Constants/Enums/TransStatus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Repository/IWalletTransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Repository/IWalletTransactionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletTransactionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletTransactionController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Repositories/RepositoryAdapter/WalletTransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Repositories/RepositoryAdapter/WalletTransactionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/Queries/GetAllWalletTransactionQuery/GetAllWalletTransactionQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/Queries/GetAllWalletTransactionQuery/GetAllWalletTransactionQuery.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,25 +50,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Presentation: http.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging 42-view-user-account-wallet-in-details",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Presentation: http.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;20-create-withdrawal-transaction-rt-tin&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C#&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Presentation: http">
     <configuration name="Presentation: FlowerExchange - Web Deploy" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish configuration="Release" platform="Any CPU" publish_profile="FlowerExchange - Web Deploy.pubxml" pubxml_path="$PROJECT_DIR$/FlowerExchange_API/Properties/PublishProfiles/FlowerExchange - Web Deploy.pubxml" user_name="$FlowerExchange" uuid_high="6423361319034701473" uuid_low="-6468624006715743678" />
@@ -158,6 +151,7 @@
       <workItem from="1729869735055" duration="4895000" />
       <workItem from="1730040479578" duration="7749000" />
       <workItem from="1730717715984" duration="295000" />
+      <workItem from="1730968698438" duration="6481000" />
     </task>
     <servers />
   </component>
