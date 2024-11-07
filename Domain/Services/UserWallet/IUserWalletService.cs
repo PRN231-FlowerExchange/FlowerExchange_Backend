@@ -4,6 +4,6 @@ namespace Domain.Services.UserWallet
 {
     public interface IUserWalletService
     {
-        public Task<Wallet> CreateUserWallet(User user);
+        public Task<Domain.Entities.Wallet> CreateUserWallet(User user);
     }
 }

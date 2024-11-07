@@ -6,8 +6,10 @@ using Application.Category.DTOs;
 using Application.PostFlower.DTOs;
 using Application.UserIdentity.DTOs;
 using Application.UserStore.DTOs;
+using Application.Wallet.DTOs;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.OpenApi.Extensions;
 using DomainEntities = Domain.Entities;
 
 namespace Application.Common.Mappers
@@ -33,6 +35,11 @@ namespace Application.Common.Mappers
             CreateMap<Store, StoreViewInDetailsDTO>();
             CreateMap<Domain.Entities.Category, CategoryDTO>().ReverseMap();
             CreateMap<Domain.Entities.User, SellerDTO>().ReverseMap();
+            CreateMap<DomainEntities.Wallet, WalletDetailsResponse>()
+                .ForMember(
+                    dest => dest.Currency, 
+                    opt => opt.MapFrom(src => src.Currency.GetDisplayName())
+                    );
         }
     }
 }

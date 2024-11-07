@@ -12,11 +12,11 @@ namespace Application.UserIdentity.Queries.ExternalLogin
     public record ExternalLoginRedirectQuery : IRequest<AuthenticationProperties>
     {
         [DefaultValue("Google")]
-        public string AuthenticationScheme;
+        public string AuthenticationScheme { get; set; }
 
 
         [Required]
-        public string RedirectUrl;
+        public string RedirectUrl { get; set; }
     }
 
     public class ExternalLoginRedirectQueryHandler : IRequestHandler<ExternalLoginRedirectQuery, AuthenticationProperties>
