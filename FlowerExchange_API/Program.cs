@@ -1,4 +1,4 @@
-using Application;
+﻿using Application;
 using Domain.FirebaseStorage;
 using Domain.Payment;
 using Domain.Payment.Models;
@@ -26,14 +26,13 @@ builder.Services.AddEndpointsApiExplorer();
 //Allow Cors Origin
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAnyOrigin",
-        builder =>
-        {
-
-            builder.AllowAnyOrigin()
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Đảm bảo điều này cho phép cookie/tokens
+    });
 });
 //Swagger Configuration
 builder.Services.AddSwaggerGen(c =>
@@ -93,7 +92,11 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 
 // VNPAY service
 builder.Services.AddScoped<IVNPAYService, VNPAYService>();
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+    options.MaximumReceiveMessageSize = 1024 * 1024;
+});
 
 // Momo service
 builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
@@ -151,7 +154,9 @@ app.UseExceptionHandler(error =>
 });
 
 
-app.UseCors("AllowAnyOrigin");
+//app.UseCors("AllowAnyOrigin");
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 
@@ -164,11 +169,7 @@ app.UseRouting();
 
 //app.MapIdentityApi<User>();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    endpoints.MapHub<ChatHub>("/chatHub"); // SignalR Hub endpoint
-});
+app.MapHub<ChatHub>("/chatHub");
 
 
 app.Run();
