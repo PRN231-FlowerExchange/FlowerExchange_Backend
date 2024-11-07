@@ -1,4 +1,5 @@
 ﻿
+using Application.UserWallet.DTOs;
 using Application.UserWallet.Queries.GetAllWalletTransactionQuery;
 using Application.UserWallet.Queries.GetDetailWalletTransactionQuery;
 using Domain.Entities;
@@ -17,7 +18,7 @@ namespace Presentation.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public async Task<PagedList<WalletTransaction>> GetAllWalletTransaction([FromQuery] WalletTransactionParameter walletTransactionParameter)
+        public async Task<PagedList<WalletTransactionListResponse>> GetAllWalletTransaction([FromQuery] WalletTransactionParameter walletTransactionParameter)
         {
             return await Mediator.Send(new GetAllWalletTransactionQuery(walletTransactionParameter));
         }

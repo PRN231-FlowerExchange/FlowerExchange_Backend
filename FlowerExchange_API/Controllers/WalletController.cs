@@ -1,7 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using Application.UserWallet.Queries.GetWalletTransactionsOfUserWallet;
 using Application.Wallet.Commands.CreateWalletWithdrawTransaction;
 using Application.Wallet.Queries.GetWalletDetailsOfUser;
 using Domain.Exceptions;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -71,6 +73,21 @@ public class WalletController : APIControllerBase
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("{userId}/wallet-transaction")]
+    public async Task<IActionResult> GetWalletTransactionsOfUserWallet(Guid userId, [FromQuery] WalletTransactionParameter walletTransactionParameter)
+    {
+        try
+        {
+            var response =
+                await Mediator.Send(new GetWalletTransactionsOfUserWalletQuery(userId, walletTransactionParameter));
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
         }
     }
 }
