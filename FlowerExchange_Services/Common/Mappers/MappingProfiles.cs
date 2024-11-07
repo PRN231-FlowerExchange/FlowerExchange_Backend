@@ -34,6 +34,7 @@ namespace Application.Common.Mappers
             CreateMap<Store, StoreDTO>().ReverseMap();
             CreateMap<Store, StoreViewInDetailsDTO>();
             CreateMap<Domain.Entities.Category, CategoryDTO>().ReverseMap();
+            CreateMap<Domain.Entities.User, SellerDTO>().ReverseMap();
             CreateMap<DomainEntities.Wallet, WalletDetailsResponse>()
                 .ForMember(
                     dest => dest.Currency, 

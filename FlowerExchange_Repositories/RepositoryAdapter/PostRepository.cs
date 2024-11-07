@@ -102,7 +102,8 @@ namespace Persistence.RepositoryAdapter
                 var query = _dbContext.Posts
                     .Include(c => c.Store)
                     .Include(c => c.Flower)
-                    .Where(post => post.StoreId == userId);
+                    .Include(c => c.Seller)
+                    .Where(post => post.StoreId == null ? post.SellerId == userId : post.StoreId == userId);
 
                 SearchByName(ref query, postParameters.Title);
                 ApplySort(ref query, postParameters.OrderBy);
@@ -123,6 +124,7 @@ namespace Persistence.RepositoryAdapter
                 return _dbContext.Posts
                     .Include(c => c.Store)
                     .Include(c => c.Flower)
+                    .Include(c => c.Seller)
                     .FirstOrDefault(post => post.Id == id);
             }
             catch (Exception ex)
