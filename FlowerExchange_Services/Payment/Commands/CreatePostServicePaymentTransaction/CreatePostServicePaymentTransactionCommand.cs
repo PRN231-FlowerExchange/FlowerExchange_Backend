@@ -111,7 +111,7 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                 var transaction = new Transaction
                 {
                     Amount = totalAmount,
-                    Status = Domain.Constants.Enums.TransStatus.NotKnown,
+                    Status = Domain.Constants.Enums.TransStatus.Success,
                     Type = Domain.Constants.Enums.TransactionType.Sell,
                     FromWallet = wallet.Id,
                     ToWallet = Guid.NewGuid(),

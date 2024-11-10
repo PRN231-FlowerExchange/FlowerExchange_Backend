@@ -5,7 +5,9 @@ namespace Domain.Constants.Enums
 {
     public enum TransStatus
     {
-        [Display(Name = "Not Known")]
-        NotKnown
+        [Display(Name = "Success")]
+        Success,
+        [Display(Name = "Fail")]
+        Fail
     }
 }
