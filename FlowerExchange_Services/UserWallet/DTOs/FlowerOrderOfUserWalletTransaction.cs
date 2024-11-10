@@ -1,4 +1,6 @@
-﻿namespace Application.UserWallet.DTOs;
+﻿using Domain.Entities;
+
+namespace Application.UserWallet.DTOs;
 
 public class FlowerOrderOfUserWalletTransaction
 {
@@ -10,11 +12,11 @@ public class FlowerOrderOfUserWalletTransaction
 
     public Guid BuyerId { get; set; }
 
-    // public virtual User Buyer { get; set; }
+    public string BuyerName { get; set; }
 
     public Guid SellerId { get; set; }
 
-    // public virtual User Seller { get; set; }
+    public string SellerName { get; set; }
 
     public Guid FlowerId { get; set; }
 

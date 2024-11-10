@@ -6,6 +6,6 @@ namespace Domain.Repository
 {
     public interface IUserRepository : IRepositoryBase<User, Guid>
     {
-
+        Task<User> GetUserByWalletId(Guid walletId);
     }
 }

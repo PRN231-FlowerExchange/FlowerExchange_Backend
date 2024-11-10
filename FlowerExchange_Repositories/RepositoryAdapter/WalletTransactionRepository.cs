@@ -96,9 +96,8 @@ namespace Persistence.RepositoryAdapter
                 
                 var query = _context.WalletTransactions
                     .Include(wt => wt.Transaction)
-                    .ThenInclude(wt => wt.ServiceOrder)
-                    .Include(wt => wt.Transaction)
-                    .ThenInclude(wt => wt.FlowerOrder)
+                    .Include(wt => wt.Wallet)
+                    .ThenInclude(w => w.User)
                     .Where(wt => wt.WalletId.Equals(walletId))
                     .AsNoTracking();
 
@@ -106,6 +105,28 @@ namespace Persistence.RepositoryAdapter
                 ApplySort(ref query, walletTransactionParameter.OrderBy);
 
                 return await PagedList<WalletTransaction>.ToPagedList(query, walletTransactionParameter.PageNumber, walletTransactionParameter.PageSize);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<WalletTransaction?> GetWalletTransactionByTransactionIdAsync(Guid transactionId, Guid userId)
+        {
+            try
+            {
+                return await _dbContext.WalletTransactions
+                    .Include(wt => wt.Transaction)
+                    .ThenInclude(t => t.FlowerOrder)
+                    .Include(wt => wt.Transaction)
+                    .ThenInclude(t => t.ServiceOrder)
+                    .Include(wt => wt.Wallet)
+                    .ThenInclude(w => w.User)
+                    .SingleOrDefaultAsync(
+                        wt => wt.TransactonId.Equals(transactionId) && wt.Wallet.UserId.Equals(userId)
+                        );
+
             }
             catch (Exception e)
             {

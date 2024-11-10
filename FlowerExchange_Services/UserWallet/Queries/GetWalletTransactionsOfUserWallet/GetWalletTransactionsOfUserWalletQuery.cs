@@ -26,13 +26,16 @@ public class GetWalletTransactionsOfUserWalletQueryHandler : IRequestHandler<Get
     private IWalletTransactionRepository _walletTransactionRepository;
     
     private IWalletRepository _walletRepository;
+    
+    private IUserRepository _userRepository;
 
     private IMapper _mapper;
 
-    public GetWalletTransactionsOfUserWalletQueryHandler(IWalletTransactionRepository walletTransactionRepository, IWalletRepository walletRepository, IMapper mapper)
+    public GetWalletTransactionsOfUserWalletQueryHandler(IWalletTransactionRepository walletTransactionRepository, IWalletRepository walletRepository, IUserRepository userRepository, IMapper mapper)
     {
         _walletTransactionRepository = walletTransactionRepository;
         _walletRepository = walletRepository;
+        _userRepository = userRepository;
         _mapper = mapper;
     }
 
@@ -49,6 +52,22 @@ public class GetWalletTransactionsOfUserWalletQueryHandler : IRequestHandler<Get
             var walletTransactions = await _walletTransactionRepository.GetWalletTransactionsByWalletIdAsync(wallet.Id, request.WalletTransactionParameter);
             
             var response = _mapper.Map<PagedList<WalletTransactionOfUserListResponse>>(walletTransactions);
+
+            foreach (var transaction in response)
+            {
+                if (transaction.FromWallet != Guid.Empty)
+                {
+                    var fromUser = await _userRepository.GetUserByWalletId(transaction.FromWallet);
+                    transaction.FromUserFullName = fromUser.Fullname;
+                }
+                
+                if (transaction.ToWallet != Guid.Empty)
+                {
+                    var toUser = await _userRepository.GetUserByWalletId(transaction.ToWallet);
+                    transaction.ToUserFullName = toUser.Fullname;
+                }
+            }
+            
             return new PagedList<WalletTransactionOfUserListResponse>(response, walletTransactions.TotalCount, walletTransactions.CurrentPage, walletTransactions.PageSize);
         }
         catch

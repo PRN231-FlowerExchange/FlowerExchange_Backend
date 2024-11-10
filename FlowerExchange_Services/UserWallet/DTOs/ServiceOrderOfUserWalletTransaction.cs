@@ -8,7 +8,7 @@ public class ServiceOrderOfUserWalletTransaction
 
     public Guid BuyerId { get; set; }
 
-    // public virtual User Buyer { get; set; }
+    public string BuyerName { get; set; }
     //
     // public virtual ICollection<PostService>? PostServices { get; set; }
 }

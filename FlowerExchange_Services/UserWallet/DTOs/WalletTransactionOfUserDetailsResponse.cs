@@ -1,8 +1,6 @@
-﻿using Domain.Entities;
+﻿namespace Application.UserWallet.DTOs;
 
-namespace Application.UserWallet.DTOs;
-
-public class WalletTransactionOfUserListResponse
+public class WalletTransactionOfUserDetailsResponse
 {
     public Guid Id { get; set; }
     
@@ -16,11 +14,13 @@ public class WalletTransactionOfUserListResponse
     
     public Guid FromWallet { get; set; }
     
-    
     public string? FromUserFullName { get; set; }
     
     public Guid ToWallet { get; set; }  
     
-    
     public string? ToUserFullName { get; set; }
+    
+    public ServiceOrderOfUserWalletTransaction? ServiceOrder { get; set; }
+    
+    public FlowerOrderOfUserWalletTransaction? FlowerOrder { get; set; }
 }
