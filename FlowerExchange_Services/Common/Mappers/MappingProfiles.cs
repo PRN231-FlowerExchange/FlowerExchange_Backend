@@ -66,8 +66,49 @@ namespace Application.Common.Mappers
                 .ForMember(
                     dest => dest.Type, 
                     opt 
+                        => opt.MapFrom(src => src.Transaction.Type.GetDisplayName())
+                        )
+                .ForMember(
+                    dest => dest.Direction, 
+                    opt 
                         => opt.MapFrom(src => src.Type.GetDisplayName())
-                        );
+                )
+                .ForMember(
+                    dest => dest.Status, 
+                    opt 
+                        => opt.MapFrom(src => src.Transaction.Status.GetDisplayName())
+                )
+                .ForMember(
+                    dest => dest.FromWallet, 
+                    opt 
+                        => opt.MapFrom(src => src.Transaction.FromWallet)
+                )
+                .ForMember(
+                    dest => dest.ToWallet, 
+                    opt 
+                        => opt.MapFrom(src => src.Transaction.ToWallet)
+                )
+                // .ForMember(
+                //     dest => dest.ServiceOrder, 
+                //     opt 
+                //         => opt.MapFrom(src => src.Transaction.ServiceOrder)
+                // )
+                // .ForMember(
+                //     dest => dest.FlowerOrder, 
+                //     opt 
+                //         => opt.MapFrom(src => src.Transaction.FlowerOrder)
+                // )
+                ;
+
+            CreateMap<ServiceOrder, ServiceOrderOfUserWalletTransaction>()
+                .ForMember(dest => dest.Status,
+                    opt 
+                        => opt.MapFrom(src => src.Status.GetDisplayName()));
+            
+            CreateMap<FlowerOrder, FlowerOrderOfUserWalletTransaction>()
+                .ForMember(dest => dest.Status,
+                    opt 
+                        => opt.MapFrom(src => src.Status.GetDisplayName()));
         }
     }
 }

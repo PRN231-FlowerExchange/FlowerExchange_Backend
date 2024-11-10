@@ -70,7 +70,7 @@ namespace Application.Payment.Commands.CreateTransaction
                 var transaction = new Transaction
                 {
                     Amount = vnpayPaymentResponse.Amount,
-                    Status = TransStatus.NotKnown,
+                    Status = TransStatus.Success,
                     Type = TransactionType.Deposit,
                     FromWallet = Guid.NewGuid(), // Can be null cause from system to user
                     ToWallet = userWallet.Id,

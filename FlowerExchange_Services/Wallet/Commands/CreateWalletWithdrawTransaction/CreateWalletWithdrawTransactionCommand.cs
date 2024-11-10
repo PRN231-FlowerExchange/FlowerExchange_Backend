@@ -80,7 +80,7 @@ public class CreateWalletWithdrawTransactionCommandHandler : IRequestHandler<Cre
             var transaction = new Domain.Entities.Transaction
             {
                 Amount = request.Amount,
-                Status = TransStatus.NotKnown,
+                Status = TransStatus.Success,
                 Type = TransactionType.Withdraw,
                 FromWallet = wallet.Id
             };

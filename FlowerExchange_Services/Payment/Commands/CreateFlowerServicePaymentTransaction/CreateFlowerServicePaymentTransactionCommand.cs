@@ -115,7 +115,7 @@ public class
             var transaction = new Transaction
             {
                 Amount = totalAmount,
-                Status = Domain.Constants.Enums.TransStatus.NotKnown,
+                Status = Domain.Constants.Enums.TransStatus.Success,
                 Type = Domain.Constants.Enums.TransactionType.Buy,
                 FromWallet = buyerWallet.Id,
                 ToWallet = sellerWallet.Id,

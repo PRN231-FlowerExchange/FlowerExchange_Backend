@@ -91,8 +91,14 @@ namespace Persistence.RepositoryAdapter
         {
             try
             {
+                if (!_context.WalletTransactions.Any())
+                    return new PagedList<WalletTransaction>();
+                
                 var query = _context.WalletTransactions
                     .Include(wt => wt.Transaction)
+                    .ThenInclude(wt => wt.ServiceOrder)
+                    .Include(wt => wt.Transaction)
+                    .ThenInclude(wt => wt.FlowerOrder)
                     .Where(wt => wt.WalletId.Equals(walletId))
                     .AsNoTracking();
 
