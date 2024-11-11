@@ -1,5 +1,5 @@
-﻿using Domain.Exceptions;
-using Domain.FirebaseStorage;
+﻿using Domain.Cloudinary;
+using Domain.Exceptions;
 using Domain.FirebaseStorage.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -13,20 +13,39 @@ namespace Application.FirebaseStorage.Commands.UploadFile
 
     public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, FileUploadedResponse>
     {
-        private IFirebaseStorageService _firebaseStorageService;
+        private ICloudinaryService _cloudinaryService;
 
-        public UploadFileCommandHandler(IFirebaseStorageService firebaseStorageService)
+        public UploadFileCommandHandler(ICloudinaryService cloudinaryService)
         {
-            _firebaseStorageService = firebaseStorageService;
+            _cloudinaryService = cloudinaryService;
         }
 
         public async Task<FileUploadedResponse> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
-            if (request.File == null)
+            try
             {
-                throw new MediaException("File is required!");
+                if (request.File == null)
+                {
+                    throw new MediaException("File is required!");
+                }
+
+                var result = await _cloudinaryService.UploadImageAsync(request.File);
+
+                if (result.Error != null)
+                {
+                    throw new Exception(result.Error.Message);
+                }
+
+                return new FileUploadedResponse
+                {
+                    Uri = result.SecureUrl,
+                    FileName = result.PublicId
+                };
             }
-            return await _firebaseStorageService.UploadFile(request.File.FileName, request.File);
+            catch
+            {
+                throw;
+            }
         }
     }
 }

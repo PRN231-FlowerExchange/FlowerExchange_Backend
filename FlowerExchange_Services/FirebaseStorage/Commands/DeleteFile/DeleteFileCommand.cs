@@ -1,4 +1,4 @@
-﻿using Domain.FirebaseStorage;
+﻿using Domain.Cloudinary;
 using MediatR;
 
 namespace Application.FirebaseStorage.Commands.DeleteFile
@@ -10,11 +10,11 @@ namespace Application.FirebaseStorage.Commands.DeleteFile
 
     public class DeleteFileCommandHandler : IRequestHandler<DeleteFileCommand, Boolean>
     {
-        private IFirebaseStorageService _firebaseStorageService;
+        private ICloudinaryService _cloudinaryService;
 
-        public DeleteFileCommandHandler(IFirebaseStorageService firebaseStorageService)
+        public DeleteFileCommandHandler(ICloudinaryService cloudinaryService)
         {
-            _firebaseStorageService = firebaseStorageService;
+            _cloudinaryService = cloudinaryService;
         }
 
         public async Task<bool> Handle(DeleteFileCommand request, CancellationToken cancellationToken)
@@ -22,7 +22,12 @@ namespace Application.FirebaseStorage.Commands.DeleteFile
             bool result = false;
             try
             {
-                await _firebaseStorageService.DeleteFile(request.FileName);
+                var response = await _cloudinaryService.DeleteImageAsync(request.FileName);
+
+                if(response.Result != "ok")
+                {
+                    return false;
+                }
                 result = true;
             }
             catch (Exception ex)
