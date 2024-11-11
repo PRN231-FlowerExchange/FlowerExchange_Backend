@@ -182,6 +182,11 @@ namespace Application.Common.Mappers
                     dest => dest.Status,
                     opt
                         => opt.MapFrom(src => src.Status.GetDisplayName())
+                )
+                .ForMember(
+                    dest => dest.CreatedAt,
+                    opt
+                        => opt.MapFrom(src => src.CreatedAt.ToString())
                 );
             
             CreateMap<Flower, FlowerForFlowerOrderHistoryList>()

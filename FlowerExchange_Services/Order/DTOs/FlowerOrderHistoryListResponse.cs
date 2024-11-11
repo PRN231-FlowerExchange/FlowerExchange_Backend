@@ -17,6 +17,8 @@ public class FlowerOrderHistoryListResponse
     public Guid SellerId { get; set; }
 
     public string? SellerFullName { get; set; }
+    
+    public string? CreatedAt { get; set; }
 
     public Guid FlowerId { get; set; }
 
