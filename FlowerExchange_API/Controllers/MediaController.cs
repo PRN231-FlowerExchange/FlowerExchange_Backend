@@ -10,12 +10,10 @@ namespace Presentation.Controllers
     public class MediaController : APIControllerBase
     {
         private readonly ILogger<MediaController> _logger;
-        private readonly IFirebaseStorageService _firebaseStorageService;
 
-        public MediaController(ILogger<MediaController> logger, IFirebaseStorageService firebaseStorageService)
+        public MediaController(ILogger<MediaController> logger)
         {
             _logger = logger;
-            _firebaseStorageService = firebaseStorageService;
         }
 
         [HttpPost("upload")]

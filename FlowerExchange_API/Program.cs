@@ -1,9 +1,12 @@
 ﻿using Application;
+using Domain.Cloudinary;
+using Domain.Cloudinary.Models;
 using Domain.Entities;
 using Domain.FirebaseStorage;
 using Domain.Payment;
 using Domain.Payment.Models;
 using Google.Cloud.Storage.V1;
+using Infrastructure.Cloudinary;
 using Infrastructure.ExceptionHandlers;
 using Infrastructure.FirebaseStorage;
 using Infrastructure.Payment;
@@ -114,29 +117,9 @@ builder.Services.AddSignalR(options =>
 builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
 builder.Services.AddScoped<IMomoService, MomoService>();
 
-//// Retrieve Firebase credentials from the environment variable
-//string credentialsPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS");
-//if (string.IsNullOrEmpty(credentialsPath))
-//{
-//    throw new Exception("Google Application Credentials not found in environment variables.");
-//}
-
-// Step 1: Retrieve the Firebase credentials JSON content from appsettings.Development.json
-var firebaseConfigSection = builder.Configuration.GetSection("FirebaseConfig");
-var credentialsJson = firebaseConfigSection.GetSection("CredentialsJson").Get<Dictionary<string, object>>();
-
-// Step 2: Convert the credentials to a JSON string
-var credentialsJsonString = JsonConvert.SerializeObject(credentialsJson);
-
-// Step 3: Write the JSON string to a temporary file
-var tempFilePath = Path.GetTempFileName(); // Creates a unique temporary file
-File.WriteAllText(tempFilePath, credentialsJsonString);
-
-// Set the environment variable for Firebase initialization
-Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", tempFilePath);
-
-// Register the Firebase storage service
-builder.Services.AddSingleton<IFirebaseStorageService>(s => new FirebaseStorageService(StorageClient.Create()));
+// Add Cloudinary
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 
 builder.Services.ConfigureOptions<JwtConfigOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
