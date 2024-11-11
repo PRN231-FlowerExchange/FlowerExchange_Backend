@@ -101,15 +101,20 @@ namespace Persistence.RepositoryAdapter
                 };
 
                 await _context.Messages.AddAsync(message);
+
+                var conversation = await _context.Conversations.FindAsync(existingConversation);
+                if (conversation != null)
+                {
+                    conversation.UpdatedAt = DateTime.UtcNow;
+                    _context.Conversations.Update(conversation);
+                }
+
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex) {
                 throw;
             }
-           
-
             // Tạo tin nhắn mới và thêm vào cơ sở dữ liệu
-            
         }
 
         public async Task<Message> GetMessageByIdAsync(Guid messageId)

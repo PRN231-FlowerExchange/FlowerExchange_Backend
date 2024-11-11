@@ -80,14 +80,14 @@ namespace Application.PostFlower.Queries.GetPost
                         {
                             foreach (var service in post.PostServices)
                             {
-                                if (service.ExpiredAt > DateTime.UtcNow)
-                                {
                                     PostViewDTO viewPost = ConvertFuction.ConvertObjectToObject<PostViewDTO, Domain.Entities.Post>(post);
                                     List<Domain.Entities.Category> listCates = await _cateRepository.GetCategoryByPostId(post.Id);
+                                if (service.ExpiredAt > DateTime.UtcNow)
+                                {
                                     viewPost.Categories = ConvertFuction.ConvertListToList<PostCategoryDTO, Domain.Entities.Category>(listCates);
                                     viewPost.priority = 1;
-                                    result.Add(viewPost);
                                 }
+                                    result.Add(viewPost);
                             }
                         }
                         result.Sort((x, y) => x.priority.CompareTo(y.priority));

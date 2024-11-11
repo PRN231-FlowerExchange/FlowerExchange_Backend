@@ -34,7 +34,10 @@ namespace Persistence.RepositoryAdapter
         public async Task<List<Conversation>> GetConversationsByUserIdAsync(Guid userId)
         {
             var conversations = _context.Conversations
-                .Where(c => c.UserConversations.Any(uc => uc.UserId == userId)) 
+                .Where(c => c.UserConversations.Any(uc => uc.UserId == userId))
+                .OrderByDescending(c => c.UserConversations
+                    .Where(uc => uc.UserId == userId)
+                    .Max(uc => uc.UpdatedAt))
                 .Select(c => new Conversation
                 {
                     Id = c.Id,
