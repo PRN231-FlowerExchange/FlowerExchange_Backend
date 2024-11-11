@@ -88,6 +88,10 @@ namespace Application.Common.Mappers
                     opt 
                         => opt.MapFrom(src => src.Transaction.ToWallet)
                 )
+                .ForMember(
+                    dest => dest.CreateAt, 
+                    opt 
+                        => opt.MapFrom(src => src.CreatedAt.ToString()))
                 ;
 
             CreateMap<ServiceOrder, ServiceOrderOfUserWalletTransaction>()
@@ -161,6 +165,10 @@ namespace Application.Common.Mappers
                     dest => dest.FlowerOrder, 
                     opt 
                         => opt.MapFrom(src => src.Transaction.FlowerOrder))
+                .ForMember(
+                    dest => dest.CreateAt, 
+                    opt 
+                        => opt.MapFrom(src => src.CreatedAt.ToString()))
                 ;
 
         }
