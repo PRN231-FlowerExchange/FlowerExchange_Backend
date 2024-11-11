@@ -25,7 +25,7 @@ namespace Infrastructure.Payment
             var userInfo = "Nap tien vao vi dien tu cua nguoi dung: " + walletDeposit.UserId;
             var description = "So tien " + walletDeposit.Amount + " VND";
 
-            var urlCallBack = currentPath + "/swagger/index.html";
+            var urlCallBack = "http://localhost:5173/charge/noti";
 
             pay.AddRequestData("vnp_Version", _configuration["Vnpay:Version"]);
             pay.AddRequestData("vnp_Command", _configuration["Vnpay:Command"]);
