@@ -26,6 +26,17 @@ namespace Persistence.RepositoryAdapter
             return _dbSetUser.FirstOrDefault(u => u.Email == email);
 
         }
+
+        public async Task<User> GetUserByWalletId(Guid walletId)
+        {
+            var users = await _dbContext.Wallets
+                .Include(w => w.User)
+                .Where(w => w.Id.Equals(walletId))
+                .Select(w => w.User)
+                .ToListAsync();
+
+            return users.First();
+        }
     }
 
 

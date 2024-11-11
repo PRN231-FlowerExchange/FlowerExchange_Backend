@@ -11,6 +11,10 @@
     <Compile Remove="Interfaces\**" />
     <Compile Remove="SystemUser\**" />
     <Compile Remove="Wallet\**" />
+    <Compile Include="Wallet\Commands\CreateWalletWithdrawTransaction\CreateWalletWithdrawTransactionCommand.cs" />
+    <Compile Include="Wallet\Commands\CreateWalletWithdrawTransaction\CreateWalletWithdrawTransactionCommandValidator.cs" />
+    <Compile Include="Wallet\DTOs\WalletDetailsResponse.cs" />
+    <Compile Include="Wallet\Queries\GetWalletDetailsOfUser\GetaWalletDetailsOfUserCommand.cs" />
     <EmbeddedResource Remove="Implements\**" />
     <EmbeddedResource Remove="Interfaces\**" />
     <EmbeddedResource Remove="SystemUser\**" />
@@ -28,7 +32,6 @@
     <Folder Include="Category\Services\" />
     <Folder Include="Common\Services\" />
     <Folder Include="Conversation\Commands\" />
-    <Folder Include="Post\Commands\" />
     <Folder Include="Post\Services\" />
     <Folder Include="Report\Commands\" />
     <Folder Include="Report\Queries\" />
@@ -51,7 +54,6 @@
     <Folder Include="UserIdentity\Commands\ResetPassword\" />
     <Folder Include="UserIdentity\Commands\SignOut\" />
     <Folder Include="UserStore\Services\" />
-    <Folder Include="Wallet\Commands\" />
     <Folder Include="Weather\Services\" />
     <Folder Include="UserApplication\Services\" />
     <Folder Include="Wallet\Services\" />

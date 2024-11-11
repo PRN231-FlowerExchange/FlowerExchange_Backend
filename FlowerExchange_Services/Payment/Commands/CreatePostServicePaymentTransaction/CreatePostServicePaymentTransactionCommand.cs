@@ -111,8 +111,8 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                 var transaction = new Transaction
                 {
                     Amount = totalAmount,
-                    Status = Domain.Constants.Enums.TransStatus.NotKnown,
-                    Type = Domain.Constants.Enums.TransactionType.Sell,
+                    Status = Domain.Constants.Enums.TransStatus.Success,
+                    Type = Domain.Constants.Enums.TransactionType.Promotion,
                     FromWallet = wallet.Id,
                     ToWallet = Guid.NewGuid(),
                     ServiceOrderId = serviceOrder.Id

@@ -1,7 +1,13 @@
-﻿namespace Domain.Constants.Enums
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace Domain.Constants.Enums
 {
     public enum TransStatus
     {
-        NotKnown
+        [Display(Name = "Success")]
+        Success,
+        [Display(Name = "Fail")]
+        Fail
     }
 }

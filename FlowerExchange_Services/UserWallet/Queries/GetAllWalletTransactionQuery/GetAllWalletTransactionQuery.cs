@@ -1,14 +1,16 @@
-﻿using Application.UserWallet.Queries.GetAllWalletTransactionQuery;
+﻿using Application.UserWallet.DTOs;
+using Application.UserWallet.Queries.GetAllWalletTransactionQuery;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Models;
 using Domain.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Transaction = System.Transactions.Transaction;
 
 namespace Application.UserWallet.Queries.GetAllWalletTransactionQuery
 {
-    public class GetAllWalletTransactionQuery : IRequest<PagedList<WalletTransaction>>
+    public class GetAllWalletTransactionQuery : IRequest<PagedList<WalletTransactionListResponse>>
     {
         public WalletTransactionParameter walletTransactionParameter { get; set; }
         public GetAllWalletTransactionQuery(WalletTransactionParameter _walletTransactionParameter = null)
@@ -18,7 +20,7 @@ namespace Application.UserWallet.Queries.GetAllWalletTransactionQuery
     }
 }
 
-public class GetAllWalletTransactionQueryHandler : IRequestHandler<GetAllWalletTransactionQuery, PagedList<WalletTransaction>>
+public class GetAllWalletTransactionQueryHandler : IRequestHandler<GetAllWalletTransactionQuery, PagedList<WalletTransactionListResponse>>
 {
     private IWalletTransactionRepository _iWalletTransactionRepository;
 
@@ -33,7 +35,7 @@ public class GetAllWalletTransactionQueryHandler : IRequestHandler<GetAllWalletT
         _mapper = mapper;
     }
 
-    public async Task<PagedList<WalletTransaction>> Handle(GetAllWalletTransactionQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<WalletTransactionListResponse>> Handle(GetAllWalletTransactionQuery request, CancellationToken cancellationToken)
     {
         var walletTransactions = await _iWalletTransactionRepository.GetAllWalletTransactionAsync(request.walletTransactionParameter);
 
@@ -44,7 +46,7 @@ public class GetAllWalletTransactionQueryHandler : IRequestHandler<GetAllWalletT
         //    _logger.LogWarning(errorMessage);
         //    throw new NotFoundException(errorMessage);
         //}
-        var response = _mapper.Map<PagedList<WalletTransaction>>(walletTransactions);
-        return new PagedList<WalletTransaction>(response, walletTransactions.TotalCount, walletTransactions.CurrentPage, walletTransactions.PageSize);
+        var response = _mapper.Map<PagedList<WalletTransactionListResponse>>(walletTransactions);
+        return new PagedList<WalletTransactionListResponse>(response, walletTransactions.TotalCount, walletTransactions.CurrentPage, walletTransactions.PageSize);
     }
 }
