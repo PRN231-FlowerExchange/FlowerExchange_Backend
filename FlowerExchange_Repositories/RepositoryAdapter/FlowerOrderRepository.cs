@@ -27,6 +27,7 @@ public class FlowerOrderRepository : RepositoryBase<FlowerOrder, Guid>, IFlowerO
                 .ThenInclude(f => f.Post)
                 .Where(t => t.FromWallet.Equals(walletId) && t.Type == type && t.Status == status)
                 .Select(t => t.FlowerOrder)
+                .OrderByDescending(fo => fo.CreatedAt)
                 .ToListAsync();
         }
         catch (Exception ex)
