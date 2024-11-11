@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.PostFlower.DTOs;
+using Domain.Entities;
 
 namespace Application.UserWallet.DTOs;
 
@@ -20,5 +21,5 @@ public class FlowerOrderOfUserWalletTransaction
 
     public Guid FlowerId { get; set; }
 
-    // public virtual Flower Flower { get; set; }
+     public virtual FlowerDTO Flower { get; set; }
 }
