@@ -40,6 +40,11 @@ namespace Application.PostFlower.Commands.UpdatePostCommand
                     throw new NotFoundException("Post not found");
                 }
 
+                // Chuyển đổi ExpiredAt sang UTC 
+                if (request.UpdatePost.ExpiredAt != default)
+                {
+                    request.UpdatePost.ExpiredAt = request.UpdatePost.ExpiredAt.ToUniversalTime();
+                }
 
                 postEntity.Title = request.UpdatePost.Title ?? postEntity.Title;
                 postEntity.Description = request.UpdatePost.Description ?? postEntity.Description;
