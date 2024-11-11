@@ -1,5 +1,6 @@
 ﻿using Application.Report.DTOs;
 using Domain.Constants.Enums;
+using Domain.Entities;
 
 namespace Application.PostFlower.DTOs
 {
@@ -41,7 +42,7 @@ namespace Application.PostFlower.DTOs
 
         //public StoreModel? Store { get; set; }
 
-        //public FlowerModel? Flower { get; set; }
+        public Flower? Flower { get; set; }
 
         //public List<PostServiceModel>? PostServices { get; set; }
 

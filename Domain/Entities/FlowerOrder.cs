@@ -1,5 +1,6 @@
 ﻿using Domain.Commons.BaseEntities;
 using Domain.Constants.Enums;
+using Newtonsoft.Json;
 
 namespace Domain.Entities
 {
@@ -22,7 +23,7 @@ namespace Domain.Entities
         public Guid FlowerId { get; set; }
 
         public virtual Flower Flower { get; set; }
-
+        
         public virtual ICollection<Transaction>? Transactions { get; set; }
 
 

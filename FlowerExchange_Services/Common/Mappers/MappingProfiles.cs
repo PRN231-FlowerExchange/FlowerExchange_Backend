@@ -3,6 +3,7 @@
 using Application.Conversation.DTOs;
 using Application.Message.DTOs;
 using Application.Category.DTOs;
+using Application.Order.DTOs;
 using Application.PostFlower.DTOs;
 using Application.UserIdentity.DTOs;
 using Application.UserStore.DTOs;
@@ -38,6 +39,7 @@ namespace Application.Common.Mappers
             CreateMap<Domain.Entities.User, SellerDTO>().ReverseMap();
             CreateMap<Domain.Entities.PostCategory, PostCategoryDTO>().ReverseMap();
             CreateMap<Domain.Entities.PostCategory, CategoryDetailDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Category, CategoryDetailDTO>().ReverseMap();
             CreateMap<DomainEntities.Wallet, WalletDetailsResponse>()
                 .ForMember(
                     dest => dest.Currency, 
@@ -162,17 +164,32 @@ namespace Application.Common.Mappers
                 .ForMember(
                     dest => dest.ServiceOrder, 
                     opt 
-                        => opt.MapFrom(src => src.Transaction.ServiceOrder))
+                        => opt.MapFrom(src => src.Transaction.ServiceOrder)
+                        )
                 .ForMember(
                     dest => dest.FlowerOrder, 
                     opt 
-                        => opt.MapFrom(src => src.Transaction.FlowerOrder))
+                        => opt.MapFrom(src => src.Transaction.FlowerOrder)
+                        )
                 .ForMember(
                     dest => dest.CreateAt, 
                     opt 
-                        => opt.MapFrom(src => src.CreatedAt.ToString()))
+                        => opt.MapFrom(src => src.CreatedAt.ToString())
+                        )
                 ;
-
+            CreateMap<FlowerOrder, FlowerOrderHistoryListResponse>()
+                .ForMember(
+                    dest => dest.Status,
+                    opt
+                        => opt.MapFrom(src => src.Status.GetDisplayName())
+                );
+            
+            CreateMap<Flower, FlowerForFlowerOrderHistoryList>()
+                .ForMember(
+                    dest => dest.Currency,
+                    opt
+                        => opt.MapFrom(src => src.Currency.GetDisplayName())
+                );
         }
     }
 }
