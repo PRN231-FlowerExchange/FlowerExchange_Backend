@@ -1,5 +1,6 @@
 ﻿using CrossCuttingConcerns.Utils;
 using Domain.Commons.BaseRepositories;
+using Domain.Constants.Enums;
 using Domain.Entities;
 using Domain.Models;
 using Domain.Repository;
@@ -24,21 +25,22 @@ namespace Persistence.RepositoryAdapter
                                                List<SortCriteria>? sortCriteria = null)
         {
             var query = _dbContext.Posts
-       .Include(p => p.Store)
-       .Include(p => p.Seller)
-       .Include(p => p.Flower)
-       .Include(p => p.PostCategories)
-       .Include(p => p.PostServices).ThenInclude(s => s.Service)
-       // Apply SellerId filter only if SellerId is provided
-       .Where(p => entity.SellerId == Guid.Empty || p.SellerId == entity.SellerId)
-       // Apply StoreId filter only if StoreId is provided
-       .Where(p => entity.StoreId == Guid.Empty || p.StoreId == entity.StoreId)
-            // Apply search filter if provided
-            .Where(p => (string.IsNullOrEmpty(searchString)
-                || p.Title.ToLower().Contains(searchString.Trim().ToLower())
-                || p.Description.ToLower().Contains(searchString.Trim().ToLower())
-                || p.Flower.Name.ToLower().Contains(searchString.Trim().ToLower())
-                || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower())));
+                .Include(p => p.Store)
+                .Include(p => p.Seller)
+                .Include(p => p.Flower)
+                .Include(p => p.PostCategories)
+                .Include(p => p.PostServices).ThenInclude(s => s.Service)
+                .Where(p => p.PostStatus ==  PostStatus.Available)
+                // Apply SellerId filter only if SellerId is provided
+                .Where(p => entity.SellerId == Guid.Empty || p.SellerId == entity.SellerId)
+                // Apply StoreId filter only if StoreId is provided
+                .Where(p => entity.StoreId == Guid.Empty || p.StoreId == entity.StoreId)
+                // Apply search filter if provided
+            .   Where(p => (string.IsNullOrEmpty(searchString)
+                        || p.Title.ToLower().Contains(searchString.Trim().ToLower())
+                        || p.Description.ToLower().Contains(searchString.Trim().ToLower())
+                        || p.Flower.Name.ToLower().Contains(searchString.Trim().ToLower())
+                        || p.Store.Name.ToLower().Contains(searchString.Trim().ToLower())));
 
 
             if (entity.PostCategories.Any())
@@ -85,6 +87,7 @@ namespace Persistence.RepositoryAdapter
                 .Include(p => p.Seller)
                 .Include(p => p.Flower)
                 .Include(p => p.PostServices).ThenInclude(s => s.Service)
+                .Where(p => p.PostStatus == PostStatus.SoldOut)
                 // Apply SellerId filter only if SellerId is provided
                 .Where(p => entity.SellerId == Guid.Empty || p.SellerId == entity.SellerId)
                 // Apply StoreId filter only if StoreId is provided
