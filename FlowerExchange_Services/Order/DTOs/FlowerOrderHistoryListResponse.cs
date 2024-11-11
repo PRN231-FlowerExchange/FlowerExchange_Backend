@@ -1,8 +1,6 @@
-﻿using Domain.Entities;
+﻿namespace Application.Order.DTOs;
 
-namespace Application.UserWallet.DTOs;
-
-public class FlowerOrderOfUserWalletTransaction
+public class FlowerOrderHistoryListResponse
 {
     public Guid Id { get; set; }
     
@@ -14,13 +12,14 @@ public class FlowerOrderOfUserWalletTransaction
 
     public Guid BuyerId { get; set; }
 
-    public string BuyerName { get; set; }
+    public string? BuyerFullName { get; set; }
 
     public Guid SellerId { get; set; }
 
-    public string SellerName { get; set; }
+    public string? SellerFullName { get; set; }
 
     public Guid FlowerId { get; set; }
 
-    // public virtual Flower Flower { get; set; }
+    public FlowerForFlowerOrderHistoryList Flower { get; set; }
+    
 }
