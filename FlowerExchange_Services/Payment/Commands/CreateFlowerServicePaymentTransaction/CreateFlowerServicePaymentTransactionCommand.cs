@@ -82,6 +82,11 @@ public class
                                     $"CreateFlowerServicePaymentTransactionCommand!");
             }
 
+            if (post.PostStatus != PostStatus.Available)
+            {
+                throw new Exception($"Post with id {request.postId} is not available!");
+            }
+
             double totalAmount = 0;
 
             // Get flower price
