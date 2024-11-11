@@ -125,6 +125,7 @@ namespace Persistence.RepositoryAdapter
                     .Include(c => c.Store)
                     .Include(c => c.Flower)
                     .Include(c => c.Seller)
+                    .Include(c => c.PostCategories).ThenInclude(c => c.Category)
                     .FirstOrDefault(post => post.Id == id);
             }
             catch (Exception ex)
