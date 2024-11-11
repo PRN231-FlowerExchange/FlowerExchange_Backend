@@ -33,6 +33,8 @@ namespace Application.Common.Mappers
             CreateMap<Store, StoreViewInDetailsDTO>();
             CreateMap<Domain.Entities.Category, CategoryDTO>().ReverseMap();
             CreateMap<Domain.Entities.User, SellerDTO>().ReverseMap();
+            CreateMap<Domain.Entities.PostCategory, PostCategoryDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Category, CategoryDetailDTO>().ReverseMap();
         }
     }
 }

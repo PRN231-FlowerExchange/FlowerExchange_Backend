@@ -23,7 +23,7 @@ namespace Application.PostFlower.DTOs
 
         public string MainImageUrl { get; set; }
 
-        //public virtual ICollection<PostCategory> PostCategories { get; set; }
+        public virtual ICollection<PostCategoryDTO> PostCategories { get; set; }
 
         //public virtual ICollection<Domain.Entities.Report> Reports { get; set; }
 
