@@ -38,6 +38,7 @@ namespace Application.Common.Mappers
             CreateMap<Domain.Entities.Category, CategoryDTO>().ReverseMap();
             CreateMap<Domain.Entities.User, SellerDTO>().ReverseMap();
             CreateMap<Domain.Entities.PostCategory, PostCategoryDTO>().ReverseMap();
+            CreateMap<Domain.Entities.PostCategory, CategoryDetailDTO>().ReverseMap();
             CreateMap<Domain.Entities.Category, CategoryDetailDTO>().ReverseMap();
             CreateMap<DomainEntities.Wallet, WalletDetailsResponse>()
                 .ForMember(
@@ -176,7 +177,6 @@ namespace Application.Common.Mappers
                         => opt.MapFrom(src => src.CreatedAt.ToString())
                         )
                 ;
-
             CreateMap<FlowerOrder, FlowerOrderHistoryListResponse>()
                 .ForMember(
                     dest => dest.Status,
@@ -190,7 +190,6 @@ namespace Application.Common.Mappers
                     opt
                         => opt.MapFrom(src => src.Currency.GetDisplayName())
                 );
-
         }
     }
 }
