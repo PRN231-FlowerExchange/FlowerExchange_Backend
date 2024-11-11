@@ -60,6 +60,8 @@ namespace Application.Payment.Commands.CreateTransaction
                         UserId = vnpayPaymentResponse.UserId,
                         TotalBalance = 0,
                         Currency = Currency.VND,
+                        CreatedAt = DateTimeOffset.UtcNow,
+                        UpdatedAt = DateTimeOffset.UtcNow
                     };
 
                     await _walletRepository.InsertAsync(userWallet);
@@ -72,12 +74,11 @@ namespace Application.Payment.Commands.CreateTransaction
                     Amount = vnpayPaymentResponse.Amount,
                     Status = TransStatus.Success,
                     Type = TransactionType.Deposit,
-                    FromWallet = Guid.NewGuid(), // Can be null cause from system to user
                     ToWallet = userWallet.Id,
                     createById = vnpayPaymentResponse.UserId,
                     updateById = vnpayPaymentResponse.UserId,
-                    //CreatedAt = vnpayPaymentResponse.PayDate,
-                    //UpdatedAt = vnpayPaymentResponse.PayDate
+                    CreatedAt = new DateTimeOffset(vnpayPaymentResponse.PayDate.ToUniversalTime(), TimeSpan.Zero),
+                    UpdatedAt = new DateTimeOffset(vnpayPaymentResponse.PayDate.ToUniversalTime(), TimeSpan.Zero)
                 };
 
                 await _transactionRepository.InsertAsync(transaction);
@@ -88,7 +89,9 @@ namespace Application.Payment.Commands.CreateTransaction
                 {
                     WalletId = userWallet.Id,
                     TransactonId = transaction.Id,
-                    Type = TransDirection.Plus
+                    Type = TransDirection.Plus,
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    UpdatedAt = DateTimeOffset.UtcNow
                 };
                 await _walletTransactionRepository.InsertAsync(plusTransaction);
                 await _walletTransactionRepository.SaveChagesAysnc();

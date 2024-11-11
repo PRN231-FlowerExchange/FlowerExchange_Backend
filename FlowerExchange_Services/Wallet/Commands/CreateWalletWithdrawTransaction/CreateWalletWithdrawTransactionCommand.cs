@@ -82,7 +82,9 @@ public class CreateWalletWithdrawTransactionCommandHandler : IRequestHandler<Cre
                 Amount = request.Amount,
                 Status = TransStatus.Success,
                 Type = TransactionType.Withdraw,
-                FromWallet = wallet.Id
+                FromWallet = wallet.Id,
+                CreatedAt = DateTimeOffset.UtcNow,
+                UpdatedAt = DateTimeOffset.UtcNow
             };
             await _transactionRepository.InsertAsync(transaction);
             
@@ -91,7 +93,9 @@ public class CreateWalletWithdrawTransactionCommandHandler : IRequestHandler<Cre
             {
                 WalletId = wallet.Id,
                 TransactonId = transaction.Id,
-                Type = TransDirection.Minus
+                Type = TransDirection.Minus,
+                CreatedAt = DateTimeOffset.UtcNow,
+                UpdatedAt = DateTimeOffset.UtcNow
             };
             await _walletTransactionRepository.InsertAsync(walletTransaction);
             

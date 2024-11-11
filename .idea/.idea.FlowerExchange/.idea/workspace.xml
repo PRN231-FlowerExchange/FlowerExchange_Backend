@@ -13,17 +13,12 @@
   <component name="ChangeListManager">
     <list default="true" id="be3e27a2-2c75-4bc1-8539-3facec803cbd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Repository/IUserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Repository/IUserRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Repository/IWalletTransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Repository/IWalletTransactionRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletTransactionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletTransactionController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Repositories/RepositoryAdapter/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Repositories/RepositoryAdapter/UserRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Repositories/RepositoryAdapter/WalletTransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Repositories/RepositoryAdapter/WalletTransactionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Constants/Enums/TransactionType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Constants/Enums/TransactionType.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/DTOs/FlowerOrderOfUserWalletTransaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/DTOs/FlowerOrderOfUserWalletTransaction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/DTOs/ServiceOrderOfUserWalletTransaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/DTOs/ServiceOrderOfUserWalletTransaction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/DTOs/WalletTransactionOfUserListResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/DTOs/WalletTransactionOfUserListResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/Queries/GetDetailWalletTransactionQuery/GetDetailWalletTransactionQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/Queries/GetDetailWalletTransactionQuery/GetDetailWalletTransactionQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/Queries/GetWalletTransactionsOfUserWallet/GetWalletTransactionsOfUserWalletQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/UserWallet/Queries/GetWalletTransactionsOfUserWallet/GetWalletTransactionsOfUserWalletQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreateFlowerServicePaymentTransaction/CreateFlowerServicePaymentTransactionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreateFlowerServicePaymentTransaction/CreateFlowerServicePaymentTransactionCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreatePostServicePaymentTransaction/CreatePostServicePaymentTransactionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreatePostServicePaymentTransaction/CreatePostServicePaymentTransactionCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreateTransaction/CreateTransactionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreateTransaction/CreateTransactionCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Wallet/Commands/CreateWalletWithdrawTransaction/CreateWalletWithdrawTransactionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Wallet/Commands/CreateWalletWithdrawTransaction/CreateWalletWithdrawTransactionCommand.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,13 +32,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5b7939ac84ece28eb02d599c3a58efc3289150733e8f3375fb576f45d12e7b0/DateTimeOffset.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/FlowerExchange_Services/PostFlower/DTOs/StoreDTO.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/FlowerExchange_Services/UserApplication/DTOs/StoreModel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Commands/ExternalLogin/CallbackExternalLoginCommand.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Commands/Login/UsernamePasswordLoginCommand.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/FPT University/FALL2024/PRN231/Group Project/PRN231_Backend/FlowerExchange_Backend/FlowerExchange_Services/UserIdentity/Queries/CurrentUser/CurrentUserQuery.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/FPT University/FALL2024/PRN231/Group Project/PRN231_Backend/FlowerExchange_Backend/FlowerExchange_Services/UserIdentity/Queries/CurrentUser/CurrentUserQuery.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -157,6 +151,7 @@
       <workItem from="1730717715984" duration="295000" />
       <workItem from="1730968698438" duration="6481000" />
       <workItem from="1731254622554" duration="4510000" />
+      <workItem from="1731308550897" duration="4475000" />
     </task>
     <servers />
   </component>
@@ -166,5 +161,24 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/FlowerExchange_Services/UserWallet/Queries/GetWalletTransactionsOfUserWallet/GetWalletTransactionsOfUserWalletQuery.cs</url>
+          <line>45</line>
+          <properties documentPath="E:\FPT University\FALL2024\PRN231\Group Project\PRN231_Backend\FlowerExchange_Backend\FlowerExchange_Services\UserWallet\Queries\GetWalletTransactionsOfUserWallet\GetWalletTransactionsOfUserWalletQuery.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="1670" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1735" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

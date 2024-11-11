@@ -1,4 +1,5 @@
-﻿using Domain.Commons.BaseRepositories;
+﻿using CrossCuttingConcerns.Datetimes;
+using Domain.Commons.BaseRepositories;
 using Domain.Constants.Enums;
 using Domain.Entities;
 using Domain.Repository;
@@ -33,6 +34,7 @@ public class
     private readonly IUnitOfWork<FlowerExchangeDbContext> _unitOfWork;
     private IFlowerRepository _flowerRepository;
     private IFlowerOrderRepository _flowerOrderRepository;
+    private IDateTimeProvider _dateTimeProvider;
 
     public CreateFlowerServicePaymentTransactionCommandHandler(
         IUserRepository userRepository, 
@@ -44,7 +46,8 @@ public class
         IWalletTransactionRepository walletTransactionRepository, 
         IUnitOfWork<FlowerExchangeDbContext> unitOfWork,
         IFlowerRepository flowerRepository,
-        IFlowerOrderRepository flowerOrderRepository
+        IFlowerOrderRepository flowerOrderRepository,
+        IDateTimeProvider dateTimeProvider
         )
     {
         _userRepository = userRepository;
@@ -57,6 +60,7 @@ public class
         _unitOfWork = unitOfWork;
         _flowerRepository = flowerRepository;
         _flowerOrderRepository = flowerOrderRepository;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task Handle(CreateFlowerServicePaymentTransactionCommand request, CancellationToken cancellationToken)
@@ -107,7 +111,9 @@ public class
                 Status = OrderStatus.Success,
                 BuyerId = buyer.Id,
                 SellerId = (Guid)post.SellerId,
-                FlowerId = post.Flower.Id
+                FlowerId = post.Flower.Id,
+                CreatedAt = _dateTimeProvider.OffsetUtcNow,
+                UpdatedAt = _dateTimeProvider.OffsetUtcNow
             };
             await _flowerOrderRepository.InsertAsync(flowerOrder);
 
@@ -116,10 +122,12 @@ public class
             {
                 Amount = totalAmount,
                 Status = Domain.Constants.Enums.TransStatus.Success,
-                Type = Domain.Constants.Enums.TransactionType.Buy,
+                Type = Domain.Constants.Enums.TransactionType.Trade,
                 FromWallet = buyerWallet.Id,
                 ToWallet = sellerWallet.Id,
-                FlowerOrderId = flowerOrder.Id
+                FlowerOrderId = flowerOrder.Id,
+                CreatedAt = _dateTimeProvider.OffsetUtcNow,
+                UpdatedAt = _dateTimeProvider.OffsetUtcNow
             };
             await _transactionRepository.InsertAsync(transaction);
             
@@ -129,7 +137,9 @@ public class
             {
                 WalletId = sellerWallet.Id,
                 TransactonId = transaction.Id,
-                Type = Domain.Constants.Enums.TransDirection.Plus
+                Type = Domain.Constants.Enums.TransDirection.Plus,
+                CreatedAt = _dateTimeProvider.OffsetUtcNow,
+                UpdatedAt = _dateTimeProvider.OffsetUtcNow
             };
             await _walletTransactionRepository.InsertAsync(plusWalletTransaction);
             
@@ -138,7 +148,9 @@ public class
             {
                 WalletId = buyerWallet.Id,
                 TransactonId = transaction.Id,
-                Type = Domain.Constants.Enums.TransDirection.Minus
+                Type = Domain.Constants.Enums.TransDirection.Minus,
+                CreatedAt = _dateTimeProvider.OffsetUtcNow,
+                UpdatedAt = _dateTimeProvider.OffsetUtcNow
             };
             await _walletTransactionRepository.InsertAsync(minusWalletTransaction);
             
@@ -150,6 +162,11 @@ public class
             // Seller wallet
             sellerWallet.TotalBalance += totalAmount;
             await _walletRepository.UpdateByIdAsync(sellerWallet, sellerWallet.Id);
+            
+            // Update post status to "Sold out"
+            post.PostStatus = PostStatus.SoldOut;
+            post.UpdatedAt = _dateTimeProvider.OffsetUtcNow;
+            await _postRepository.UpdateByIdAsync(post, post.Id);
 
             await _unitOfWork.SaveChangesAsync();
 

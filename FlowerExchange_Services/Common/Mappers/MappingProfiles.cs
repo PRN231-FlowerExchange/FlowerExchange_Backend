@@ -153,6 +153,14 @@ namespace Application.Common.Mappers
                     opt 
                         => opt.MapFrom(src => src.Transaction.ToWallet)
                 )
+                .ForMember(
+                    dest => dest.ServiceOrder, 
+                    opt 
+                        => opt.MapFrom(src => src.Transaction.ServiceOrder))
+                .ForMember(
+                    dest => dest.FlowerOrder, 
+                    opt 
+                        => opt.MapFrom(src => src.Transaction.FlowerOrder))
                 ;
 
         }
