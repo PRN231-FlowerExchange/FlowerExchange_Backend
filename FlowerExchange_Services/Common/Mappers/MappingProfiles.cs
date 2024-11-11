@@ -36,10 +36,8 @@ namespace Application.Common.Mappers
             CreateMap<Store, StoreViewInDetailsDTO>();
             CreateMap<Domain.Entities.Category, CategoryDTO>().ReverseMap();
             CreateMap<Domain.Entities.User, SellerDTO>().ReverseMap();
-<<<<<<< HEAD
             CreateMap<Domain.Entities.PostCategory, PostCategoryDTO>().ReverseMap();
-            CreateMap<Domain.Entities.Category, CategoryDetailDTO>().ReverseMap();
-=======
+            CreateMap<Domain.Entities.PostCategory, CategoryDetailDTO>().ReverseMap();
             CreateMap<DomainEntities.Wallet, WalletDetailsResponse>()
                 .ForMember(
                     dest => dest.Currency, 
@@ -175,7 +173,6 @@ namespace Application.Common.Mappers
                         => opt.MapFrom(src => src.CreatedAt.ToString()))
                 ;
 
->>>>>>> b787dd99f50e883784d40cf5b697376c8ba3bbc6
         }
     }
 }
