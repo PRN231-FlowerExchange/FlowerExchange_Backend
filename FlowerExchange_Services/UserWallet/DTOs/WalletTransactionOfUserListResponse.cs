@@ -23,4 +23,6 @@ public class WalletTransactionOfUserListResponse
     
     
     public string? ToUserFullName { get; set; }
+    
+    public string? CreateAt { get; set; }
 }

@@ -112,7 +112,7 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                 {
                     Amount = totalAmount,
                     Status = Domain.Constants.Enums.TransStatus.Success,
-                    Type = Domain.Constants.Enums.TransactionType.Sell,
+                    Type = Domain.Constants.Enums.TransactionType.Promotion,
                     FromWallet = wallet.Id,
                     ToWallet = Guid.NewGuid(),
                     ServiceOrderId = serviceOrder.Id

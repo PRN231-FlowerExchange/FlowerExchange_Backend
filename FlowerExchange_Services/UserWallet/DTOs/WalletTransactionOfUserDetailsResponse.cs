@@ -20,6 +20,8 @@ public class WalletTransactionOfUserDetailsResponse
     
     public string? ToUserFullName { get; set; }
     
+    public string? CreateAt { get; set; }
+    
     public ServiceOrderOfUserWalletTransaction? ServiceOrder { get; set; }
     
     public FlowerOrderOfUserWalletTransaction? FlowerOrder { get; set; }
