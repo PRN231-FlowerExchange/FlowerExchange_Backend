@@ -46,7 +46,6 @@
     <Folder Include="PaymentTransaction\Queries\" />
     <Folder Include="PaymentTransaction\Services\" />
     <Folder Include="Order\Commands\" />
-    <Folder Include="Order\Queries\" />
     <Folder Include="Order\Services\" />
     <Folder Include="UserApplication\Commands\" />
     <Folder Include="UserApplication\Queries\" />

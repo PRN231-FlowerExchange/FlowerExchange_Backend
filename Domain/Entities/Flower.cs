@@ -18,8 +18,6 @@ namespace Domain.Entities
         [JsonIgnore]
         public virtual FlowerOrder FlowerOrder { get; set; }
 
-        //TODO: Flower Status bỏ vô category
-
 
     }
 }

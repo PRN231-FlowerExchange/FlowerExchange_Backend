@@ -5,6 +5,8 @@ namespace Application.UserWallet.DTOs;
 
 public class FlowerOrderOfUserWalletTransaction
 {
+    public Guid Id { get; set; }
+    
     public double Amount { get; set; }
 
     public bool IsRefund { get; set; }
