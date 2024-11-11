@@ -13,14 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="be3e27a2-2c75-4bc1-8539-3facec803cbd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Entities/Flower.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Entities/Flower.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Entities/FlowerOrder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Entities/FlowerOrder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Repository/IFlowerOrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Repository/IFlowerOrderRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Repositories/RepositoryAdapter/FlowerOrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Repositories/RepositoryAdapter/FlowerOrderRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Application.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreatePostServicePaymentTransaction/CreatePostServicePaymentTransactionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreatePostServicePaymentTransaction/CreatePostServicePaymentTransactionCommand.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +28,8 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5b7939ac84ece28eb02d599c3a58efc3289150733e8f3375fb576f45d12e7b0/DateTimeOffset.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/FPT University/FALL2024/PRN231/Group Project/PRN231_Backend/FlowerExchange_Backend/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/FPT University/FALL2024/PRN231/Group Project/PRN231_Backend/FlowerExchange_Backend/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/FlowerExchange_Services/PostFlower/DTOs/StoreDTO.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/FlowerExchange_Services/UserApplication/DTOs/StoreModel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/FlowerExchange_Services/UserIdentity/Commands/ExternalLogin/CallbackExternalLoginCommand.cs" root0="FORCE_HIGHLIGHTING" />
