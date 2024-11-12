@@ -95,7 +95,7 @@ namespace Application.Common.Mappers
                 .ForMember(
                     dest => dest.CreateAt, 
                     opt 
-                        => opt.MapFrom(src => src.CreatedAt.ToString()))
+                        => opt.MapFrom(src => ((DateTimeOffset)src.CreatedAt).ToOffset(TimeSpan.FromHours(7)).ToString()))
                 ;
 
             CreateMap<ServiceOrder, ServiceOrderOfUserWalletTransaction>()
@@ -186,7 +186,7 @@ namespace Application.Common.Mappers
                 .ForMember(
                     dest => dest.CreatedAt,
                     opt
-                        => opt.MapFrom(src => src.CreatedAt.ToString())
+                        => opt.MapFrom(src => ((DateTimeOffset)src.CreatedAt).ToOffset(TimeSpan.FromHours(7)).ToString())
                 );
             
             CreateMap<Flower, FlowerForFlowerOrderHistoryList>()

@@ -13,9 +13,10 @@
   <component name="ChangeListManager">
     <list default="true" id="be3e27a2-2c75-4bc1-8539-3facec803cbd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FlowerExchange/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Models/WalletTransactionParameter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Models/WalletTransactionParameter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_API/Controllers/WalletController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Common/Mappers/MappingProfiles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreateFlowerServicePaymentTransaction/CreateFlowerServicePaymentTransactionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreateFlowerServicePaymentTransaction/CreateFlowerServicePaymentTransactionCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreatePostServicePaymentTransaction/CreatePostServicePaymentTransactionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreatePostServicePaymentTransaction/CreatePostServicePaymentTransactionCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreateTransaction/CreateTransactionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreateTransaction/CreateTransactionCommand.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,5 +162,24 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/FlowerExchange_Services/Payment/Commands/CreateTransaction/CreateTransactionCommand.cs</url>
+          <line>55</line>
+          <properties documentPath="E:\FPT University\FALL2024\PRN231\Group Project\PRN231_Backend\FlowerExchange_Backend\FlowerExchange_Services\Payment\Commands\CreateTransaction\CreateTransactionCommand.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="2171" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2257" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

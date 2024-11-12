@@ -117,8 +117,8 @@ public class
                 BuyerId = buyer.Id,
                 SellerId = (Guid)post.SellerId,
                 FlowerId = post.Flower.Id,
-                CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
-                UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
+                CreatedAt = DateTimeOffset.UtcNow,
+                UpdatedAt = DateTimeOffset.UtcNow
             };
             await _flowerOrderRepository.InsertAsync(flowerOrder);
             await _unitOfWork.SaveChangesAsync();
@@ -132,8 +132,8 @@ public class
                 FromWallet = buyerWallet.Id,
                 ToWallet = sellerWallet.Id,
                 FlowerOrderId = flowerOrder.Id,
-                CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
-                UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
+                CreatedAt = DateTimeOffset.UtcNow,
+                UpdatedAt = DateTimeOffset.UtcNow
             };
             await _transactionRepository.InsertAsync(transaction);
             
@@ -144,8 +144,8 @@ public class
                 WalletId = sellerWallet.Id,
                 TransactonId = transaction.Id,
                 Type = Domain.Constants.Enums.TransDirection.Plus,
-                CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
-                UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
+                CreatedAt = DateTimeOffset.UtcNow,
+                UpdatedAt = DateTimeOffset.UtcNow
             };
             await _walletTransactionRepository.InsertAsync(plusWalletTransaction);
             
@@ -155,25 +155,25 @@ public class
                 WalletId = buyerWallet.Id,
                 TransactonId = transaction.Id,
                 Type = Domain.Constants.Enums.TransDirection.Minus,
-                CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
-                UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
+                CreatedAt = DateTimeOffset.UtcNow,
+                UpdatedAt = DateTimeOffset.UtcNow
             };
             await _walletTransactionRepository.InsertAsync(minusWalletTransaction);
             
             // Update buyer and seller wallet balance
             // Buyer wallet
             buyerWallet.TotalBalance -= totalAmount;
-            buyerWallet.UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7));
+            buyerWallet.UpdatedAt = DateTimeOffset.UtcNow;
             await _walletRepository.UpdateByIdAsync(buyerWallet, buyerWallet.Id);
             
             // Seller wallet
             sellerWallet.TotalBalance += totalAmount;
-            sellerWallet.UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7));
+            sellerWallet.UpdatedAt = DateTimeOffset.UtcNow;
             await _walletRepository.UpdateByIdAsync(sellerWallet, sellerWallet.Id);
             
             // Update post status to "Sold out"
             post.PostStatus = PostStatus.SoldOut;
-            post.UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7));
+            post.UpdatedAt = DateTimeOffset.UtcNow;
             await _postRepository.UpdateByIdAsync(post, post.Id);
 
             await _unitOfWork.SaveChangesAsync();

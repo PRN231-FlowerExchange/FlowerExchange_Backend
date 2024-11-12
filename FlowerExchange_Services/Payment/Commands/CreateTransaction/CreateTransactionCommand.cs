@@ -51,7 +51,7 @@ namespace Application.Payment.Commands.CreateTransaction
 
                 // Find wallet id of user buy user id
                 var userWallet = await _walletRepository.GetByUserId(vnpayPaymentResponse.UserId);
-
+                
                 // Create wallet for user if userWallet is null
                 if (userWallet == null)
                 {
@@ -60,8 +60,8 @@ namespace Application.Payment.Commands.CreateTransaction
                         UserId = vnpayPaymentResponse.UserId,
                         TotalBalance = 0,
                         Currency = Currency.VND,
-                        CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
-                        UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
+                        CreatedAt = DateTimeOffset.UtcNow,
+                        UpdatedAt = DateTimeOffset.UtcNow
                     };
 
                     await _walletRepository.InsertAsync(userWallet);
@@ -92,15 +92,15 @@ namespace Application.Payment.Commands.CreateTransaction
                     WalletId = userWallet.Id,
                     TransactonId = transaction.Id,
                     Type = TransDirection.Plus,
-                    CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
-                    UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    UpdatedAt = DateTimeOffset.UtcNow
                 };
                 await _walletTransactionRepository.InsertAsync(plusTransaction);
                 await _walletTransactionRepository.SaveChagesAysnc();
 
                 // Update wallet total balance 
                 userWallet.TotalBalance += vnpayPaymentResponse.Amount;
-                userWallet.UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7));
+                userWallet.UpdatedAt = DateTimeOffset.UtcNow;
                 await _walletRepository.UpdateByIdAsync(userWallet, userWallet.Id);
                 await _walletRepository.SaveChagesAysnc();
 
