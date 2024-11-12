@@ -94,8 +94,8 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                     Amount = totalAmount,
                     Status = Domain.Constants.Enums.OrderStatus.Success,
                     BuyerId = user.Id,
-                    CreatedAt = DateTimeOffset.UtcNow,
-                    UpdatedAt = DateTimeOffset.UtcNow
+                    CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
+                    UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
                 };
                 await _serviceOrderRepository.InsertAsync(serviceOrder);
                 // await _serviceOrderRepository.SaveChagesAysnc();
@@ -104,7 +104,7 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                 foreach (PostService postService in selectedPostServices)
                 {
                     postService.ServiceOrderId = serviceOrder.Id;
-                    postService.UpdatedAt = DateTimeOffset.UtcNow;
+                    postService.UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7));
                     await _postServiceRepository.UpdateByIdAsync(postService, postService.Id);
                 }
                 // await _postServiceRepository.SaveChagesAysnc();
@@ -118,8 +118,8 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
                     FromWallet = wallet.Id,
                     ToWallet = Guid.NewGuid(),
                     ServiceOrderId = serviceOrder.Id,
-                    CreatedAt = DateTimeOffset.UtcNow,
-                    UpdatedAt = DateTimeOffset.UtcNow
+                    CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
+                    UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
                 };
                 await _transactionRepository.InsertAsync(transaction);
                 // await _transactionRepository.SaveChagesAysnc();
@@ -138,7 +138,7 @@ namespace Application.Payment.Commands.CreatePostServicePaymentTransaction
 
                 // Update wallet balance
                 wallet.TotalBalance -= totalAmount;
-                wallet.UpdatedAt = DateTimeOffset.UtcNow;
+                wallet.UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7));
                 await _walletRepository.UpdateByIdAsync(wallet, wallet.Id);
                 // await _walletRepository.SaveChagesAysnc();
 
