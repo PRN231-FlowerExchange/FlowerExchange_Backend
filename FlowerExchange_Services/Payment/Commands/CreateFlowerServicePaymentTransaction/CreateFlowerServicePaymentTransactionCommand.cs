@@ -90,7 +90,7 @@ public class
             double totalAmount = 0;
 
             // Get flower price
-            totalAmount += post.Flower.Price;
+            totalAmount += post.Flower.Price * (double)post.Quantity;
             
             // Find wallet of buyer and check if balance is valid
             var buyerWallet = await _walletRepository.GetByUserId(buyer.Id);
