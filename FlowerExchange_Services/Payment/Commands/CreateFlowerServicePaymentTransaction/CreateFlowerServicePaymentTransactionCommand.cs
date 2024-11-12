@@ -121,6 +121,7 @@ public class
                 UpdatedAt = _dateTimeProvider.OffsetUtcNow
             };
             await _flowerOrderRepository.InsertAsync(flowerOrder);
+            await _unitOfWork.SaveChangesAsync();
 
             // Create transaction
             var transaction = new Transaction

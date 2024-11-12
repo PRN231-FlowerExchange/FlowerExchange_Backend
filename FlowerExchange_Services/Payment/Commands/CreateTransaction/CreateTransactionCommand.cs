@@ -68,9 +68,11 @@ namespace Application.Payment.Commands.CreateTransaction
                     await _walletRepository.SaveChagesAysnc();
                 }
 
+                var transactionId = vnpayPaymentResponse.TxnRef;
                 // Create new transaction
                 var transaction = new Transaction
                 {
+                    Id = Guid.Parse(transactionId),
                     Amount = vnpayPaymentResponse.Amount,
                     Status = TransStatus.Success,
                     Type = TransactionType.Deposit,
