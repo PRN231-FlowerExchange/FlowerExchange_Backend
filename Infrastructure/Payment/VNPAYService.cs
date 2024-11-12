@@ -59,6 +59,11 @@ namespace Infrastructure.Payment
                     return null;
                 }
 
+                if (!response.ResponseCode.Equals("00"))
+                {
+                    return null;
+                }
+
                 // Payment success
                 var userInfo = response.OrderInfo.Split('.')[0].Trim();
                 var userIdString = userInfo.Split(": ")[1].Trim();
