@@ -1,4 +1,6 @@
-﻿using Domain.Constants.Enums;
+﻿using AutoMapper.Configuration.Annotations;
+using Domain.Constants.Enums;
+using System.Text.Json.Serialization;
 
 namespace Application.PostFlower.DTOs
 {
@@ -12,38 +14,13 @@ namespace Application.PostFlower.DTOs
 
         public int Quantity { get; set; }
 
+        public string Location { get; set; }
 
-        //public string Location { get; set; }
+        public DateTime ExpiredAt { get; set; }
 
-        //public DateTime ExpiredAt { get; set; }
-        public PostStatus PostStatus { get; set; }
 
-        public List<Guid> Services { get; set; }
+        public string UnitMeasure { get; set; }
 
-        //public List<string> ImageUrls { get; set; } = new List<string>();
-
-        //public string UnitMeasure { get; set; }
-
-        //public DateTime CreateAt { get; set; }
-
-        //public DateTime UpdateAt { get; set; }
-
-        //public string MainImageUrl { get; set; }
-
-        //public List<PostCategoryModel> PostCategories { get; set; }
-
-        //public List<ReportModel> Reports { get; set; }
-
-        //public Guid SellerId { get; set; }
-
-        //public UserModel Seller { get; set; }
-
-        //public Guid StoreId { get; set; }
-
-        //public StoreModel Store { get; set; }
-
-        //public FlowerModel Flower { get; set; }
-
-        //public List<PostServiceModel>? PostServices { get; set; }
+        public FlowerDTO Flower { get; set; }
     }
 }
