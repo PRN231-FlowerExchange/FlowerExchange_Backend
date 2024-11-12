@@ -60,8 +60,8 @@ namespace Application.Payment.Commands.CreateTransaction
                         UserId = vnpayPaymentResponse.UserId,
                         TotalBalance = 0,
                         Currency = Currency.VND,
-                        CreatedAt = DateTimeOffset.UtcNow,
-                        UpdatedAt = DateTimeOffset.UtcNow
+                        CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
+                        UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
                     };
 
                     await _walletRepository.InsertAsync(userWallet);
@@ -92,14 +92,15 @@ namespace Application.Payment.Commands.CreateTransaction
                     WalletId = userWallet.Id,
                     TransactonId = transaction.Id,
                     Type = TransDirection.Plus,
-                    CreatedAt = DateTimeOffset.UtcNow,
-                    UpdatedAt = DateTimeOffset.UtcNow
+                    CreatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)),
+                    UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7))
                 };
                 await _walletTransactionRepository.InsertAsync(plusTransaction);
                 await _walletTransactionRepository.SaveChagesAysnc();
 
                 // Update wallet total balance 
                 userWallet.TotalBalance += vnpayPaymentResponse.Amount;
+                userWallet.UpdatedAt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7));
                 await _walletRepository.UpdateByIdAsync(userWallet, userWallet.Id);
                 await _walletRepository.SaveChagesAysnc();
 
