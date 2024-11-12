@@ -5,7 +5,7 @@
         public string? Title { get; set; } = null;
         public WalletTransactionParameter()
         {
-            OrderBy = "CreatedAt";
+            OrderBy = "CreatedAt desc";
         }
     }
 }

@@ -83,6 +83,20 @@ public class WalletController : APIControllerBase
         {
             var response =
                 await Mediator.Send(new GetWalletTransactionsOfUserWalletQuery(userId, walletTransactionParameter));
+            // return Ok(new
+            // {
+            //     WalletTransactions = response,
+            //     Pagination = new
+            //     {
+            //         CurrentPage = response.CurrentPage,
+            //         TotalPages = response.TotalPages,
+            //         PageSize = response.PageSize,
+            //         TotalCount = response.TotalCount,
+            //         HasPrevious = response.HasPrevious,
+            //         HasNext = response.HasNext
+            //     }
+            // });
+
             return Ok(response);
         }
         catch (Exception ex)
